@@ -14,6 +14,7 @@
 \usepackage{gensymb}
 \usepackage{multirow}
 \usepackage{longtable}
+\usepackage{indentfirst}
 \usetikzlibrary {arrows.meta}
 
 \hypersetup{
@@ -139,6 +140,18 @@
 \end{enumerate}
 
 \section{Архитектура приложения}
+
+Клиентская часть приложения реализует паттерны \texttt{Single Activity Application}, а также \texttt{MVVM} (Model View ViewModel).
+
+Пользователь взаимодействует с UI, написанном на Compose, который в свою очередь получает данные из ViewModel и отправляет действия пользователя во ViewModel.
+
+Клиент же общается с сервером посредством предоставляемого сервером API, внутри которого происходит исполнение бизнес-логики и обращение к БД.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm]{resources/2.png}
+    \caption{Архитектура приложения}
+\end{figure}
 
 \section{Стек технологий}
 
