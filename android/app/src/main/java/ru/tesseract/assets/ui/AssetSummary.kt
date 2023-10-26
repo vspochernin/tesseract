@@ -20,9 +20,45 @@ import ru.tesseract.assets.domain.Asset
 import ru.tesseract.ui.FavoriteIcon
 
 @Composable
-fun AssetSummary(
+fun DiversificationAssetSummary(
     asset: Asset,
-    quantity: Int?,
+    quantity: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    AssetSummary(
+        asset = asset,
+        additionalInfo = {
+            Text(
+                text = stringResource(id = R.string.asset_quantity, quantity),
+                style = MaterialTheme.typography.titleSmall,
+            )
+        },
+        onClick = onClick,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun AssetSummaryWithChange(
+    asset: Asset,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    AssetSummary(
+        asset = asset,
+        additionalInfo = {
+            Text(asset.annotatedPriceChange(), style = MaterialTheme.typography.titleMedium)
+        },
+        onClick = onClick,
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun AssetSummary(
+    asset: Asset,
+    additionalInfo: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -54,12 +90,7 @@ fun AssetSummary(
             }
             Column(horizontalAlignment = Alignment.End) {
                 Text(asset.price, style = MaterialTheme.typography.titleMedium)
-                quantity?.let {
-                    Text(
-                        text = stringResource(id = R.string.asset_quantity, it),
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                }
+                additionalInfo()
             }
         }
         Divider(

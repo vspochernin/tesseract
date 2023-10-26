@@ -25,6 +25,7 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ru.tesseract.R
 import ru.tesseract.assets.domain.Asset
+import ru.tesseract.diversifications.ui.RiskTolerance
 import ru.tesseract.ui.FavoriteIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,12 +62,14 @@ fun AssetScreen(
                     .verticalScroll(rememberScrollState())
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
                     .padding(padding)
-                    .padding(16.dp),
+                    .padding(vertical = 16.dp),
         ) {
             AssetDescription(asset)
-            Divider(modifier = Modifier.padding(vertical = 16.dp))
+            Divider(modifier = Modifier.padding(16.dp))
             Price(asset)
-            Divider(modifier = Modifier.padding(vertical = 16.dp))
+            Divider(modifier = Modifier.padding(16.dp))
+            RiskTolerance(asset.riskTolerance)
+            Divider(modifier = Modifier.padding(16.dp))
             OrganizationDescription(asset)
         }
     }
@@ -74,26 +77,33 @@ fun AssetScreen(
 
 @Composable
 private fun OrganizationDescription(asset: Asset) {
-    Text(
-        text = stringResource(id = R.string.asset_screen_organization),
-        style = MaterialTheme.typography.labelLarge,
-        modifier = Modifier.padding(bottom = 8.dp),
-    )
-    Text(text = asset.organization, style = MaterialTheme.typography.titleLarge)
-    Text(text = "Описание организации...")
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Text(
+            text = stringResource(id = R.string.asset_screen_organization),
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(bottom = 8.dp),
+        )
+        Text(text = asset.organization, style = MaterialTheme.typography.titleLarge)
+        Text(text = "Описание организации...")
+    }
 }
 
 @Composable
 private fun Price(asset: Asset) {
-    Text(
-        text = stringResource(id = R.string.asset_screen_price),
-        style = MaterialTheme.typography.labelLarge,
-    )
-    Text(text = asset.price, style = MaterialTheme.typography.displayMedium)
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Text(
+            text = stringResource(id = R.string.asset_screen_price),
+            style = MaterialTheme.typography.labelLarge,
+        )
+        Text(text = asset.price, style = MaterialTheme.typography.displayMedium)
+        Text(asset.annotatedPriceChange(), style = MaterialTheme.typography.titleMedium)
+    }
 }
 
 @Composable
 private fun AssetDescription(asset: Asset) {
-    Text(text = asset.name, style = MaterialTheme.typography.headlineMedium)
-    Text(text = "Описание актива...")
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Text(text = asset.name, style = MaterialTheme.typography.headlineMedium)
+        Text(text = "Описание актива...")
+    }
 }
