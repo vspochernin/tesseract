@@ -25,7 +25,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ru.tesseract.R
-import ru.tesseract.assets.ui.AssetSummary
+import ru.tesseract.assets.ui.DiversificationAssetSummary
 import ru.tesseract.assets.ui.sampleAssets
 import ru.tesseract.destinations.AssetScreenDestination
 import ru.tesseract.diversifications.domain.RiskTolerance
@@ -92,7 +92,7 @@ private fun DiversificationAssets(navigator: DestinationsNavigator) {
         modifier = Modifier.padding(horizontal = 16.dp),
     )
     sampleAssets.shuffled().take(5).forEach { asset ->
-        AssetSummary(
+        DiversificationAssetSummary(
             asset = asset,
             quantity = Random.nextInt(1, 6),
             onClick = { navigator.navigate(AssetScreenDestination(asset.id)) },
@@ -113,7 +113,7 @@ private fun DiversificationSum(sum: String) {
 }
 
 @Composable
-private fun RiskTolerance(riskTolerance: RiskTolerance) {
+fun RiskTolerance(riskTolerance: RiskTolerance) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = stringResource(id = R.string.risk_tolerance),

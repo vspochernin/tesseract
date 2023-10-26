@@ -41,9 +41,8 @@ fun FavoritesScreen(navigator: DestinationsNavigator) {
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
             items(sampleAssets.filter { it.isFavorite }) {
-                AssetSummary(
+                AssetSummaryWithChange(
                     asset = it,
-                    quantity = null,
                     onClick = { navigator.navigate(AssetScreenDestination(it.id)) },
                     modifier = Modifier.fillMaxWidth(),
                 )

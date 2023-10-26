@@ -19,6 +19,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ru.tesseract.R
 import ru.tesseract.assets.domain.Asset
 import ru.tesseract.destinations.AssetScreenDestination
+import ru.tesseract.diversifications.domain.RiskTolerance
 
 val sampleAssets =
     listOf(
@@ -27,6 +28,8 @@ val sampleAssets =
             name = "АО «ЛИД» – Денежное требование №1",
             organization = "АО «ЛИД»",
             price = "220.33 ₽",
+            change = "+12.33 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = false,
         ),
         Asset(
@@ -34,6 +37,8 @@ val sampleAssets =
             name = "ООО «Фудсервис» – Денежное требование №1",
             organization = "ООО «Фудсервис»",
             price = "225.04 ₽",
+            change = "–10.24 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = false,
         ),
         Asset(
@@ -41,6 +46,8 @@ val sampleAssets =
             name = "ООО «Фудсервис» – Денежное требование №2",
             organization = "ООО «Фудсервис»",
             price = "211.89 ₽",
+            change = "+17.33 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = false,
         ),
         Asset(
@@ -48,6 +55,8 @@ val sampleAssets =
             name = "ИП Почернин Владислав Сергеевич – Денежное требование №1",
             organization = "ИП Почернин Владислав Сергеевич",
             price = "228.00 ₽",
+            change = "+2.53 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = true,
         ),
         Asset(
@@ -55,6 +64,8 @@ val sampleAssets =
             name = "ООО «Новый Горизонт» – Денежное требование №1",
             organization = "ООО «Новый Горизонт»",
             price = "22.00 ₽",
+            change = "+1.44 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = false,
         ),
         Asset(
@@ -62,6 +73,8 @@ val sampleAssets =
             name = "ООО «Сетевые технологии» – Денежное требование №1",
             organization = "ООО «Сетевые технологии»",
             price = "137.00 ₽",
+            change = "+0.41 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = false,
         ),
         Asset(
@@ -69,6 +82,8 @@ val sampleAssets =
             name = "ООО «Сетевые технологии» – Денежное требование №2",
             organization = "ООО «Сетевые технологии»",
             price = "17.00 ₽",
+            change = "+12.33 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = false,
         ),
         Asset(
@@ -76,6 +91,8 @@ val sampleAssets =
             name = "ООО «Сетевые технологии» – Денежное требование №3",
             organization = "ООО «Сетевые технологии»",
             price = "13.00 ₽",
+            change = "+12.33 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = false,
         ),
         Asset(
@@ -83,6 +100,8 @@ val sampleAssets =
             name = "ИП Мурзаканов Ислам Мухамадинович – Денежное требование №1",
             organization = "ИП Мурзаканов Ислам Мухамадинович",
             price = "2445.00 ₽",
+            change = "+140.12 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = true,
         ),
         Asset(
@@ -90,6 +109,8 @@ val sampleAssets =
             name = "ИП Шиляев Владислав Сергеевич – Денежное требование №1",
             organization = "ИП Шиляев Владислав Сергеевич",
             price = "1212.00 ₽",
+            change = "+55.23 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = true,
         ),
         Asset(
@@ -97,6 +118,8 @@ val sampleAssets =
             name = "ИП Разукрантов Владислав Евгеньевич – Денежное требование №1",
             organization = "ИП Разукрантов Владислав Евгеньевич",
             price = "2124.00 ₽",
+            change = "+123.67 ₽",
+            riskTolerance = RiskTolerance.Low,
             isFavorite = true,
         ),
     )
@@ -123,9 +146,8 @@ fun AssetsScreen(navigator: DestinationsNavigator) {
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
             items(sampleAssets) {
-                AssetSummary(
+                AssetSummaryWithChange(
                     asset = it,
-                    quantity = null,
                     onClick = { navigator.navigate(AssetScreenDestination(it.id)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
