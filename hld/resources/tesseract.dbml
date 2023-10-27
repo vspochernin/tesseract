@@ -1,0 +1,77 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+Table users {
+  id integer [primary key]
+  login varchar
+  email varchar
+  password varchar
+}
+
+Table assets {
+  id integer [primary key]
+  title varchar
+  description varchar
+  release_datetime timestamp
+  company_id integer
+  interest double
+}
+
+Table prices {
+  id integer [primary key]
+  asset_id integer
+  price integer
+  set_datetime timestamp
+}
+
+Table users_assets {
+  user_id integer
+  asset_id integer
+}
+
+Table companies {
+  id integer [primary key]
+  title varchar
+  description varchar
+  foundation_datetime timestamp
+  revenue bigint
+  profit bigint
+  staff integer
+}
+
+Table risks {
+  id integer [primary key]
+  description varchar
+}
+
+Table diversifications {
+  id integer [primary key]
+  user_id integer
+  create_datetime timestamp
+  risk_id integer
+  amount integer
+
+}
+
+Table diversifications_assets {
+  diversification_id integer
+  asset_id integer
+  count integer
+}
+
+Ref: "assets"."id" < "prices"."asset_id"
+
+Ref: "users"."id" < "users_assets"."user_id"
+
+Ref: "assets"."id" < "users_assets"."asset_id"
+
+Ref: "companies"."id" < "assets"."company_id"
+
+Ref: "risks"."id" < "diversifications"."risk_id"
+
+Ref: "diversifications"."id" < "diversifications_assets"."diversification_id"
+
+Ref: "assets"."id" < "diversifications_assets"."asset_id"
+
+Ref: "users"."id" < "diversifications"."user_id"
