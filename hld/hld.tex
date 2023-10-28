@@ -205,15 +205,25 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/login/tesseract}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
-        \item Заголовка:
-        \item Пути:
-        \item Строки запроса:
-        \item Тела запроса:
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String login;
+            \item String password;
+        \end{itemize}
     \end{itemize}
-    \item Входные параметры: логин, пароль.
-    \item Выходные параметры: токен.
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String token;
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Аутентификация через Google OAuth}
@@ -221,8 +231,24 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/login/google}.
-    \item Входные параметры: токен.
-    \item Выходные параметры: ???.
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String googleToken;
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String token;
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Регистрация пользователя}
@@ -230,8 +256,22 @@
 \begin{itemize}
     \item HTTP метод: \texttt{POST}.
     \item Путь: \texttt{/users}.
-    \item Входные параметры: логин, пароль, email.
-    \item Выходные параметры: -.
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String login;
+            \item String password;
+            \item String email;
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить список всех активов}
@@ -239,8 +279,26 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/assets}.
-    \item Входные параметры: id последнего загруженного актива.
-    \item Выходные параметры: список активов (название актива, название компании, стоимость, изменение стоимости, статус избранного).
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации;
+        \item Строка запроса: id последнего загруженного актива (опционально).
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON) - список:
+        \begin{itemize}
+            \item String assetTitle; - название актива.
+            \item String companyTitle; - название компании.
+            \item Integer assetPrice; - стоимость актива.
+            \item Integer assetDiff; - изменение стоимости актива.
+            \item Boolean favouriteStatus; - статус избранного актива.
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Добавить актив в избранное}
@@ -248,8 +306,18 @@
 \begin{itemize}
     \item HTTP метод: \texttt{POST}.
     \item Путь: \texttt{favourites/\{id\}}.
-    \item Входные параметры: id добавляемого в избранное актива.
-    \item Выходные параметры: -.
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Путь: id добавляемого в избранное актива.
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Удалить актив из избранного}
@@ -257,8 +325,18 @@
 \begin{itemize}
     \item HTTP метод: \texttt{DELETE}.
     \item Путь: \texttt{favourites/\{id\}}.
-    \item Входные параметры: id удаляемого из избранного актива.
-    \item Выходные параметры: -.
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Путь: id удаляемого из избранного актива.
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить информацию о конкретном активе}
@@ -266,17 +344,55 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/assets/\{id\}}.
-    \item Входные параметры: id актива.
-    \item Выходные параметры: название актива, описание актива, стоимость, изменение стоимости, рискованность, название компании, описание компании, статус избранного.
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Путь: id запрашиваемого актива.
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String assetTitle; - название актива.
+            \item String assetDescription; - описание актива.
+            \item Integer assetPrice; - стоимость актива.
+            \item Integer assetDiff; - изменение стоимости актива.
+            \item String companyTitle; - название компании.
+            \item String companyDescription; - описание компании.
+            \item Boolean favouriteStatus; - статус избранного актива.
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить список избранных активов}
 
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
-    \item Путь: \texttt{/favourites/\{id\}}.
-    \item Входные параметры: id последнего загруженного избранного актива.
-    \item Выходные параметры: список избранных активов (название актива, название компании, стоимость, изменение стоимости, статус избранного).
+    \item Путь: \texttt{/favourites}.
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Строка запроса: id последнего загруженного избранного актива (опционально).
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON) - список:
+        \begin{itemize}
+            \item String assetTitle; - название актива.
+            \item String companyTitle; - название компании.
+            \item Integer assetPrice; - стоимость актива.
+            \item Integer assetDiff; - изменение стоимости актива.
+            \item Boolean favouriteStatus; - статус избранного актива.
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить список диверсификаций}
@@ -284,8 +400,24 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/diversifications}.
-    \item Входные параметры: id последней загруженной диверсификации.
-    \item Выходные параметры: список диверсификаций (дата и время создания, степень рискованности, сумма).
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Строка запроса: id последней загруженной диверсификации (опционально).
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON) - список:
+        \begin{itemize}
+            \item Timestamp createDatetime; - дата и время создания диверсификации.
+            \item Integer risk; - степень рискованности диверсификации.
+            \item Integer amount; - сумма диверсификации.
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Создать диверсификацию}
@@ -293,8 +425,22 @@
 \begin{itemize}
     \item HTTP метод: \texttt{POST}.
     \item Путь: \texttt{/diversifications}.
-    \item Входные параметры: сумма, степень рискованности.
-    \item Выходные параметры: -.
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Тело (JSON):
+        \begin{itemize}
+            \item Integer amount; - сумма создаваемой диверсификации.
+            \item Integer risk; - степень рискованности создаваемой диверсификации.
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить информацию о конкретной диверсификации}
@@ -302,8 +448,31 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/diversifications/\{id\}}.
-    \item Входные параметры: id диверсификации.
-    \item Выходные параметры: дата и время создания, степень рискованности, сумма, список активов (название актива, название компании, общая стоимость данного вида актива (старая ???), изменение стоимости (по отношению к текущей общей стоимости данного вида актива) ???, количество активов данного вида в диверсификации).
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Путь: id запрашиваемой диверсификации.
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item Timestamp createDatetime; - дата и время создания диверсификации.
+            \item Integer risk; - уровень рискованности диверсификации.
+            \item Integer amount - сумма диверсификации.
+            \item Список:
+            \begin{itemize}
+                \item String assetTitle; - название актива.
+                \item String companyTitle; - название компании.
+                \item Integer priceSum; - \textbf{старая} цена актива (то есть цена на момент создания диверсификации).
+                \item Integer count; количество активов данного вида.
+            \end{itemize}
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Изменить пароль}
@@ -311,8 +480,22 @@
 \begin{itemize}
     \item HTTP метод: \texttt{PUT}.
     \item Путь: \texttt{/users}.
-    \item Входные параметры: старый пароль, новый пароль.
-    \item Выходные параметры: -.
+    \item Входные параметры: % TODO
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String oldPassword; - старый пароль.
+            \item String newPassword; - новый пароль.
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры: % TODO
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item TODO;
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \newpage
