@@ -3,26 +3,26 @@
 
 
 Table users {
-  id integer [primary key]
+  id SERIAL4 [primary key]
   login varchar
   email varchar
   password varchar
 }
 
 Table assets {
-  id integer [primary key]
+  id SERIAL4 [primary key]
   title varchar
   description varchar
-  release_datetime timestamp
+  release_datetime timestampz
   company_id integer
   interest double
 }
 
 Table prices {
-  id integer [primary key]
+  id SERIAL4 [primary key]
   asset_id integer
   price integer
-  set_datetime timestamp
+  set_datetime timestampz
 }
 
 Table users_assets {
@@ -31,24 +31,24 @@ Table users_assets {
 }
 
 Table companies {
-  id integer [primary key]
+  id SERIAL4 [primary key]
   title varchar
   description varchar
-  foundation_datetime timestamp
+  foundation_datetime timestampz
   revenue bigint
   profit bigint
   staff integer
 }
 
 Table risks {
-  id integer [primary key]
+  id SERIAL4 [primary key]
   description varchar
 }
 
 Table diversifications {
-  id integer [primary key]
+  id SERIAL4 [primary key]
   user_id integer
-  create_datetime timestamp
+  create_datetime timestampz
   risk_id integer
   amount integer
 
