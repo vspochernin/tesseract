@@ -200,6 +200,16 @@
 
 \section{API}
 
+API будет поддерживать следующие HTTP коды:
+\begin{itemize}
+    \item \texttt{200 OK} - успешные \texttt{GET}, \texttt{PUT}, \texttt{DELETE} или \texttt{POST} без создания.
+    \item \texttt{201 Created} - успешный \texttt{POST} с созданием.
+    \item \texttt{400 Bad Request} - некорректное тело запроса.
+    \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+    \item \texttt{404 Not Found} - запрашивается несуществующий ресурс.
+    \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+\end{itemize}
+
 \subsection{Аутентификация через логин и пароль}
 
 \begin{itemize}
@@ -213,7 +223,7 @@
             \item String password;
         \end{itemize}
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON):
         \begin{itemize}
@@ -221,7 +231,10 @@
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешная авторизация.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - несуществующая комбинация логин/пароль.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -231,14 +244,14 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/login/google}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Тело (JSON):
         \begin{itemize}
             \item String googleToken;
         \end{itemize}
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON):
         \begin{itemize}
@@ -246,7 +259,10 @@
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешная авторизация.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - некорректный Google токен.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -256,7 +272,7 @@
 \begin{itemize}
     \item HTTP метод: \texttt{POST}.
     \item Путь: \texttt{/users}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Тело (JSON):
         \begin{itemize}
@@ -265,11 +281,13 @@
             \item String email;
         \end{itemize}
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{201 Created} - успешная регистрация.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -279,24 +297,27 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/assets}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации;
         \item Строка запроса: id последнего загруженного актива (опционально).
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON) - список:
         \begin{itemize}
             \item String assetTitle; - название актива.
             \item String companyTitle; - название компании.
             \item Integer assetPrice; - стоимость актива.
-            \item Integer assetDiff; - изменение стоимости актива.
+            \item Integer assetDiff; - изменение стоимости актива за последний месяц.
             \item Boolean favouriteStatus; - статус избранного актива.
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешное получение списка активов.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -306,16 +327,21 @@
 \begin{itemize}
     \item HTTP метод: \texttt{POST}.
     \item Путь: \texttt{favourites/\{id\}}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
         \item Путь: id добавляемого в избранное актива.
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешное добавление актива в избранное, если он там уже был.
+            \item \texttt{201 Created} - успешное добавление актива в избранное.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{404 Not Found} - указан несуществующий id актива.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -325,16 +351,19 @@
 \begin{itemize}
     \item HTTP метод: \texttt{DELETE}.
     \item Путь: \texttt{favourites/\{id\}}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
         \item Путь: id удаляемого из избранного актива.
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешное удаление актива из избранного (либо отсутствие соответствующего id актива).
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -344,26 +373,31 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/assets/\{id\}}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
         \item Путь: id запрашиваемого актива.
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON):
         \begin{itemize}
             \item String assetTitle; - название актива.
             \item String assetDescription; - описание актива.
             \item Integer assetPrice; - стоимость актива.
-            \item Integer assetDiff; - изменение стоимости актива.
+            \item Integer assetDiff; - изменение стоимости актива за последний месяц.
             \item String companyTitle; - название компании.
             \item String companyDescription; - описание компании.
+            \item Integer risk; - степень рискованности актива.
             \item Boolean favouriteStatus; - статус избранного актива.
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешное получение информации об активе.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{404 Not Found} - отсутствие запрашиваемого id актива.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -373,24 +407,27 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/favourites}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
         \item Строка запроса: id последнего загруженного избранного актива (опционально).
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON) - список:
         \begin{itemize}
             \item String assetTitle; - название актива.
             \item String companyTitle; - название компании.
             \item Integer assetPrice; - стоимость актива.
-            \item Integer assetDiff; - изменение стоимости актива.
+            \item Integer assetDiff; - изменение стоимости актива за последний месяц.
             \item Boolean favouriteStatus; - статус избранного актива.
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешное получение списка активов.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -400,12 +437,12 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/diversifications}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
         \item Строка запроса: id последней загруженной диверсификации (опционально).
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON) - список:
         \begin{itemize}
@@ -415,7 +452,10 @@
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешное получение списка диверсификаций.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -425,7 +465,7 @@
 \begin{itemize}
     \item HTTP метод: \texttt{POST}.
     \item Путь: \texttt{/diversifications}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
         \item Тело (JSON):
@@ -434,11 +474,14 @@
             \item Integer risk; - степень рискованности создаваемой диверсификации.
         \end{itemize}
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{201 Created} - успешное создание диверсификации.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -448,12 +491,12 @@
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
     \item Путь: \texttt{/diversifications/\{id\}}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
         \item Путь: id запрашиваемой диверсификации.
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON):
         \begin{itemize}
@@ -470,7 +513,11 @@
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешное получение диверсификации.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{404 Not Found} - отсутствует диверсификация с таким id (либо запрашиваем не свою диверсификацию).
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -480,7 +527,7 @@
 \begin{itemize}
     \item HTTP метод: \texttt{PUT}.
     \item Путь: \texttt{/users}.
-    \item Входные параметры: % TODO
+    \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
         \item Тело (JSON):
@@ -489,11 +536,14 @@
             \item String newPassword; - новый пароль.
         \end{itemize}
     \end{itemize}
-    \item Выходные параметры: % TODO
+    \item Выходные параметры:
     \begin{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item TODO;
+            \item \texttt{200 OK} - успешное изменение пароля.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - внутренняя ошибка сервера.
         \end{itemize}
     \end{itemize}
 \end{itemize}
