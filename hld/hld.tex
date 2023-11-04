@@ -153,6 +153,8 @@
 
 Клиент же общается с сервером посредством предоставляемого сервером API, внутри которого происходит исполнение бизнес-логики и обращение к БД.
 
+Используется модель MVC.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=19cm]{resources/2.png}
@@ -165,10 +167,13 @@
 
 \begin{itemize}
     \item \textbf{Java} - язык программирования.
-    \item \textbf{Spring} - основной фреймворк.
+    \item \textbf{Spring Boot} - основной фреймворк.
+    \item \textbf{Spring Web MVC} - веб среда Spring для работы с сетью.
+    \item \textbf{Spring Security} - фреймворк, предоставляющий механизмы построения систем аутентификации и авторизации.
+    \item \textbf{Spring Data JPA} - механизм для взаимодействия с сущностями базы данных.
     \item \textbf{PostgreSQL} - система управления базами данных.
+    \item \textbf{Flyway} - система управления версиями баз данных.
     \item \textbf{Swagger} - инструмент для описания API.
-    \item \textbf{Hibernate} - библиотека для задач объектно-реляционного отображения.
 \end{itemize}
 
 \subsection{Frontend}
@@ -186,7 +191,13 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm]{resources/15.png}
-    \caption{Диаграмма классов}
+    \caption{Диаграмма классов клиентского приложения}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm]{resources/16.png}
+    \caption{Диаграмма классов серверного приложения}
 \end{figure}
 
 \section{Схема базы данных}
@@ -200,112 +211,352 @@
 
 \section{API}
 
+API будет поддерживать следующие HTTP коды:
+\begin{itemize}
+    \item \texttt{200 OK} - успешные \texttt{GET}, \texttt{PUT}, \texttt{DELETE} или \texttt{POST} без создания.
+    \item \texttt{201 Created} - успешный \texttt{POST} с созданием.
+    \item \texttt{400 Bad Request} - некорректное тело запроса.
+    \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+    \item \texttt{404 Not Found} - запрашивается несуществующий ресурс.
+    \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+\end{itemize}
+
 \subsection{Аутентификация через логин и пароль}
 
 \begin{itemize}
-    \item Тип запроса: GET.
-    \item Путь запроса: /login.
-    \item Входные параметры запроса: логин, пароль.
-    \item Выходные параметры запроса: токен.
+    \item HTTP метод: \texttt{GET}.
+    \item Путь: \texttt{/login/tesseract}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String login;
+            \item String password;
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String token;
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешная авторизация.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - несуществующая комбинация логин/пароль.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Аутентификация через Google OAuth}
 
 \begin{itemize}
-    \item Тип запроса: GET.
-    \item Путь запроса: /loginByGoogle.
-    \item Входные параметры запроса: токен.
-    \item Выходные параметры запроса: ???.
+    \item HTTP метод: \texttt{GET}.
+    \item Путь: \texttt{/login/google}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String googleToken;
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String token;
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешная авторизация.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - некорректный Google токен.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Регистрация пользователя}
 
 \begin{itemize}
-    \item Тип запроса: POST.
-    \item Путь запроса: /register.
-    \item Входные параметры запроса: логин, пароль, email.
-    \item Выходные параметры запроса: -.
+    \item HTTP метод: \texttt{POST}.
+    \item Путь: \texttt{/users}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String login;
+            \item String password;
+            \item String email;
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{201 Created} - успешная регистрация.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить список всех активов}
 
 \begin{itemize}
-    \item Тип запроса: GET.
-    \item Путь запроса: /assets\{id\}.
-    \item Входные параметры запроса: id последнего загруженного актива.
-    \item Выходные параметры запроса: список активов (название актива, название компании, стоимость, изменение стоимости, статус избранного).
+    \item HTTP метод: \texttt{GET}.
+    \item Путь: \texttt{/assets}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации;
+        \item Строка запроса: id последнего загруженного актива (опционально).
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item Тело (JSON) - список:
+        \begin{itemize}
+            \item String assetTitle; - название актива.
+            \item String companyTitle; - название компании.
+            \item Integer assetPrice; - стоимость актива.
+            \item Integer assetDiff; - изменение стоимости актива за последний месяц.
+            \item Boolean favouriteStatus; - статус избранного актива.
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешное получение списка активов.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Добавить актив в избранное}
 
 \begin{itemize}
-    \item Тип запроса: POST.
-    \item Путь запроса: /addFavourite/\{id\}.
-    \item Входные параметры запроса: id добавляемого в избранное актива.
-    \item Выходные параметры запроса: -.
+    \item HTTP метод: \texttt{POST}.
+    \item Путь: \texttt{favourites/\{id\}}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Путь: id добавляемого в избранное актива.
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешное добавление актива в избранное, если он там уже был.
+            \item \texttt{201 Created} - успешное добавление актива в избранное.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{404 Not Found} - указан несуществующий id актива.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Удалить актив из избранного}
 
 \begin{itemize}
-    \item Тип запроса: DELETE.
-    \item Путь запроса: /removeFavourite/\{id\}.
-    \item Входные параметры запроса: id удаляемого из избранного актива.
-    \item Выходные параметры запроса: -.
+    \item HTTP метод: \texttt{DELETE}.
+    \item Путь: \texttt{favourites/\{id\}}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Путь: id удаляемого из избранного актива.
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешное удаление актива из избранного (либо отсутствие соответствующего id актива).
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить информацию о конкретном активе}
 
 \begin{itemize}
-    \item Тип запроса: GET.
-    \item Путь запроса: /asset/\{id\}.
-    \item Входные параметры запроса: id актива.
-    \item Выходные параметры запроса: название актива, описание актива, стоимость, изменение стоимости, рискованность, название компании, описание компании, статус избранного.
+    \item HTTP метод: \texttt{GET}.
+    \item Путь: \texttt{/assets/\{id\}}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Путь: id запрашиваемого актива.
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String assetTitle; - название актива.
+            \item String assetDescription; - описание актива.
+            \item Integer assetPrice; - стоимость актива.
+            \item Integer assetDiff; - изменение стоимости актива за последний месяц.
+            \item String companyTitle; - название компании.
+            \item String companyDescription; - описание компании.
+            \item Integer risk; - степень рискованности актива.
+            \item Boolean favouriteStatus; - статус избранного актива.
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешное получение информации об активе.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{404 Not Found} - отсутствие запрашиваемого id актива.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить список избранных активов}
 
 \begin{itemize}
-    \item Тип запроса: GET.
-    \item Путь запроса: /favouritesAssets/\{id\}.
-    \item Входные параметры запроса: id последнего загруженного избранного актива.
-    \item Выходные параметры запроса: список избранных активов (название актива, название компании, стоимость, изменение стоимости, статус избранного).
+    \item HTTP метод: \texttt{GET}.
+    \item Путь: \texttt{/favourites}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Строка запроса: id последнего загруженного избранного актива (опционально).
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item Тело (JSON) - список:
+        \begin{itemize}
+            \item String assetTitle; - название актива.
+            \item String companyTitle; - название компании.
+            \item Integer assetPrice; - стоимость актива.
+            \item Integer assetDiff; - изменение стоимости актива за последний месяц.
+            \item Boolean favouriteStatus; - статус избранного актива.
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешное получение списка активов.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить список диверсификаций}
 
 \begin{itemize}
-    \item Тип запроса: GET.
-    \item Путь запроса: /diversifications/\{id\}.
-    \item Входные параметры запроса: id последней загруженной диверсификации.
-    \item Выходные параметры запроса: список диверсификаций (дата и время создания, степень рискованности, сумма).
+    \item HTTP метод: \texttt{GET}.
+    \item Путь: \texttt{/diversifications}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Строка запроса: id последней загруженной диверсификации (опционально).
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item Тело (JSON) - список:
+        \begin{itemize}
+            \item Timestamp createDatetime; - дата и время создания диверсификации.
+            \item Integer risk; - степень рискованности диверсификации.
+            \item Integer amount; - сумма диверсификации.
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешное получение списка диверсификаций.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Создать диверсификацию}
 
 \begin{itemize}
-    \item Тип запроса: POST.
-    \item Путь запроса: /createDiversification.
-    \item Входные параметры запроса: сумма, степень рискованности.
-    \item Выходные параметры запроса: -.
+    \item HTTP метод: \texttt{POST}.
+    \item Путь: \texttt{/diversifications}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Тело (JSON):
+        \begin{itemize}
+            \item Integer amount; - сумма создаваемой диверсификации.
+            \item Integer risk; - степень рискованности создаваемой диверсификации.
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{201 Created} - успешное создание диверсификации.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Получить информацию о конкретной диверсификации}
 
 \begin{itemize}
-    \item Тип запроса: GET.
-    \item Путь запроса: /diversification/\{id\}.
-    \item Входные параметры запроса: id диверсификации.
-    \item Выходные параметры запроса: дата и время создания, степень рискованности, сумма, список активов (название актива, название компании, общая стоимость данного вида актива (старая ???), изменение стоимости (по отношению к текущей общей стоимости данного вида актива) ???, количество активов данного вида в диверсификации).
+    \item HTTP метод: \texttt{GET}.
+    \item Путь: \texttt{/diversifications/\{id\}}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Путь: id запрашиваемой диверсификации.
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item Тело (JSON):
+        \begin{itemize}
+            \item Timestamp createDatetime; - дата и время создания диверсификации.
+            \item Integer risk; - уровень рискованности диверсификации.
+            \item Integer amount - сумма диверсификации.
+            \item Список:
+            \begin{itemize}
+                \item String assetTitle; - название актива.
+                \item String companyTitle; - название компании.
+                \item Integer priceSum; - \textbf{старая} цена актива (то есть цена на момент создания диверсификации).
+                \item Integer count; количество активов данного вида.
+            \end{itemize}
+        \end{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешное получение диверсификации.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{404 Not Found} - отсутствует диверсификация с таким id (либо запрашиваем не свою диверсификацию).
+            \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsection{Изменить пароль}
 
 \begin{itemize}
-    \item Тип запроса: PUT.
-    \item Путь запроса: /changePassword.
-    \item Входные параметры запроса: старый пароль, новый пароль.
-    \item Выходные параметры запроса: -.
+    \item HTTP метод: \texttt{PUT}.
+    \item Путь: \texttt{/users}.
+    \item Входные параметры:
+    \begin{itemize}
+        \item Заголовок: данные аутентификации.
+        \item Тело (JSON):
+        \begin{itemize}
+            \item String oldPassword; - старый пароль.
+            \item String newPassword; - новый пароль.
+        \end{itemize}
+    \end{itemize}
+    \item Выходные параметры:
+    \begin{itemize}
+        \item HTTP коды:
+        \begin{itemize}
+            \item \texttt{200 OK} - успешное изменение пароля.
+            \item \texttt{400 Bad Request} - некорректное тело запроса.
+            \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
+            \item \texttt{500 Internal Server Error} - внутренняя ошибка сервера.
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \newpage
