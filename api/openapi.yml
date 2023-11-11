@@ -1,0 +1,234 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Tesseract
+  description: An API for tesseract
+  termsOfService: https://swagger.io/terms/
+  contact:
+    name: Swagger API Team
+    email: apiteam@swagger.io
+    url: https://swagger.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /login/tesseract:
+    post:
+      summary: Аутентификация через логин и пароль
+      requestBody:
+        description: Данные для авторизации через логин и пароль
+        required: true
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AuthCredentials'
+      responses:
+        '200':
+          description: Успешная авторизация
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SuccsessAuthToken'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Несуществующая комбинация логин/пароль
+        '500':
+          description: Непредвиденная ошибка      
+  /login/google:
+    get:
+      summary: Аутентификация через Google OAuth
+      requestBody:
+        description: Данные для авторизации через Google Auth
+        required: true
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AuthGoogleCredentials'
+      responses:
+        '200':
+          description: Успешная авторизация
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SuccsessAuthToken'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Некорректный Google токен
+        '500':
+          description: Непредвиденная ошибка   
+  /users:
+    post:
+      summary: Регистрация пользователя
+      requestBody:
+        description: Данные для регистрации
+        required: true
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/RegisterCredentials'
+      responses:
+        '201':
+          description: Успешная регистрация.
+        '400':
+          description: Некорректное тело запроса
+        '500':
+          description: Непредвиденная ошибка
+    put:
+      summary: Изменить пароль
+      requestBody:
+        description: Данные для смены пароля
+        required: true
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/PasswordChangeCredentials'
+      responses:
+        '200':
+          description: Успешное изменение пароля
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: внутренняя ошибка сервера         
+  /assets:
+    post:
+      summary: Получить список всех активов
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - name: id
+          in: query
+          description: id последнего загруженного актива
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное получение списка активов
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AssetsList'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: Непредвиденная ошибка
+  /favourites/{id}:
+    post:
+      summary: Добавить актив в избранное
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - name: id
+          in: query
+          description:  id добавляемого в избранное актива
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное добавление актива в избранное, если он там уже был
+        '201':
+          description: Успешное добавление актива в избранное
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '404':
+          description: Указан несуществующий id актива
+        '500':
+          description: Непредвиденная ошибка
+    delete:
+      summary: Удалить актив из избранного
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - name: id
+          in: query
+          description:  id удаляемого из избранного актива
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное удаление актива из избранного (либо отсутствие соответствующего id актива).
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: Непредвиденная ошибка
+  /assets/{id}:
+    get:
+      summary: Получить информацию о конкретном активе
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - name: id
+          in: query
+          description:  id удаляемого из избранного актива
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешное получение информации об активе
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AssetInfo'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '404':
+          description: Отсутствие запрашиваемого id актива
+        '500':
+          description: Непредвиденная ошибка
+  /favourites:
+    get:
+      summary: Получить список избранных активов
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+      responses:
+        '200':
+          description: Success
+  /diversifications:
+    get:
+      summary: Получить список диверсификаций
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Создать диверсификацию
+      responses:
+        '200':
+          description: Success
+  /diversifications/{id}:
+    get:
+      summary: Получить информацию о конкретной диверсификации
+      responses:
+        '200':
+          description: Success
+components:
+  parameters:
+    authCredsParam:
+      name: authCreds
+      in: header
+      description: Данные аутентификации
+      required: true
+      schema:
+        type: string
+    idParam:
+      name: id
+      in: query
+      description: id сущности
+      required: false
+      schema:
+        type: integer
+  responses:
+    NotFound:
+      description: Сущность не найдена
+    GeneralError:
+      description: Непредвиденная ошибка
