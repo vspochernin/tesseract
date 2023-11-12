@@ -250,6 +250,8 @@ paths:
           description: Непредвиденная ошибка
   /diversifications/{id}:
     get:
+      tags:
+        - diversification
 
       summary: Получить информацию о конкретной диверсификации
       parameters:
