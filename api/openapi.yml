@@ -399,7 +399,7 @@ components:
           type: string
         priceSum:
           type: integer
-          description: Старая цена актива, в копейках 
+          description: Старая цена актива (то есть цена на момент создания диверсификации), в копейках 
         count:
           type: integer
     SpecifiedDiversification:
