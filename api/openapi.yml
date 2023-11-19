@@ -1,0 +1,424 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Tesseract
+  description: An API for tesseract
+  termsOfService: https://swagger.io/terms/
+  contact:
+    name: Swagger API Team
+    email: apiteam@swagger.io
+    url: https://swagger.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /login/tesseract:
+    post:
+      summary: Аутентификация через логин и пароль
+      tags:
+        - login
+      requestBody:
+        description: Данные для авторизации через логин и пароль
+        required: true
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AuthCredentials'
+      responses:
+        '200':
+          description: Успешная авторизация
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SuccsessAuthToken'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Несуществующая комбинация логин/пароль
+        '500':
+          description: Непредвиденная ошибка      
+  /login/google:
+    post:
+      tags:
+        - login
+      summary: Аутентификация через Google OAuth
+      requestBody:
+        description: Данные для авторизации через Google Auth
+        required: true
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AuthGoogleCredentials'
+      responses:
+        '200':
+          description: Успешная авторизация
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SuccsessAuthToken'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Некорректный Google токен
+        '500':
+          description: Непредвиденная ошибка   
+  /users:
+    post:
+      tags:
+        - user
+      summary: Регистрация пользователя
+      requestBody:
+        description: Данные для регистрации
+        required: true
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/RegisterCredentials'
+      responses:
+        '201':
+          description: Успешная регистрация
+        '400':
+          description: Некорректное тело запроса
+        '500':
+          description: Непредвиденная ошибка
+    put:
+      summary: Изменить пароль
+      tags:
+        - user
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+      requestBody:
+        description: Данные для смены пароля
+        required: true
+        content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/PasswordChangeCredentials'
+      responses:
+        '200':
+          description: Успешное изменение пароля
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: внутренняя ошибка сервера         
+  /assets:
+    post:
+      tags:
+        - asset
+      summary: Получить список всех активов
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - $ref: '#/components/parameters/idQuery'
+      responses:
+        '200':
+          description: Успешное получение списка активов
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AssetList'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: Непредвиденная ошибка
+  /favourites/{id}:
+    post:
+      tags:
+        - favourites
+      summary: Добавить актив в избранное
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Успешное добавление актива в избранное, если он там уже был
+        '201':
+          description: Успешное добавление актива в избранное
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '404':
+          description: Указан несуществующий id актива
+        '500':
+          description: Непредвиденная ошибка
+    delete:
+      tags:
+        - favourites
+      summary: Удалить актив из избранного
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Успешное удаление актива из избранного (либо отсутствие соответствующего id актива)
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: Непредвиденная ошибка
+  /assets/{id}:
+    get:
+      tags:
+        - asset
+      summary: Получить информацию о конкретном активе
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Успешное получение информации об активе
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SpecifiedAsset'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '404':
+          description: Отсутствие запрашиваемого id актива
+        '500':
+          description: Непредвиденная ошибка
+  /favourites:
+    get:
+      tags:
+        - favourites
+      summary: Получить список избранных активов
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - $ref: '#/components/parameters/idQuery'
+      responses:
+        '200':
+          description: Успешное получение списка активов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetList'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: Непредвиденная ошибка
+  /diversifications:
+    get:
+      tags:
+        - diversification
+      summary: Получить список диверсификаций
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - $ref: '#/components/parameters/idQuery'
+      responses:
+        '200':
+          description: Успешное получение списка диверсификаций
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiversificationsList'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: Непредвиденная ошибка
+    post:
+      tags:
+        - diversification
+      summary: Создать диверсификацию
+      requestBody:
+        description: Данные для создании диверсификации
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiversificationCreateInfo'
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+      responses:
+        '201':
+          description: Успешное создание диверсификации
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '500':
+          description: Непредвиденная ошибка
+  /diversifications/{id}:
+    get:
+      tags:
+        - diversification
+
+      summary: Получить информацию о конкретной диверсификации
+      parameters:
+        - $ref: '#/components/parameters/authCredsParam'
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Успешное получение диверсификации
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecifiedDiversification'
+        '400':
+          description: Некорректное тело запроса
+        '401':
+          description: Отсутствуют данные аутентификации
+        '404':
+          description: Отсутствует диверсификация с таким id (либо запрашиваем несвою диверсификацию)
+        '500':
+          description: Непредвиденная ошибка
+components:
+  parameters:
+    authCredsParam:
+      name: authCreds
+      in: header
+      description: Данные аутентификации
+      required: true
+      schema:
+        type: string
+    idPath:
+      name: id
+      in: path
+      description: Уникальный номер сущности
+      required: true
+      schema:
+        type: integer
+    idQuery:
+      name: id
+      in: query
+      description: id последней загруженной сущности (пагинация)
+      required: false
+      schema:
+        type: integer
+  schemas:
+    AuthCredentials:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    SuccsessAuthToken:
+      type: object
+      properties:
+        token:
+          type: string
+    AuthGoogleCredentials:
+      type: object
+      properties:
+        googleToken:
+          type: string
+    RegisterCredentials:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+    PasswordChangeCredentials:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+    Asset:
+      type: object
+      properties:
+        assetTitle:
+          type: string
+        companyTitle:
+          type: string
+        assetPrice:
+          type: integer
+          description: Стоимость актива, в копейках
+        assetDiff:
+          type: integer
+          description: Изменение стоимости актива за последний месяц, в копейках
+        favouriteStatus:
+          type: boolean
+    AssetList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Asset'
+    SpecifiedAsset:
+      type: object
+      properties:
+        assetTitle:
+          type: string
+        assetDescription:
+          type: string
+        assetPrice:
+          type: integer
+          description: Цена актива, в копейках
+        assetDiff:
+          type: integer
+        companyTitle:
+          type: string
+        companyDescription:
+          type: string
+        risk:
+          type: integer
+        favouriteStatus:
+          type: boolean
+    Diversification:
+      type: object
+      properties:
+        createDatetime:
+          type: string
+          description: Формат времени ISO 8601
+        risk:
+          type: integer
+        amount:
+          type: integer
+          description: Сумма диверсификации, в копейках
+    DiversificationsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Diversification'
+    DiversificationCreateInfo:
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: Сумма создаваемой диверсификации, в копейках
+        risk:
+          type: integer
+    DiversificationAsset:
+      type: object
+      properties:
+        assetTitle:
+          type: string
+        companyTitle:
+          type: string
+        priceSum:
+          type: integer
+          description: Старая цена актива (то есть цена на момент создания диверсификации), в копейках 
+        count:
+          type: integer
+    SpecifiedDiversification:
+      type: object
+      properties:
+        createDatetime:
+          type: string
+          description: Формат времени ISO 8601
+        amount:
+          type: integer
+        risk:
+          type: integer
+        assetsList:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiversificationAsset"
+  responses:
+    NotFound:
+      description: Сущность не найдена
+    GeneralError:
+      description: Непредвиденная ошибка
