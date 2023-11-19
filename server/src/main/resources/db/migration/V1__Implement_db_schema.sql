@@ -5,3 +5,9 @@ CREATE TABLE users
     email    VARCHAR(255),
     password VARCHAR(255)
 );
+
+CREATE TABLE secrets
+(
+    id     SERIAL4,
+    secret VARCHAR(255)
+);
