@@ -338,8 +338,10 @@ components:
           type: string
         assetPrice:
           type: integer
+          description: Стоимость актива, в копейках
         assetDiff:
           type: integer
+          description: Изменение стоимости актива за последний месяц, в копейках
         favouriteStatus:
           type: boolean
     AssetList:
@@ -355,6 +357,7 @@ components:
           type: string
         assetPrice:
           type: integer
+          description: Цена актива, в копейках
         assetDiff:
           type: integer
         companyTitle:
@@ -374,6 +377,7 @@ components:
           type: integer
         amount:
           type: integer
+          description: Сумма диверсификации, в копейках
     DiversificationsList:
       type: array
       items:
@@ -383,6 +387,7 @@ components:
       properties:
         amount:
           type: integer
+          description: Сумма создаваемой диверсификации, в копейках
         risk:
           type: integer
     DiversificationAsset:
@@ -394,6 +399,7 @@ components:
           type: string
         priceSum:
           type: integer
+          description: Старая цена актива, в копейках 
         count:
           type: integer
     SpecifiedDiversification:
