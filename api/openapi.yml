@@ -291,7 +291,7 @@ components:
     idQuery:
       name: id
       in: query
-      description: id сущности
+      description: id последней загруженной сущности (пагинация)
       required: false
       schema:
         type: integer
