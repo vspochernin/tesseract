@@ -1,6 +1,7 @@
 package ru.spbstu.tesseract.config;
 
 import java.security.Key;
+import java.util.function.Function;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,8 +16,13 @@ public class JwtService {
     private static final String SECRET_KEY =
             "02002E11CF7D1BE7C4D64B72ABDD3B9DA0C7010AD5FA371FA1F4E40A4356D5E9";
 
-    public String extractUserLogin(String jwt) {
-        return null;
+    public String extractUserLogin(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
     }
 
     private Claims extractAllClaims(String token) {
