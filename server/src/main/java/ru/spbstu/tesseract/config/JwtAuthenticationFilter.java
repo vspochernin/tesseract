@@ -36,6 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         jwt = authHeader.substring(AUTHORIZATION_HEADER_STARTS_WITH.length());
-        userLogin = jwtService.extractUserLogin(jwt);  // TODO: extract user login from JWT.
+        userLogin = jwtService.extractUsername(jwt);  // TODO: extract user login from JWT.
     }
 }

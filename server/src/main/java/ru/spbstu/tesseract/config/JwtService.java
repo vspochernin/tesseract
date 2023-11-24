@@ -22,7 +22,7 @@ public class JwtService {
             "02002E11CF7D1BE7C4D64B72ABDD3B9DA0C7010AD5FA371FA1F4E40A4356D5E9";
     public static final int EXPIRATION_PERIOD_MILLIS = 1000 * 60 * 24;
 
-    public String extractUserLogin(String token) {
+    public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -48,6 +48,19 @@ public class JwtService {
                         EXPIRATION_PERIOD_MILLIS))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
     }
 
     private Claims extractAllClaims(String token) {
