@@ -1,12 +1,17 @@
 package ru.spbstu.tesseract.config;
 
 import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +20,7 @@ public class JwtService {
     // TODO: should be regenerated and deleted from the code in production.
     private static final String SECRET_KEY =
             "02002E11CF7D1BE7C4D64B72ABDD3B9DA0C7010AD5FA371FA1F4E40A4356D5E9";
+    public static final int EXPIRATION_PERIOD_MILLIS = 1000 * 60 * 24;
 
     public String extractUserLogin(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -23,6 +29,25 @@ public class JwtService {
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    public String generateToken(UserDetails userDetails) {
+        return generateToken(new HashMap<>(), userDetails);
+    }
+
+    public String generateToken(
+            Map<String, Object> extraClaims,
+            UserDetails userDetails
+    ) {
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() +
+                        EXPIRATION_PERIOD_MILLIS))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     private Claims extractAllClaims(String token) {
