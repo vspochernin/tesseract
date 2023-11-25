@@ -20,7 +20,7 @@ public class JwtService {
     // TODO: should be regenerated and deleted from the code in production.
     private static final String SECRET_KEY =
             "02002E11CF7D1BE7C4D64B72ABDD3B9DA0C7010AD5FA371FA1F4E40A4356D5E9";
-    public static final int EXPIRATION_PERIOD_MILLIS = 1000 * 60 * 24;
+    public static final int EXPIRATION_PERIOD_MILLIS = 24 * 60 * 60 * 1000;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
