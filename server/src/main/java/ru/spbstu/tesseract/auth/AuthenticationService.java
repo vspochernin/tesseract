@@ -6,7 +6,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.spbstu.tesseract.config.JwtService;
-import ru.spbstu.tesseract.user.Role;
 import ru.spbstu.tesseract.user.User;
 import ru.spbstu.tesseract.user.UserRepository;
 
@@ -24,7 +23,6 @@ public class AuthenticationService {
                 .login(request.getLogin())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
                 .build();
         repository.save(user);
         String jwtToken = jwtService.generateToken(user);
