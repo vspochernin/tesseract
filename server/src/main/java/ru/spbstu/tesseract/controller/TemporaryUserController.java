@@ -14,7 +14,7 @@ public class TemporaryUserController {
 
     private final TemporaryUserService temporaryUserService;
 
-    @GetMapping("/users")
+    @GetMapping("/getUsers")
     public List<User> getUsers() {
         return temporaryUserService.getUsers();
     }
