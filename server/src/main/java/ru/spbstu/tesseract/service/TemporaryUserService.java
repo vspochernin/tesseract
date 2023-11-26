@@ -2,8 +2,8 @@ package ru.spbstu.tesseract.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.spbstu.tesseract.user.User;
-import ru.spbstu.tesseract.user.UserRepository;
+import ru.spbstu.tesseract.auth.user.User;
+import ru.spbstu.tesseract.auth.user.UserRepository;
 
 import java.util.List;
 

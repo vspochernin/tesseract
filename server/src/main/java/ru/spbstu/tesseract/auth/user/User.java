@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.user;
+package ru.spbstu.tesseract.auth.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

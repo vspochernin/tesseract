@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.config;
+package ru.spbstu.tesseract.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

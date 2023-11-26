@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.config;
+package ru.spbstu.tesseract.auth.config;
 
 import java.io.IOException;
 

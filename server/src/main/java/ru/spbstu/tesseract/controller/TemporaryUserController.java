@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.spbstu.tesseract.service.TemporaryUserService;
-import ru.spbstu.tesseract.user.User;
+import ru.spbstu.tesseract.auth.user.User;
 
 import java.util.List;
 
