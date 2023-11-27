@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import ru.spbstu.tesseract.auth.config.JwtService;
 import ru.spbstu.tesseract.auth.user.User;
 import ru.spbstu.tesseract.auth.user.UserRepository;
-import ru.spbstu.tesseract.exceptions.EmailAlreadyExistsException;
 import ru.spbstu.tesseract.exceptions.IncorrectLoginException;
 import ru.spbstu.tesseract.exceptions.IncorrectPasswordException;
 import ru.spbstu.tesseract.exceptions.LoginAlreadyExistsException;
@@ -23,27 +22,32 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        User user = User.builder()
-                .login(request.getLogin())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .build();
+        String login = request.getLogin();
+        String email = request.getEmail();
+        String password = request.getPassword();
 
-        if (!FieldValidator.isValidLogin(user.getLogin())) {
+        if (!FieldValidator.isValidLogin(login)) {
             throw new IncorrectLoginException();
         }
 
-        if (!FieldValidator.isValidPassword(user.getLogin())) {
+        if (!FieldValidator.isValidPassword(password)) {
             throw new IncorrectPasswordException();
         }
 
-        if (repository.existsByLogin(user.getLogin())) {
+        if (repository.existsByLogin(login)) {
             throw new LoginAlreadyExistsException();
         }
 
-        if (repository.existsByEmail(user.getEmail())) {
-            throw new EmailAlreadyExistsException();
+        if (repository.existsByEmail(email)) {
+            // TODO: enable in prod.
+            // throw new EmailAlreadyExistsException();
         }
+
+        User user = User.builder()
+                .login(login)
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .build();
 
         repository.save(user);
         String jwtToken = jwtService.generateToken(user);

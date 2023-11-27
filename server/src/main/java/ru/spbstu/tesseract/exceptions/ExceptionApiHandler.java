@@ -1,6 +1,7 @@
 package ru.spbstu.tesseract.exceptions;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,6 +28,14 @@ public class ExceptionApiHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> notValid(MethodArgumentNotValidException ex) {
+        TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
+        return ResponseEntity
+                .status(errorType.getHttpStatus())
+                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, ex.toString()));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorMessage> notValid(HttpMessageNotReadableException ex) {
         TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
         return ResponseEntity
                 .status(errorType.getHttpStatus())

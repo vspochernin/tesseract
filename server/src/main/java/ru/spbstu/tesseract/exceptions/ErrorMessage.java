@@ -4,7 +4,7 @@ package ru.spbstu.tesseract.exceptions;
 public record ErrorMessage(
         int id,
         String description,
-        String enumName,
+        String errorType,
         String additionalInfo) {
 
     public static ErrorMessage fromErrorType(TesseractErrorType errorType) {
