@@ -26,22 +26,7 @@ public class AuthenticationService {
         String email = request.getEmail();
         String password = request.getPassword();
 
-        if (!FieldValidator.isValidLogin(login)) {
-            throw new IncorrectLoginException();
-        }
-
-        if (!FieldValidator.isValidPassword(password)) {
-            throw new IncorrectPasswordException();
-        }
-
-        if (repository.existsByLogin(login)) {
-            throw new LoginAlreadyExistsException();
-        }
-
-        if (repository.existsByEmail(email)) {
-            // TODO: enable in prod.
-            // throw new EmailAlreadyExistsException();
-        }
+        validateFields(login, email, password);
 
         User user = User.builder()
                 .login(login)
@@ -71,6 +56,25 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    private void validateFields(String login, String email, String password) {
+        if (!FieldValidator.isValidLogin(login)) {
+            throw new IncorrectLoginException();
+        }
+
+        if (!FieldValidator.isValidPassword(password)) {
+            throw new IncorrectPasswordException();
+        }
+
+        if (repository.existsByLogin(login)) {
+            throw new LoginAlreadyExistsException();
+        }
+
+        if (repository.existsByEmail(email)) {
+            // TODO: enable in prod.
+            // throw new EmailAlreadyExistsException();
+        }
     }
 }
 
