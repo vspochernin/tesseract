@@ -180,11 +180,11 @@ INSERT INTO risks(description)
 --другой наполненным (несколько избранных и хотя бы одна диверсификация).
 -- пустой
 INSERT INTO users(login, email, password)
-  VALUES('vspochernin', 'vspochernin@gmail.com', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db');
+  VALUES('vspochernin', 'vspochernin@gmail.com', '$2y$10$YvrT6vrC2Po85mXYPZ4lL.sAQ8Mef5D2j4X9.N8pNf8lP4T.UIeXG');
 
 --полный (будет две диверсификации + четыре избранных)
 INSERT INTO users(login, email, password)
-  VALUES('vrazukrantov', 'vrazbusiness@mail.ru', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db');
+  VALUES('vrazukrantov', 'vrazbusiness@mail.ru', '$2y$10$YvrT6vrC2Po85mXYPZ4lL.sAQ8Mef5D2j4X9.N8pNf8lP4T.UIeXG');
 
 -- Добавляем данные в таблицу связи пользователей и активов (избранные)
 INSERT INTO users_assets(user_id, asset_id)
