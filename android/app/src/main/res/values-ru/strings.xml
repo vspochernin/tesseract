@@ -62,4 +62,5 @@
     <string name="error_network_error">Ошибка сети</string>
     <string name="error_dismiss">ОК</string>
     <string name="validation_incorrect_confirm_password">Подтверждение пароля не совпадает</string>
+    <string name="validation_invalid_email">Некорректный email</string>
 </resources>
