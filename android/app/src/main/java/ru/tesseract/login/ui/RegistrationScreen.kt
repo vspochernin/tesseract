@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -32,7 +34,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
@@ -87,12 +92,14 @@ private fun RegisterForm(
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         val textFieldModifier = Modifier.fillMaxWidth()
-
+        val focusManager = LocalFocusManager.current
         OutlinedTextField(
             value = viewModel.login,
             onValueChange = { viewModel.login = it },
             label = { Text(stringResource(id = R.string.login_username_field)) },
             singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
             modifier = textFieldModifier,
             isError = viewModel.displayLoginError,
         )
@@ -104,6 +111,8 @@ private fun RegisterForm(
             onValueChange = { viewModel.email = it },
             label = { Text(stringResource(id = R.string.registration_screen_email_field)) },
             singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
             modifier = textFieldModifier,
             isError = viewModel.displayEmailError,
         )
@@ -115,6 +124,8 @@ private fun RegisterForm(
             onValueChange = { viewModel.password = it },
             label = { Text(stringResource(id = R.string.login_password_field)) },
             singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = textFieldModifier,
             isError = viewModel.displayPasswordError,
@@ -127,6 +138,7 @@ private fun RegisterForm(
             onValueChange = { viewModel.confirmPassword = it },
             label = { Text(stringResource(id = R.string.registration_screen_confirm_password_field)) },
             singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false),
             visualTransformation = PasswordVisualTransformation(),
             modifier = textFieldModifier,
             isError = viewModel.displayConfirmPasswordError,
@@ -135,7 +147,7 @@ private fun RegisterForm(
             Text(stringResource(id = R.string.validation_incorrect_confirm_password), color = MaterialTheme.colorScheme.error)
         }
         Button(
-            onClick = {viewModel.onRegister(dismiss = { navigator.popBackStack() }) },
+            onClick = { viewModel.onRegister(dismiss = { navigator.popBackStack() }) },
             enabled = viewModel.isRegisterButtonEnabled,
             modifier = Modifier.fillMaxWidth(),
         ) {

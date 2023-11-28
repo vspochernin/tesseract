@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,11 +32,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -134,11 +139,14 @@ private fun LoginForm(
                     .padding(horizontal = 16.dp),
             )
         }
+        val focusManager = LocalFocusManager.current
         OutlinedTextField(
             value = login.value,
             onValueChange = { login.value = it },
             label = { Text(stringResource(id = R.string.login_username_field)) },
             singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
             modifier = Modifier.fillMaxWidth(),
         )
         OutlinedTextField(
@@ -146,6 +154,8 @@ private fun LoginForm(
             onValueChange = { password.value = it },
             label = { Text(stringResource(id = R.string.login_password_field)) },
             singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false),
+            keyboardActions = KeyboardActions { onLogin() },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
         )
