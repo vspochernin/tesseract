@@ -4,13 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imeNestedScroll
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -43,6 +48,7 @@ import ru.tesseract.destinations.InfoScreenDestination
 import ru.tesseract.destinations.RegistrationScreenDestination
 import ru.tesseract.ui.navigation.LoginNavGraph
 
+@OptIn(ExperimentalLayoutApi::class)
 @LoginNavGraph(start = true)
 @Destination
 @Composable
@@ -54,7 +60,10 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .imePadding()
+                .imeNestedScroll(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.weight(1f))
@@ -93,8 +102,7 @@ private fun LoginForm(
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.tesseract),
             contentDescription = stringResource(id = R.string.app_name),
-            modifier =
-            Modifier
+            modifier = Modifier
                 .heightIn(max = 120.dp)
                 .fillMaxWidth(),
         )
