@@ -19,8 +19,8 @@ class LoginViewModel(
     private val loginState: LoginState,
     private val loginApi: LoginApi,
 ) : ViewModel() {
-    var login = mutableStateOf("wow")
-    var password = mutableStateOf("aboba123")
+    val login = mutableStateOf("")
+    val password = mutableStateOf("")
     var isLoggingIn by mutableStateOf(false)
     val isSignInEnabled by derivedStateOf { login.value.isNotEmpty() && password.value.isNotEmpty() && !isLoggingIn }
 

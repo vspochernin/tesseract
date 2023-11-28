@@ -5,13 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import org.koin.androidx.compose.koinViewModel
 import ru.tesseract.R
 import ru.tesseract.ui.navigation.LoginNavGraph
 
@@ -45,56 +49,64 @@ fun RegistrationScreen(navigator: DestinationsNavigator) {
     ) { padding ->
         Column(
             modifier =
-                Modifier
-                    .padding(padding)
-                    .fillMaxSize(),
+            Modifier
+                .padding(padding)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
             RegisterForm(
-                modifier =
-                    Modifier
-                        .widthIn(max = 360.dp)
-                        .padding(horizontal = 16.dp),
+                navigator = navigator,
+                modifier = Modifier
+                    .widthIn(max = 360.dp)
+                    .padding(horizontal = 16.dp),
             )
         }
     }
 }
 
 @Composable
-private fun RegisterForm(modifier: Modifier) {
+private fun RegisterForm(
+    navigator: DestinationsNavigator,
+    modifier: Modifier,
+    viewModel: RegisterViewModel = koinViewModel(),
+) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         val textFieldModifier = Modifier.fillMaxWidth()
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = viewModel.login,
+            onValueChange = { viewModel.login = it },
             label = { Text(stringResource(id = R.string.login_username_field)) },
             modifier = textFieldModifier,
         )
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = viewModel.email,
+            onValueChange = { viewModel.email = it },
             label = { Text(stringResource(id = R.string.registration_screen_email_field)) },
             modifier = textFieldModifier,
         )
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = viewModel.password,
+            onValueChange = { viewModel.password = it },
             label = { Text(stringResource(id = R.string.login_password_field)) },
             modifier = textFieldModifier,
         )
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = viewModel.confirmPassword,
+            onValueChange = { viewModel.confirmPassword = it },
             label = { Text(stringResource(id = R.string.registration_screen_confirm_password_field)) },
             modifier = textFieldModifier,
         )
         Button(
-            onClick = { TODO() },
-            enabled = false,
+            onClick = { viewModel.onRegister(dismiss = { navigator.popBackStack() }) },
+            enabled = viewModel.isValid,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text(text = stringResource(id = R.string.registration_screen_register_button))
+            if (viewModel.isRegistering) {
+                CircularProgressIndicator(Modifier.size(16.dp), color = MaterialTheme.colorScheme.primary)
+            } else {
+                Text(text = stringResource(id = R.string.registration_screen_register_button))
+            }
         }
     }
 }
