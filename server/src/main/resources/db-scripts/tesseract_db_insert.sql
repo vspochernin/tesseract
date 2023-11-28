@@ -7,14 +7,14 @@ INSERT INTO companies(title, description, foundation_datetime, revenue, profit, 
 		 'действующей, коммерческой. Общее количество направлений деятельнсоти - 4. Организация не имела налоговой ' ||
 		 'задолженности по состоянию на 01.10.2022. Основным учредителем является компания ООО «Самолет Плюс», ' ||
 		 'которая разрабатывает компьютерное ПО уже целых 17 лет.',
-		'2022-09-05 00:00:00+03', 314750000, -60000, 1);
+		'2022-09-05 00:00:00+03', 31475000000, -6000000, 1);
 
 INSERT INTO companies(title, description, foundation_datetime, revenue, profit, staff)
   VALUES('Общество с ограниченной ответственностью «Цифровые активы»', 
 		 'Компания ведет деятельность по управлению финансово-промышленными группами и является  действующей, ' ||
 		 'коммерческой. Общее количество направлений деятельности - 4. Организация не имела налоговой задолженности ' ||
 		 'по состоянию на 01.10.2021',
-		'2015-11-24 00:00:00+03', 231550789000, -98575297000, 1);
+		'2015-11-24 00:00:00+03', 23155078900000, -9857529700000, 1);
 		
 INSERT INTO companies(title, description, foundation_datetime, revenue, profit, staff)
   VALUES('Акционерное общество «ДЖИ-ГРУПП»', 
@@ -22,14 +22,14 @@ INSERT INTO companies(title, description, foundation_datetime, revenue, profit, 
 		 'является  действующей, коммерческой. Компания занимает первое место в Республике Татарстан по объему ' ||
 		 'ввода жилья за 2022 год и 34 место по всей России. Организация не имела налоговой задолженности по ' ||
 		 'состоянию на 01.10.2022',
-		'2021-02-19 00:00:00+03', 227365000, 1511000, 29);
+		'2021-02-19 00:00:00+03', 22736500000, 151100000, 29);
 		
 INSERT INTO companies(title, description, foundation_datetime, revenue, profit, staff)
   VALUES('Общество с ограниченной ответственностью «НТС «Градиент»', 
 		 'Компания ведет деятельность по производству парфюмерных и косметических средств, является  ' ||
 		 'действующей, коммерческой. Общее количество направлений деятельности - 4. Организация не имела ' ||
 		 'налоговой задолженности по состоянию на 01.10.2021',
-		'1995-05-15 00:00:00+03', 20627249000, 1253870000, 579);
+		'1995-05-15 00:00:00+03', 2062724900000, 125387000000, 579);
 
 INSERT INTO companies(title, description, foundation_datetime, revenue, profit, staff)
   VALUES('Общество ограниченной ответственностью «Глобал Факторинг Нетворк Рус»', 
@@ -37,14 +37,14 @@ INSERT INTO companies(title, description, foundation_datetime, revenue, profit, 
 		 'предприятий под уступку надежной краткосрочной дебиторской задолженности с использованием юридически ' ||
 		 'значимого электронного документооборота. Компания входит в топ-30 факторинговых компаний России, в ' ||
 		 'топ-10 по сделкам с предприятиями малого и среднего бизнеса',
-		'2011-03-28 00:00:00+03', 1477775000, 16404000, 7);
+		'2011-03-28 00:00:00+03', 147777500000, 1640400000, 7);
 
 INSERT INTO companies(title, description, foundation_datetime, revenue, profit, staff)
   VALUES('Общество с ограниченной ответственностью «Лизинговая компания Простые решения»',
 		 'Лизинговая компания, с 2011 года предоставляющая в лизинг широкий спектр имущества: от ' ||
 		 'легкового транспорта до высокотехнологичного оборудования и недвижимости, в том числе — ' ||
 		 'финансирование импорта. Организация не имела налоговой задолженности по состоянию на 01.10.2021',
-		'2011-08-17 00:00:00+03', 1536915000, 118383000, 78);
+		'2011-08-17 00:00:00+03', 153691500000, 11838300000, 78);
 
 -- Заполняем таблицу активов: 8 актуальных активов, с актуальной информацией (минимум один актив на компанию)
 INSERT INTO assets(title, description, release_datetime, company_id, interest)
@@ -107,62 +107,62 @@ INSERT INTO assets(title, description, release_datetime, company_id, interest)
 
 -- Заполняем таблицу цен активов
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(1, 10000, '2023-11-21 00:00:00+03');
+  VALUES(1, 1000000, '2023-11-21 00:00:00+03');
   
 -- цена на актив 1 понизилась
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(1, 9900, '2023-11-23 00:00:00+03');
+  VALUES(1, 990000, '2023-11-23 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(2, 100000, '2023-11-23 00:00:00+03');
+  VALUES(2, 10000000, '2023-11-23 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(3, 1000, '2023-10-18 00:00:00+03');
+  VALUES(3, 100000, '2023-10-18 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(3, 1100, '2023-11-18 00:00:00+03');
+  VALUES(3, 110000, '2023-11-18 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(4, 10000, '2023-11-21 00:00:00+03');
+  VALUES(4, 1000000, '2023-11-21 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(5, 17300, '2023-11-24 00:00:00+03');
+  VALUES(5, 1730000, '2023-11-24 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(6, 15900, '2023-09-25 00:00:00+03');
+  VALUES(6, 1590000, '2023-09-25 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(6, 17450, '2023-10-25 00:00:00+03');
+  VALUES(6, 1745000, '2023-10-25 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(6, 17300, '2023-11-23 00:00:00+03');
+  VALUES(6, 1730000, '2023-11-23 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(7, 99300, '2023-08-04 00:00:00+03');
+  VALUES(7, 9930000, '2023-08-04 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(7, 99700, '2023-09-04 00:00:00+03');
+  VALUES(7, 9970000, '2023-09-04 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(7, 99000, '2023-10-04 00:00:00+03');
+  VALUES(7, 9900000, '2023-10-04 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(7, 99800, '2023-11-04 00:00:00+03');
+  VALUES(7, 9980000, '2023-11-04 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 230000, '2023-07-24 00:00:00+03');
+  VALUES(8, 23000000, '2023-07-24 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 230200, '2023-08-24 00:00:00+03');
+  VALUES(8, 23020000, '2023-08-24 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 229000, '2023-09-24 00:00:00+03');
+  VALUES(8, 22900000, '2023-09-24 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 230900, '2023-10-24 00:00:00+03');
+  VALUES(8, 23090000, '2023-10-24 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 231100, '2023-11-24 00:00:00+03');
+  VALUES(8, 23110000, '2023-11-24 00:00:00+03');
   
 INSERT INTO risks(description)
   VALUES('Высокорискованная. Состоящая из активов, имеющих высокий риск');
@@ -202,12 +202,12 @@ INSERT INTO users_assets(user_id, asset_id)
 -- Добавляем данные в таблицу диверсификаций diversifications 
 -- диверсификация: комбинированная
 INSERT INTO diversifications(user_id, create_datetime, risk_id, amount)
-  VALUES(2, '2023-11-23 00:00:00+03', 4, 50000);
+  VALUES(2, '2023-11-23 00:00:00+03', 4, 5000000);
   
 -- update diversifications set amount = 100000 where id=2
 -- диверсификация: низкорискованная
 INSERT INTO diversifications(user_id, create_datetime, risk_id, amount)
-  VALUES(2, '2023-11-23 00:00:00+03', 3, 150000);
+  VALUES(2, '2023-11-23 00:00:00+03', 3, 15000000);
 
 -- Заполняем таблицу активов в диверсификации
 -- первая: три актива 1, десять активов 3, один актив 4
