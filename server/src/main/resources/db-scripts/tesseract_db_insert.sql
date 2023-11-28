@@ -203,53 +203,149 @@ INSERT INTO prices(asset_id, price, set_datetime)
   VALUES(2, 10000000, '2023-11-23 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(3, 100000, '2023-10-18 00:00:00+03');
+  VALUES(3, 10000000, '2023-12-10 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(3, 110000, '2023-11-18 00:00:00+03');
+  VALUES(4, 100000, '2023-10-18 00:00:00+03');
+  
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(4, 110000, '2023-11-18 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(4, 1000000, '2023-11-21 00:00:00+03');
-  
-INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(5, 1730000, '2023-11-24 00:00:00+03');
-  
-INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(6, 1590000, '2023-09-25 00:00:00+03');
+  VALUES(5, 300000, '2023-11-02 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(6, 1745000, '2023-10-25 00:00:00+03');
+  VALUES(5, 305000, '2023-12-02 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(6, 1730000, '2023-11-23 00:00:00+03');
-  
-INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(7, 9930000, '2023-08-04 00:00:00+03');
+  VALUES(6, 400000, '2023-09-12 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(7, 9970000, '2023-09-04 00:00:00+03');
+  VALUES(6, 390000, '2023-10-12 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(7, 9900000, '2023-10-04 00:00:00+03');
+  VALUES(6, 395000, '2023-11-12 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(7, 9980000, '2023-11-04 00:00:00+03');
+  VALUES(7, 1000000, '2023-11-20 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(8, 1000000, '2023-11-21 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 23000000, '2023-07-24 00:00:00+03');
+  VALUES(9, 2000000, '2023-08-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(9, 2050000, '2023-09-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(9, 2000000, '2023-10-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(9, 2100000, '2023-11-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(10, 500000, '2023-10-10 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(10, 495000, '2023-11-10 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(11, 1730000, '2023-11-24 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 23020000, '2023-08-24 00:00:00+03');
+  VALUES(12, 1590000, '2023-09-25 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(12, 1745000, '2023-10-25 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(12, 1730000, '2023-11-23 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 22900000, '2023-09-24 00:00:00+03');
+  VALUES(13, 1735000, '2023-11-23 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(14, 1620000, '2023-08-17 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(14, 1635000, '2023-09-17 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(14, 1640000, '2023-10-17 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(14, 17000, '2023-11-17 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(15, 9930000, '2023-08-04 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(15, 9970000, '2023-09-04 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(15, 9900000, '2023-10-04 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(15, 9980000, '2023-11-04 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 23090000, '2023-10-24 00:00:00+03');
+  VALUES(16, 8050000, '2023-09-15 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(16, 8020000, '2023-10-15 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(16, 8060000, '2023-11-15 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(17, 1580000, '2023-11-05 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(17, 1600000, '2023-12-05 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(18, 23000000, '2023-07-24 00:00:00+03');
   
 INSERT INTO prices(asset_id, price, set_datetime)
-  VALUES(8, 23110000, '2023-11-24 00:00:00+03');
+  VALUES(18, 23020000, '2023-08-24 00:00:00+03');
   
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(18, 22900000, '2023-09-24 00:00:00+03');
+  
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(18, 23090000, '2023-10-24 00:00:00+03');
+  
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(18, 23110000, '2023-11-24 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(19, 23060000, '2023-05-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(19, 23090000, '2023-07-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(19, 23140000, '2023-09-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(19, 23090000, '2023-11-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(19, 23095000, '2023-12-11 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(20, 5050000, '2023-07-12 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(20, 5020000, '2023-09-12 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(20, 5040000, '2023-10-12 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
+  VALUES(20, 5010000, '2023-11-12 00:00:00+03');
+
 INSERT INTO risks(description)
   VALUES('Высокорискованная. Состоящая из активов, имеющих высокий риск');
   
