@@ -1,7 +1,6 @@
 -- Скрипт создания базы данных для Android приложения Tesseract
 -- Создание таблиц
 -- Создаем таблицу компаний
-DROP TABLE IF EXISTS companies CASCADE;
 CREATE TABLE companies(
     id SERIAL PRIMARY KEY,  -- автоувеличение
     title VARCHAR(100) NOT NULL,  -- проанализировал - сейчас максимум 80, но возьмем с запасом
@@ -13,7 +12,6 @@ CREATE TABLE companies(
 );
 
 -- Создаем таблицу для продуктов активов
-DROP TABLE IF EXISTS assets CASCADE;
 CREATE TABLE assets(
     id SERIAL PRIMARY KEY,  -- автоувеличение
 	title VARCHAR(30) NOT NULL,  -- проанализировал - сейчас максимум 11, но возьмем с запасом
@@ -27,7 +25,6 @@ CREATE TABLE assets(
 );
 
 -- Создаем таблицу цен активов
-DROP TABLE IF EXISTS prices CASCADE;
 CREATE TABLE prices(
     id SERIAL PRIMARY KEY,  -- автоувеличение
     asset_id INTEGER NOT NULL,
@@ -37,14 +34,12 @@ CREATE TABLE prices(
 );
 
 -- Создаем таблицу описания рисков
-DROP TABLE IF EXISTS risks CASCADE;
 CREATE TABLE risks(
     id SERIAL PRIMARY KEY,  -- автоувеличение
     description VARCHAR(100) NOT NULL  -- если кратко без пояснений писать тип рискованности - 25 хватит
 );
 
 -- Создаем таблицу пользователей
-DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,  -- автоувеличение
     login VARCHAR(16) NOT NULL,  -- максимальная длина логина
@@ -53,7 +48,6 @@ CREATE TABLE users(
 );
 
 -- Создаем таблицу связи пользователей и активов
-DROP TABLE IF EXISTS users_assets CASCADE;
 CREATE TABLE users_assets(
     user_id INTEGER NOT NULL,
 	asset_id INTEGER NOT NULL,
@@ -64,7 +58,6 @@ CREATE TABLE users_assets(
 );
 
 -- Создаем таблицу диверсификаций
-DROP TABLE IF EXISTS diversifications CASCADE;
 CREATE TABLE diversifications(
     id SERIAL PRIMARY KEY,  -- автоувеличение
 	user_id INTEGER NOT NULL,
@@ -77,7 +70,6 @@ CREATE TABLE diversifications(
 );
 
 -- Создаем таблицу связи диверсификаций и активов
-DROP TABLE IF EXISTS diversification_assets CASCADE;
 CREATE TABLE diversifications_assets(
     diversification_id INTEGER NOT NULL,
 	asset_id INTEGER NOT NULL,
