@@ -46,8 +46,6 @@ INSERT INTO companies(title, description, foundation_datetime, revenue, profit, 
 		 'финансирование импорта. Организация не имела налоговой задолженности по состоянию на 01.10.2021',
 		'2011-08-17 00:00:00', 1536915000, 118383000, 78);
 
-select * from companies
-
 -- Заполняем таблицу активов: 8 актуальных активов, с актуальной информацией (минимум один актив на компанию)
 INSERT INTO assets(title, description, release_datetime, company_id, interest)
   VALUES('NDM_18',
@@ -106,8 +104,6 @@ INSERT INTO assets(title, description, release_datetime, company_id, interest)
 		 'Каждый ЦФА имеет фиксированную номинальную стоимость в размере 230 000 рублей Российской Федерации. ' ||
 		 'Выплата 1 раз в дату погашения',
 		'2023-07-24 00:00:00', 2, 15);	
-		
-select * from assets
 
 -- Заполняем таблицу цен активов
 INSERT INTO prices(asset_id, price, set_datetime)
@@ -168,8 +164,6 @@ INSERT INTO prices(asset_id, price, set_datetime)
 INSERT INTO prices(asset_id, price, set_datetime)
   VALUES(8, 231100, '2023-11-24 00:00:00');
   
-select * from prices
-  
 INSERT INTO risks(description)
   VALUES('Высокорискованная. С преобладающим количеством активов, имеющих высокий риск');
   
@@ -182,8 +176,6 @@ INSERT INTO risks(description)
 INSERT INTO risks(description)
   VALUES('Комбинированная. Имеющая примерно одинаковое количество высоко, средне и низкорискованных активов');
   
-select * from risks
-  
 --два пользователя, один будет пустым (нет ни избранных, ни диверсификацией), а 
 --другой наполненным (несколько избранных и хотя бы одна диверсификация).
 -- пустой
@@ -193,8 +185,6 @@ INSERT INTO users(login, email, password)
 --полный (будет две диверсификации + четыре избранных)
 INSERT INTO users(login, email, password)
   VALUES('vrazukrantov', 'vrazbusiness@mail.ru', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db');
-
-select * from users
 
 -- Добавляем данные в таблицу связи пользователей и активов (избранные)
 INSERT INTO users_assets(user_id, asset_id)
@@ -209,8 +199,6 @@ INSERT INTO users_assets(user_id, asset_id)
 INSERT INTO users_assets(user_id, asset_id)
   VALUES(2, 2);
 
-select * from users_assets
-
 -- Добавляем данные в таблицу диверсификаций diversifications 
 -- диверсификация: комбинированная
 INSERT INTO diversifications(user_id, create_datetime, risk_id, amount)
@@ -220,8 +208,6 @@ INSERT INTO diversifications(user_id, create_datetime, risk_id, amount)
 -- диверсификация: низкорискованная
 INSERT INTO diversifications(user_id, create_datetime, risk_id, amount)
   VALUES(2, '2023-11-23 00:00:00', 3, 150000);
-
-select * from diversifications
 
 -- Заполняем таблицу активов в диверсификации
 -- первая: три актива 1, десять активов 3, один актив 4
@@ -243,5 +229,3 @@ INSERT INTO diversifications_assets(diversification_id, asset_id, count)
   
 INSERT INTO diversifications_assets(diversification_id, asset_id, count)
   VALUES(2, 4, 3);
-
-select * from diversifications_assets
