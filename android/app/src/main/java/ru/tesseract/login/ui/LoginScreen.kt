@@ -138,12 +138,14 @@ private fun LoginForm(
             value = login.value,
             onValueChange = { login.value = it },
             label = { Text(stringResource(id = R.string.login_username_field)) },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth(),
         )
         OutlinedTextField(
             value = password.value,
             onValueChange = { password.value = it },
             label = { Text(stringResource(id = R.string.login_password_field)) },
+            singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
         )

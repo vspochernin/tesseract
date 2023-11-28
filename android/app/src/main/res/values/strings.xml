@@ -60,4 +60,6 @@
     <string name="error_bad_request_body">Bad request</string>
     <string name="error_network_error">Network error</string>
     <string name="error_dismiss">OK</string>
+    <string name="validation_incorrect_confirm_password">Password confirmation doesn\'t match</string>
+    <string name="validation_invalid_email">Invalid email</string>
 </resources>

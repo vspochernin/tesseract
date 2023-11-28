@@ -11,6 +11,11 @@ import org.koin.core.annotation.Factory
 import ru.tesseract.api.onSuccess
 import ru.tesseract.login.api.RegisterApi
 
+private val SpecialSymbols = setOf(
+    '!', '@', '#', '$', '%', '&', '*', '(', ')', '-', '_', '+', '=',
+    ';', ':', ',', '.', '/', '?', '\\', '|', '[', ']', '{', '}',
+)
+
 @Factory
 class RegisterViewModel(
     private val registerApi: RegisterApi,
@@ -20,16 +25,46 @@ class RegisterViewModel(
     var password by mutableStateOf("")
     var confirmPassword by mutableStateOf("")
     var isRegistering by mutableStateOf(false)
-    val isValid by derivedStateOf {
+    val isRegisterButtonEnabled by derivedStateOf {
         !isRegistering &&
                 login.isNotEmpty() &&
                 email.isNotEmpty() &&
                 password.isNotEmpty() &&
-                password == confirmPassword
+                confirmPassword.isNotEmpty()
     }
 
+    var allowLoginError by mutableStateOf(false)
+    var allowEmailError by mutableStateOf(false)
+    var allowPasswordError by mutableStateOf(false)
+    var allowConfirmPasswordError by mutableStateOf(false)
+
+    private val isLoginValid by derivedStateOf {
+        login.length in 3..16 && login.all { it.isLatinLetter() || it.isDigit() }
+    }
+    private val isEmailValid by derivedStateOf {
+        '@' in email
+    }
+    private val isPasswordValid by derivedStateOf {
+        password.length in 6..30 &&
+                password.all { it.isLatinLetter() || it.isDigit() || it.isSpecialSymbol() } &&
+                password.any { it.isLatinLetter() } &&
+                password.any { it.isDigit() || it.isSpecialSymbol() }
+    }
+    private val isConfirmPasswordValid by derivedStateOf {
+        password == confirmPassword
+    }
+
+    val displayLoginError by derivedStateOf { !isLoginValid && allowLoginError }
+    val displayEmailError by derivedStateOf { !isEmailValid && allowEmailError }
+    val displayPasswordError by derivedStateOf { !isPasswordValid && allowPasswordError }
+    val displayConfirmPasswordError by derivedStateOf { !isConfirmPasswordValid && allowConfirmPasswordError }
+
     fun onRegister(dismiss: () -> Unit) = viewModelScope.launch {
-        if (isValid) {
+        allowLoginError = true
+        allowEmailError = true
+        allowPasswordError = true
+        allowConfirmPasswordError = true
+        if (isLoginValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
             isRegistering = true
             registerApi.register(login, email, password).onSuccess {
                 dismiss()
@@ -37,4 +72,7 @@ class RegisterViewModel(
             isRegistering = false
         }
     }
+
+    private fun Char.isLatinLetter() = this in 'a'..'z' || this in 'A'..'Z'
+    private fun Char.isSpecialSymbol() = this in SpecialSymbols
 }
