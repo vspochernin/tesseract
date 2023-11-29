@@ -51,4 +51,15 @@
     <string name="risk_tolerance_low_risk">Low risk</string>
     <string name="risk_tolerance_combined_risk">Combined risk</string>
     <string name="asset_quantity">×%d</string>
+    <string name="error_unexpected_error">Unexpected error</string>
+    <string name="error_login_exists">Such login already exists</string>
+    <string name="error_email_exists">Such email already exists</string>
+    <string name="error_incorrect_login">Incorrect login</string>
+    <string name="error_incorrect_password">Incorrect password</string>
+    <string name="error_bad_credentials">Incorrect login or password</string>
+    <string name="error_bad_request_body">Bad request</string>
+    <string name="error_network_error">Network error</string>
+    <string name="error_dismiss">OK</string>
+    <string name="validation_incorrect_confirm_password">Password confirmation doesn\'t match</string>
+    <string name="validation_invalid_email">Invalid email</string>
 </resources>

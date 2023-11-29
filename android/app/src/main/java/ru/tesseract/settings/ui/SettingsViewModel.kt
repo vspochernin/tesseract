@@ -9,6 +9,6 @@ class SettingsViewModel(
     private val loginState: LoginState,
 ) : ViewModel() {
     fun onLogOut() {
-        loginState.isLoggedIn = false
+        loginState.token = null
     }
 }
