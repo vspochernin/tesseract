@@ -165,7 +165,7 @@ private fun LoginForm(
             enabled = isSignInEnabled,
         ) {
             if (isLoggingIn) {
-                CircularProgressIndicator(Modifier.size(16.dp), color = MaterialTheme.colorScheme.primary)
+                CircularProgressIndicator(Modifier.size(16.dp), color = MaterialTheme.colorScheme.onBackground)
             } else {
                 Text(text = stringResource(id = R.string.login_screen_login_button))
             }

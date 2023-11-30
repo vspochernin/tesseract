@@ -154,7 +154,7 @@ private fun RegisterForm(
             if (viewModel.isRegistering) {
                 CircularProgressIndicator(
                     Modifier.size(16.dp),
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             } else {
                 Text(text = stringResource(id = R.string.registration_screen_register_button))

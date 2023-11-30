@@ -68,6 +68,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.6")
     implementation("io.insert-koin:koin-androidx-compose:3.5.0")
     implementation("io.insert-koin:koin-annotations:1.3.0")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
     ksp("io.insert-koin:koin-ksp-compiler:1.3.0")
     implementation("io.github.raamcosta.compose-destinations:animations-core:1.9.54")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.9.54")
