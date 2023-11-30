@@ -17,10 +17,15 @@ import androidx.core.view.WindowCompat
 
 @Composable
 fun TesseractTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    theme: ThemeSetting,
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
+    val darkTheme = when (theme) {
+        ThemeSetting.System -> isSystemInDarkTheme()
+        ThemeSetting.Light -> false
+        ThemeSetting.Dark -> true
+    }
     val colorScheme =
         when {
             dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {

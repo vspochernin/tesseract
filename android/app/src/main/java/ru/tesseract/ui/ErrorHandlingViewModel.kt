@@ -1,4 +1,4 @@
-package ru.tesseract
+package ru.tesseract.ui
 
 import androidx.lifecycle.ViewModel
 import org.koin.core.annotation.Factory
