@@ -1,4 +1,4 @@
-package ru.tesseract
+package ru.tesseract.ui
 
 import android.util.Log
 import android.widget.Toast
@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
+import ru.tesseract.R
 import ru.tesseract.api.ApiErrorType
 
 @Composable

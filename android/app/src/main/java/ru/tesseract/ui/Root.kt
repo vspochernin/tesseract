@@ -1,4 +1,4 @@
-package ru.tesseract
+package ru.tesseract.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.runtime.Composable

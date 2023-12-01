@@ -27,7 +27,7 @@ class LoginViewModel(
     fun onLogin() = viewModelScope.launch {
         isLoggingIn = true
         loginApi.login(login.value, password.value).onSuccess { response ->
-            loginState.token = response.token
+            loginState.setToken(response.token)
         }.onApiError { error ->
             if (error == ApiErrorType.BadCredentials) {
                 password.value = ""
