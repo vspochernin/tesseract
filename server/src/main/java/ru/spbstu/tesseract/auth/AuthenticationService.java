@@ -6,8 +6,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.spbstu.tesseract.auth.config.JwtService;
-import ru.spbstu.tesseract.auth.user.User;
-import ru.spbstu.tesseract.auth.user.UserRepository;
+import ru.spbstu.tesseract.entity.User;
+import ru.spbstu.tesseract.repository.UserRepository;
 import ru.spbstu.tesseract.exceptions.IncorrectLoginException;
 import ru.spbstu.tesseract.exceptions.IncorrectPasswordException;
 import ru.spbstu.tesseract.exceptions.LoginAlreadyExistsException;

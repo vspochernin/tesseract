@@ -2,7 +2,6 @@ package ru.spbstu.tesseract.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import ru.spbstu.tesseract.auth.user.User;
 
 import java.util.Date;
 import java.util.List;
