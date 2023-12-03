@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.spbstu.tesseract.entity.Diversification;
 import ru.spbstu.tesseract.service.DiversificationService;
@@ -23,5 +24,14 @@ public class DiversificationController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(allDiversifications);
+    }
+
+    @PostMapping("/testDiversifications")
+    public ResponseEntity addDiversification() {
+        diversificationService.addDiversification();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 }

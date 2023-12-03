@@ -78,12 +78,11 @@ CREATE TABLE diversifications
 -- Создаем таблицу связи диверсификаций и активов
 CREATE TABLE diversifications_assets
 (
+    id                 SERIAL PRIMARY KEY, -- автоувеличение
     diversification_id INTEGER NOT NULL,
     asset_id           INTEGER NOT NULL,
-    PRIMARY KEY (diversification_id, asset_id),
     count              INTEGER NOT NULL,
     FOREIGN KEY (diversification_id) REFERENCES diversifications (id) ON DELETE SET NULL,
     FOREIGN KEY (asset_id) REFERENCES assets (id) ON DELETE SET NULL
     -- можно и каскадное сделать
-    -- по-хорошему еще PK нужен
 );
