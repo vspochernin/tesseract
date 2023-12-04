@@ -113,7 +113,8 @@ paths:
       summary: Получить список всех активов
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idQuery'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
           description: Успешное получение списка активов
@@ -121,8 +122,6 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/AssetList'
-        '400':
-          description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
         '500':
@@ -194,7 +193,8 @@ paths:
       summary: Получить список избранных активов
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idQuery'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
           description: Успешное получение списка активов
@@ -215,7 +215,8 @@ paths:
       summary: Получить список диверсификаций
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idQuery'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
           description: Успешное получение списка диверсификаций
@@ -291,10 +292,17 @@ components:
       required: true
       schema:
         type: integer
-    idQuery:
-      name: id
+    pageNumber:
+      name: pageNumber
       in: query
-      description: id последней загруженной сущности (пагинация)
+      description: Номер страницы пагинации (начинается с 0)
+      required: false
+      schema:
+        type: integer
+    pageSize:
+      name: pageSize
+      in: query
+      description: Размер одной страницы
       required: false
       schema:
         type: integer
@@ -342,7 +350,7 @@ components:
         assetPrice:
           type: integer
           description: Стоимость актива, в копейках
-        assetDiff:
+        assetPriceDiff:
           type: integer
           description: Изменение стоимости актива за последний месяц, в копейках
         favouriteStatus:
@@ -360,9 +368,10 @@ components:
           type: string
         assetPrice:
           type: integer
-          description: Цена актива, в копейках
-        assetDiff:
+          description: Стоимость актива, в копейках
+        assetPriceDiff:
           type: integer
+          description: Изменение стоимости актива за последний месяц, в копейках
         companyTitle:
           type: string
         companyDescription:

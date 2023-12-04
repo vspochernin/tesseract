@@ -5,8 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.spbstu.tesseract.entity.Asset;
+import ru.spbstu.tesseract.dto.AssetShortDto;
 import ru.spbstu.tesseract.service.AssetService;
 
 import java.util.List;
@@ -18,12 +19,15 @@ public class AssetController {
 
     private final AssetService assetService;
 
-    @GetMapping("/testAssets")
-    public ResponseEntity<List<Asset>> getAllCompanies() {
-        List<Asset> assets = assetService.getAllAssets();
+    @GetMapping("/assets")
+    public ResponseEntity<List<AssetShortDto>> assets(
+            @RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
+        List<AssetShortDto> assetShortDtos = assetService.getAssets(pageNumber, pageSize);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(assets);
+                .body(assetShortDtos);
     }
 }

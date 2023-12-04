@@ -29,5 +29,5 @@ public class Asset {
     private List<Price> prices;
     @ManyToMany(mappedBy = "favourites")
     @JsonIgnore
-    Set<User> favouriteBy;
+    Set<User> users;
 }

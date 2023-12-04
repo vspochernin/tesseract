@@ -2,6 +2,6 @@ POST http://localhost:8080/api/v1/login/tesseract
 Content-Type: application/json
 
 {
-  "login": "vspochernin",
+  "login": "vrazukrantov",
   "password": "1234"
 }
