@@ -11,6 +11,8 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:8080/api/v1
 paths:
   /login/tesseract:
     post:
@@ -62,10 +64,10 @@ paths:
           description: Некорректный Google токен
         '500':
           description: Непредвиденная ошибка   
-  /users:
+  /register:
     post:
       tags:
-        - user
+        - register
       summary: Регистрация пользователя
       requestBody:
         description: Данные для регистрации
@@ -81,10 +83,11 @@ paths:
           description: Некорректное тело запроса
         '500':
           description: Непредвиденная ошибка
+  /password:
     put:
       summary: Изменить пароль
       tags:
-        - user
+        - password
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
       requestBody:

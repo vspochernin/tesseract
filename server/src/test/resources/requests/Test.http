@@ -1,24 +1,14 @@
-GET http://localhost:8080/testAssets
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2c3BvY2hlcm5pbiIsImlhdCI6MTcwMTY4MTEyNCwiZXhwIjoxNzAxNzY3NTI0fQ.hlJ02mAowAfP_J1HbMArkFUPlLtUJ09qytMrBVT-im4
+GET http://localhost:8080/api/v1/testAssets
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2c3BvY2hlcm5pbiIsImlhdCI6MTcwMTcwODE3MiwiZXhwIjoxNzAzMTc5NDAxfQ.-U0gpnOlOoCVGLDQjq4FyIau9O7s_ROzwHn07EyCLes
 
 ###
 
-GET http://localhost:8080/testCompanies
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2c3BvY2hlcm5pbiIsImlhdCI6MTcwMTY4MTEyNCwiZXhwIjoxNzAxNzY3NTI0fQ.hlJ02mAowAfP_J1HbMArkFUPlLtUJ09qytMrBVT-im4
+GET http://localhost:8080/api/v1/testUsers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2c3BvY2hlcm5pbiIsImlhdCI6MTcwMTcwODE3MiwiZXhwIjoxNzAzMTc5NDAxfQ.-U0gpnOlOoCVGLDQjq4FyIau9O7s_ROzwHn07EyCLes
 
 ###
 
-GET http://localhost:8080/testPrices
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2c3BvY2hlcm5pbiIsImlhdCI6MTcwMTY4MTEyNCwiZXhwIjoxNzAxNzY3NTI0fQ.hlJ02mAowAfP_J1HbMArkFUPlLtUJ09qytMrBVT-im4
-
-###
-
-GET http://localhost:8080/testUsers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2c3BvY2hlcm5pbiIsImlhdCI6MTcwMTY4MTEyNCwiZXhwIjoxNzAxNzY3NTI0fQ.hlJ02mAowAfP_J1HbMArkFUPlLtUJ09qytMrBVT-im4
-
-###
-
-GET http://localhost:8080/testDiversifications
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2c3BvY2hlcm5pbiIsImlhdCI6MTcwMTY4MTEyNCwiZXhwIjoxNzAxNzY3NTI0fQ.hlJ02mAowAfP_J1HbMArkFUPlLtUJ09qytMrBVT-im4
+GET http://localhost:8080/api/v1/testDiversifications
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2c3BvY2hlcm5pbiIsImlhdCI6MTcwMTcwODE3MiwiZXhwIjoxNzAzMTc5NDAxfQ.-U0gpnOlOoCVGLDQjq4FyIau9O7s_ROzwHn07EyCLes
 
 ###
