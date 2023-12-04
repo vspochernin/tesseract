@@ -1,10 +1,12 @@
 package ru.spbstu.tesseract.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -25,4 +27,7 @@ public class Asset {
     @OneToMany
     @JoinColumn(name = "asset_id")
     private List<Price> prices;
+    @ManyToMany(mappedBy = "favourites")
+    @JsonIgnore
+    Set<User> favouriteBy;
 }

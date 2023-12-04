@@ -1,0 +1,7 @@
+POST http://localhost:8080/login/tesseract
+Content-Type: application/json
+
+{
+  "login": "vspochernin",
+  "password": "1234"
+}
