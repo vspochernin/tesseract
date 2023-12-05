@@ -26,7 +26,10 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login/tesseract", "/login/google", "/users")
+                .requestMatchers(
+                        "/api/v1/login/tesseract",
+                        "/api/v1/login/google",
+                        "/api/v1/register")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

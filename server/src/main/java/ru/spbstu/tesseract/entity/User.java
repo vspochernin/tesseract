@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.auth.user;
+package ru.spbstu.tesseract.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 @Data
 @Builder
@@ -26,6 +27,13 @@ public class User implements UserDetails {
     private String login;
     private String email;
     private String password;
+    @ManyToMany
+    @JoinTable(
+            name = "users_assets",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "asset_id")
+    )
+    private List<Asset> favourites;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

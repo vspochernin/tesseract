@@ -346,18 +346,6 @@ VALUES (20, 5040000, '2023-10-12 00:00:00+03');
 INSERT INTO prices(asset_id, price, set_datetime)
 VALUES (20, 5010000, '2023-11-12 00:00:00+03');
 
-INSERT INTO risks(description)
-VALUES ('Высокорискованная. Состоящая из активов, имеющих высокий риск');
-
-INSERT INTO risks(description)
-VALUES ('Среднерискованная. Состоящая из активов, имеющих средний риск');
-
-INSERT INTO risks(description)
-VALUES ('Низкорискованная. Состоящая из активов, имеющих низкий риск');
-
-INSERT INTO risks(description)
-VALUES ('Комбинированная. Состоящая из высоко, средне и низкорискованных активов');
-
 --два пользователя, один будет пустым (нет ни избранных, ни диверсификацией), а 
 --другой наполненным (несколько избранных и хотя бы одна диверсификация).
 -- пустой
@@ -383,13 +371,13 @@ VALUES (2, 2);
 
 -- Добавляем данные в таблицу диверсификаций diversifications 
 -- диверсификация: комбинированная
-INSERT INTO diversifications(user_id, create_datetime, risk_id, amount)
-VALUES (2, '2023-11-23 00:00:00+03', 4, 5000000);
+INSERT INTO diversifications(user_id, create_datetime, risk_type_id, amount)
+VALUES (2, '2023-11-23 00:00:00+03', 3, 5000000);
 
 -- update diversifications set amount = 100000 where id=2
 -- диверсификация: низкорискованная
-INSERT INTO diversifications(user_id, create_datetime, risk_id, amount)
-VALUES (2, '2023-11-23 00:00:00+03', 3, 15000000);
+INSERT INTO diversifications(user_id, create_datetime, risk_type_id, amount)
+VALUES (2, '2023-11-23 00:00:00+03', 2, 15000000);
 
 -- Заполняем таблицу активов в диверсификации
 -- первая: три актива 1, десять активов 3, один актив 4

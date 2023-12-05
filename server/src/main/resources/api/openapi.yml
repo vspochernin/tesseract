@@ -11,6 +11,8 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:8080/api/v1
 paths:
   /login/tesseract:
     post:
@@ -62,10 +64,10 @@ paths:
           description: Некорректный Google токен
         '500':
           description: Непредвиденная ошибка   
-  /users:
+  /register:
     post:
       tags:
-        - user
+        - register
       summary: Регистрация пользователя
       requestBody:
         description: Данные для регистрации
@@ -81,10 +83,11 @@ paths:
           description: Некорректное тело запроса
         '500':
           description: Непредвиденная ошибка
+  /password:
     put:
       summary: Изменить пароль
       tags:
-        - user
+        - password
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
       requestBody:
@@ -110,7 +113,8 @@ paths:
       summary: Получить список всех активов
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idQuery'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
           description: Успешное получение списка активов
@@ -118,8 +122,6 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/AssetList'
-        '400':
-          description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
         '500':
@@ -191,7 +193,8 @@ paths:
       summary: Получить список избранных активов
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idQuery'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
           description: Успешное получение списка активов
@@ -212,7 +215,8 @@ paths:
       summary: Получить список диверсификаций
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idQuery'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
           description: Успешное получение списка диверсификаций
@@ -288,10 +292,17 @@ components:
       required: true
       schema:
         type: integer
-    idQuery:
-      name: id
+    pageNumber:
+      name: pageNumber
       in: query
-      description: id последней загруженной сущности (пагинация)
+      description: Номер страницы пагинации (начинается с 0)
+      required: false
+      schema:
+        type: integer
+    pageSize:
+      name: pageSize
+      in: query
+      description: Размер одной страницы
       required: false
       schema:
         type: integer
@@ -339,7 +350,7 @@ components:
         assetPrice:
           type: integer
           description: Стоимость актива, в копейках
-        assetDiff:
+        assetPriceDiff:
           type: integer
           description: Изменение стоимости актива за последний месяц, в копейках
         favouriteStatus:
@@ -357,9 +368,10 @@ components:
           type: string
         assetPrice:
           type: integer
-          description: Цена актива, в копейках
-        assetDiff:
+          description: Стоимость актива, в копейках
+        assetPriceDiff:
           type: integer
+          description: Изменение стоимости актива за последний месяц, в копейках
         companyTitle:
           type: string
         companyDescription:
