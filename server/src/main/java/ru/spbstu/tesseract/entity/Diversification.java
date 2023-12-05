@@ -2,6 +2,7 @@ package ru.spbstu.tesseract.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -28,6 +29,7 @@ public class Diversification {
     private RiskType riskType;
     private Integer amount;
     @OneToMany(mappedBy = "diversification", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
     private Set<DiversificationAsset> diversificationAssetSet;
 
     public Diversification(

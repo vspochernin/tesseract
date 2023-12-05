@@ -1,16 +1,15 @@
 package ru.spbstu.tesseract.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -19,6 +18,10 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
+    public static User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +36,9 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "asset_id")
     )
-    private List<Asset> favourites;
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private Set<Asset> favourites;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

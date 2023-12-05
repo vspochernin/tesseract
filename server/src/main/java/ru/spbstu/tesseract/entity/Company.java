@@ -14,6 +14,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "companies_id_seq")
     private Integer id;
+
     private String title;
     private String description;
     private Date foundationDatetime;

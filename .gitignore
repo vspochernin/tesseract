@@ -646,3 +646,4 @@ gradle-app.setting
 
 .idea
 build
+.idea/*

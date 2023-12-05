@@ -19,8 +19,7 @@ public class AssetService {
     public List<AssetShortDto> getAssets(Integer pageNumber, Integer pageSize) {
         Slice<Asset> assets = assetRepository.findBy(PageRequest.of(pageNumber, pageSize));
 
-        return assets.getContent()
-                .stream()
+        return assets.getContent().stream()
                 .map(AssetShortDto::fromAsset)
                 .toList();
     }

@@ -37,8 +37,6 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Несуществующая комбинация логин/пароль
-        '500':
-          description: Непредвиденная ошибка      
   /login/google:
     post:
       tags:
@@ -62,8 +60,6 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Некорректный Google токен
-        '500':
-          description: Непредвиденная ошибка   
   /register:
     post:
       tags:
@@ -81,8 +77,6 @@ paths:
           description: Успешная регистрация
         '400':
           description: Некорректное тело запроса
-        '500':
-          description: Непредвиденная ошибка
   /password:
     put:
       summary: Изменить пароль
@@ -104,8 +98,6 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
-        '500':
-          description: внутренняя ошибка сервера         
   /assets:
     post:
       tags:
@@ -124,8 +116,6 @@ paths:
                   $ref: '#/components/schemas/AssetList'
         '401':
           description: Отсутствуют данные аутентификации
-        '500':
-          description: Непредвиденная ошибка
   /favourites/{id}:
     post:
       tags:
@@ -136,17 +126,15 @@ paths:
         - $ref: '#/components/parameters/idPath'
       responses:
         '200':
-          description: Успешное добавление актива в избранное, если он там уже был
+          description: Актив уже присутствует в избранном
         '201':
-          description: Успешное добавление актива в избранное
+          description: Актив был добавлен в избранное
         '400':
           description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
         '404':
           description: Указан несуществующий id актива
-        '500':
-          description: Непредвиденная ошибка
     delete:
       tags:
         - favourites
@@ -161,8 +149,8 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
-        '500':
-          description: Непредвиденная ошибка
+        '404':
+          description: Указан несуществующий id актива
   /assets/{id}:
     get:
       tags:
@@ -184,8 +172,6 @@ paths:
           description: Отсутствуют данные аутентификации
         '404':
           description: Отсутствие запрашиваемого id актива
-        '500':
-          description: Непредвиденная ошибка
   /favourites:
     get:
       tags:
@@ -206,8 +192,6 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
-        '500':
-          description: Непредвиденная ошибка
   /diversifications:
     get:
       tags:
@@ -228,8 +212,6 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
-        '500':
-          description: Непредвиденная ошибка
     post:
       tags:
         - diversification
@@ -250,8 +232,6 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
-        '500':
-          description: Непредвиденная ошибка
   /diversifications/{id}:
     get:
       tags:
@@ -274,8 +254,6 @@ paths:
           description: Отсутствуют данные аутентификации
         '404':
           description: Отсутствует диверсификация с таким id (либо запрашиваем несвою диверсификацию)
-        '500':
-          description: Непредвиденная ошибка
 components:
   parameters:
     authCredsParam:

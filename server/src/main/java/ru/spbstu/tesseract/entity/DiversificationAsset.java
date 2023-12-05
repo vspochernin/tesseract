@@ -2,15 +2,11 @@ package ru.spbstu.tesseract.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Table(name = "diversifications_assets")
 public class DiversificationAsset {
@@ -20,12 +16,12 @@ public class DiversificationAsset {
     @SequenceGenerator(name = "diversifications_assets_id_seq")
     private Integer id;
 
-    @ManyToOne(/*fetch = FetchType.LAZY, optional = false*/)
+    @ManyToOne()
     @JoinColumn(name = "diversification_id")
     @JsonIgnore
     private Diversification diversification;
 
-    @ManyToOne(/*fetch = FetchType.LAZY, optional = false*/)
+    @ManyToOne()
     @JoinColumn(name = "asset_id")
     private Asset asset;
 
@@ -34,18 +30,5 @@ public class DiversificationAsset {
     public DiversificationAsset(Asset asset, Integer count) {
         this.asset = asset;
         this.count = count;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DiversificationAsset that = (DiversificationAsset) o;
-        return id != null && id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
