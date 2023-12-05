@@ -1,5 +1,7 @@
 package ru.spbstu.tesseract.controller;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.spbstu.tesseract.dto.AssetLongDto;
 import ru.spbstu.tesseract.dto.AssetShortDto;
 import ru.spbstu.tesseract.service.AssetService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")

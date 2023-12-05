@@ -1,5 +1,9 @@
 package ru.spbstu.tesseract.service;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -8,10 +12,6 @@ import ru.spbstu.tesseract.dto.AssetLongDto;
 import ru.spbstu.tesseract.dto.AssetShortDto;
 import ru.spbstu.tesseract.entity.Asset;
 import ru.spbstu.tesseract.repository.AssetRepository;
-
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -1,14 +1,21 @@
 package ru.spbstu.tesseract.service;
 
+import java.util.Date;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-import ru.spbstu.tesseract.entity.*;
+import ru.spbstu.tesseract.dto.DiversificationShortDto;
+import ru.spbstu.tesseract.entity.Asset;
+import ru.spbstu.tesseract.entity.Diversification;
+import ru.spbstu.tesseract.entity.DiversificationAsset;
+import ru.spbstu.tesseract.entity.RiskType;
+import ru.spbstu.tesseract.entity.User;
 import ru.spbstu.tesseract.repository.AssetRepository;
 import ru.spbstu.tesseract.repository.DiversificationRepository;
 import ru.spbstu.tesseract.repository.UserRepository;
-
-import java.util.Date;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +47,14 @@ public class DiversificationService {
         );
 
         diversificationRepository.save(diversification);
+    }
+
+    public List<DiversificationShortDto> getDiversifications(int pageNumber, int pageSize) {
+        Slice<Diversification> diversifications =
+                diversificationRepository.findBy(PageRequest.of(pageNumber, pageSize));
+
+        return diversifications.getContent().stream()
+                .map(DiversificationShortDto::fromDiversification)
+                .toList();
     }
 }
