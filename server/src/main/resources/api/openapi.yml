@@ -343,6 +343,8 @@ components:
     Asset:
       type: object
       properties:
+        assetId:
+          type: integer
         assetTitle:
           type: string
         companyTitle:
@@ -362,6 +364,8 @@ components:
     SpecifiedAsset:
       type: object
       properties:
+        assetId:
+          type: integer
         assetTitle:
           type: string
         assetDescription:
@@ -383,6 +387,8 @@ components:
     Diversification:
       type: object
       properties:
+        diversificationId:
+          type: integer
         createDatetime:
           type: string
           description: Формат времени ISO 8601
@@ -406,6 +412,8 @@ components:
     DiversificationAsset:
       type: object
       properties:
+        assetId:
+          type: integer
         assetTitle:
           type: string
         companyTitle:
