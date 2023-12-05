@@ -55,6 +55,12 @@ public class Asset {
                 .anyMatch(user -> user.getLogin().equals(userLogin));
     }
 
+    public RiskType getRiskType() {
+        // TODO: will be implemented in 48.
+
+        return RiskType.getById(id % RiskType.values().length);
+    }
+
     private Optional<Integer> getAssetPriceMonthAgo() {
         return prices.stream()
                 .filter(price -> price.getSetDatetime()

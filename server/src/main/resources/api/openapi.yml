@@ -358,7 +358,7 @@ components:
           type: string
         companyDescription:
           type: string
-        risk:
+        riskTypeId:
           type: integer
         favouriteStatus:
           type: boolean
@@ -370,7 +370,7 @@ components:
         createDatetime:
           type: string
           description: Формат времени ISO 8601
-        risk:
+        riskTypeId:
           type: integer
         amount:
           type: integer
@@ -385,7 +385,7 @@ components:
         amount:
           type: integer
           description: Сумма создаваемой диверсификации, в копейках
-        risk:
+        riskTypeId:
           type: integer
     DiversificationAsset:
       type: object
@@ -409,7 +409,7 @@ components:
           description: Формат времени ISO 8601
         amount:
           type: integer
-        risk:
+        riskTypeId:
           type: integer
         assetsList:
           type: array
