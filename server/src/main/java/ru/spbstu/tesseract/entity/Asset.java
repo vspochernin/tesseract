@@ -3,10 +3,10 @@ package ru.spbstu.tesseract.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 @Entity
 @Data
@@ -30,4 +30,30 @@ public class Asset {
     @ManyToMany(mappedBy = "favourites")
     @JsonIgnore
     Set<User> users;
+
+    public Integer getAssetPrice() {
+        return prices.stream()
+                .max(Comparator.comparing(Price::getSetDatetime))
+                .map(Price::getPrice)
+                .orElseThrow();
+    }
+
+    public Integer getAssetMonthPriceDiff(Integer currentPrice) {
+        return currentPrice - getAssetPriceMonthAgo().orElse(currentPrice);
+    }
+
+    public boolean isAssetFavourite() {
+        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        return users.stream()
+                .anyMatch(user -> user.getLogin().equals(userLogin));
+    }
+
+    private Optional<Integer> getAssetPriceMonthAgo() {
+        return prices.stream()
+                .filter(price -> price.getSetDatetime()
+                        .toInstant()
+                        .isBefore(ZonedDateTime.now().minusMonths(1).toInstant()))
+                .max(Comparator.comparing(Price::getSetDatetime))
+                .map(Price::getPrice);
+    }
 }
