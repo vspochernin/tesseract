@@ -1,5 +1,6 @@
 package ru.spbstu.tesseract.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -31,7 +32,8 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "asset_id")
     )
     @EqualsAndHashCode.Exclude
-    private List<Asset> favourites;
+    @JsonIgnore
+    private Set<Asset> favourites;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
