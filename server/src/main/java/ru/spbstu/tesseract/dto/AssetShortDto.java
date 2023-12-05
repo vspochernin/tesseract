@@ -12,18 +12,18 @@ public class AssetShortDto {
 
     public static AssetShortDto fromAsset(Asset asset) {
         Integer assetPrice = asset.getAssetPrice();
-        Integer assetPriceDiff = asset.getAssetMonthPriceDiff(assetPrice);
-        Boolean favouriteStatus = asset.isAssetFavourite();
 
         return AssetShortDto.builder()
+                .assetId(asset.getId())
                 .assetTitle(asset.getTitle())
                 .companyTitle(asset.getCompany().getTitle())
                 .assetPrice(assetPrice)
-                .assetPriceDiff(assetPriceDiff)
-                .favouriteStatus(favouriteStatus)
+                .assetPriceDiff(asset.getAssetMonthPriceDiff(assetPrice))
+                .favouriteStatus(asset.isAssetFavourite())
                 .build();
     }
 
+    private Integer assetId;
     private String assetTitle;
     private String companyTitle;
     private Integer assetPrice;
