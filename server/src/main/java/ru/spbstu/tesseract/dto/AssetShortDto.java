@@ -1,7 +1,6 @@
 package ru.spbstu.tesseract.dto;
 
 import lombok.*;
-import org.springframework.security.core.context.SecurityContextHolder;
 import ru.spbstu.tesseract.auth.utils.AssetUtils;
 import ru.spbstu.tesseract.entity.Asset;
 
@@ -15,10 +14,7 @@ public class AssetShortDto {
     public static AssetShortDto fromAsset(Asset asset) {
         Integer assetPrice = AssetUtils.getAssetPrice(asset);
         Integer assetPriceDiff = AssetUtils.getAssetMonthPriceDiff(asset, assetPrice);
-
-        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-        boolean favouriteStatus = asset.getUsers().stream()
-                .anyMatch(user -> user.getLogin().equals(userLogin));
+        Boolean favouriteStatus = AssetUtils.isAssetFavourite(asset);
 
         return AssetShortDto.builder()
                 .assetTitle(asset.getTitle())

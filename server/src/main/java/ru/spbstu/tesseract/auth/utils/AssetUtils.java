@@ -1,5 +1,6 @@
 package ru.spbstu.tesseract.auth.utils;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import ru.spbstu.tesseract.entity.Asset;
 import ru.spbstu.tesseract.entity.Price;
 
@@ -18,6 +19,12 @@ public class AssetUtils {
 
     public static Integer getAssetMonthPriceDiff(Asset asset, Integer currentPrice) {
         return currentPrice - getAssetPriceMonthAgo(asset).orElse(currentPrice);
+    }
+
+    public static boolean isAssetFavourite(Asset asset) {
+        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        return asset.getUsers().stream()
+                .anyMatch(user -> user.getLogin().equals(userLogin));
     }
 
     private static Optional<Integer> getAssetPriceMonthAgo(Asset asset) {
