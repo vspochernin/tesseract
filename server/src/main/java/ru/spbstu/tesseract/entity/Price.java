@@ -13,7 +13,7 @@ public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "assets_id_seq")
-    private Integer id;
-    private Integer price;
+    private int id;
+    private int price;
     private Date setDatetime;
 }

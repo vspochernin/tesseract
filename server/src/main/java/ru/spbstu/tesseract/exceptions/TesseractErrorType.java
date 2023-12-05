@@ -10,7 +10,8 @@ public enum TesseractErrorType {
     INCORRECT_LOGIN(3, "Некорректный логин", HttpStatus.BAD_REQUEST),
     INCORRECT_PASSWORD(4, "Некорректный пароль", HttpStatus.BAD_REQUEST),
     BAD_CREDENTIALS(5, "Пользователь с таким логином или паролем не найден", HttpStatus.UNAUTHORIZED),
-    BAD_REQUEST_BODY(6, "Некорректное тело запроса", HttpStatus.BAD_REQUEST)
+    BAD_REQUEST_BODY(6, "Некорректное тело запроса", HttpStatus.BAD_REQUEST),
+    NOT_FOUND(7, "Запрашиваемый элемент не найден", HttpStatus.NOT_FOUND),
     ;
 
     private final int id;

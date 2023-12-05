@@ -13,12 +13,12 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "companies_id_seq")
-    private Integer id;
+    private int id;
 
     private String title;
     private String description;
     private Date foundationDatetime;
-    private Long revenue;
-    private Long profit;
-    private Integer staff;
+    private long revenue;
+    private long profit;
+    private int staff;
 }
