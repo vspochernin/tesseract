@@ -1,12 +1,15 @@
 package ru.spbstu.tesseract.service;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import ru.spbstu.tesseract.dto.DiversificationLongDto;
 import ru.spbstu.tesseract.dto.DiversificationShortDto;
 import ru.spbstu.tesseract.entity.Asset;
 import ru.spbstu.tesseract.entity.Diversification;
@@ -38,7 +41,7 @@ public class DiversificationService {
 
         Diversification diversification = new Diversification(
                 user,
-                new Date(),
+                ZonedDateTime.now(),
                 RiskType.HIGH,
                 123456,
                 new DiversificationAsset(asset1, 1123),
@@ -56,5 +59,13 @@ public class DiversificationService {
         return diversifications.getContent().stream()
                 .map(DiversificationShortDto::fromDiversification)
                 .toList();
+    }
+
+    public DiversificationLongDto getDiversification(int diversificationId) {
+        Optional<Diversification> diversificationO = diversificationRepository.findById(diversificationId);
+
+        return diversificationO
+                .map(DiversificationLongDto::fromDiversification)
+                .orElseThrow(NoSuchElementException::new);
     }
 }

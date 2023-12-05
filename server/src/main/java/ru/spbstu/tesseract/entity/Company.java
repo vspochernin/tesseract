@@ -1,9 +1,14 @@
 package ru.spbstu.tesseract.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import java.time.ZonedDateTime;
 
-import java.util.Date;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Data
@@ -17,7 +22,7 @@ public class Company {
 
     private String title;
     private String description;
-    private Date foundationDatetime;
+    private ZonedDateTime foundationDatetime;
     private long revenue;
     private long profit;
     private int staff;

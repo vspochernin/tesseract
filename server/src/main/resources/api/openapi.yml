@@ -394,7 +394,7 @@ components:
           type: string
         companyTitle:
           type: string
-        priceSum:
+        oldPrice:
           type: integer
           description: Старая цена актива (то есть цена на момент создания диверсификации), в копейках 
         count:
