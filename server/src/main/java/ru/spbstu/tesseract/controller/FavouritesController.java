@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.spbstu.tesseract.dto.AssetShortDto;
-import ru.spbstu.tesseract.service.AssetService;
+import ru.spbstu.tesseract.service.FavouritesService;
 
 import java.util.List;
 
@@ -17,14 +17,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FavouritesController {
 
-    private final AssetService assetService;
+    private final FavouritesService favouritesService;
 
     @GetMapping("/favourites")
     public ResponseEntity<List<AssetShortDto>> favourites(
             @RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
     ) {
-        List<AssetShortDto> assetShortDtos = assetService.getFavouriteAssets(pageNumber, pageSize);
+        List<AssetShortDto> assetShortDtos = favouritesService.getFavouriteAssets(pageNumber, pageSize);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
