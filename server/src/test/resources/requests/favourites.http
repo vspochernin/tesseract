@@ -1,28 +1,4 @@
-# Без параметров.
-GET http://localhost:8080/api/v1/favourites
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
-
-###
-
-# Задаем только номер страницы.
-GET http://localhost:8080/api/v1/favourites?pageNumer=1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
-
-###
-
-# Задаем только размер страницы.
-GET http://localhost:8080/api/v1/favourites?pageSize=2
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
-
-###
-
-# Задаем и номер страницы, и размер страницы.
-GET http://localhost:8080/api/v1/favourites?pageNumber=3&pageSize=2
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
-
-###
-
-# Вообще все активы.
+# Получить все избранные активы.
 GET http://localhost:8080/api/v1/favourites?pageNumber=0&pageSize=1000
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
 

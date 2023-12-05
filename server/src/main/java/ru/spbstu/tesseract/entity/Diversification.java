@@ -19,7 +19,7 @@ public class Diversification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "diversifications_id_seq")
-    private Integer id;
+    private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -27,7 +27,7 @@ public class Diversification {
     @Column(name = "risk_type_id")
     @Enumerated(EnumType.ORDINAL)
     private RiskType riskType;
-    private Integer amount;
+    private int amount;
     @OneToMany(mappedBy = "diversification", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Set<DiversificationAsset> diversificationAssetSet;
@@ -36,7 +36,7 @@ public class Diversification {
             User user,
             Date createDatetime,
             RiskType riskType,
-            Integer amount,
+            int amount,
             DiversificationAsset... diversificationsAssets) {
         this.user = user;
         this.createDatetime = createDatetime;

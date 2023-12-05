@@ -8,7 +8,7 @@ import ru.spbstu.tesseract.entity.Asset;
 public class AssetShortDto {
 
     public static AssetShortDto fromAsset(Asset asset) {
-        Integer assetPrice = asset.getAssetPrice();
+        int assetPrice = asset.getAssetPrice();
 
         return AssetShortDto.builder()
                 .assetId(asset.getId())
@@ -20,10 +20,10 @@ public class AssetShortDto {
                 .build();
     }
 
-    private Integer assetId;
+    private int assetId;
     private String assetTitle;
     private String companyTitle;
-    private Integer assetPrice;
-    private Integer assetPriceDiff;
-    private Boolean favouriteStatus;
+    private int assetPrice;
+    private int assetPriceDiff;
+    private boolean favouriteStatus;
 }

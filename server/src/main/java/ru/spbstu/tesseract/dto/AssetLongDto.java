@@ -9,7 +9,7 @@ import ru.spbstu.tesseract.entity.Asset;
 public class AssetLongDto {
 
     public static AssetLongDto fromAsset(Asset asset) {
-        Integer assetPrice = asset.getAssetPrice();
+        int assetPrice = asset.getAssetPrice();
 
         return AssetLongDto.builder()
                 .assetId(asset.getId())
@@ -24,13 +24,13 @@ public class AssetLongDto {
                 .build();
     }
 
-    private Integer assetId;
+    private int assetId;
     private String assetTitle;
     private String assetDescription;
-    private Integer assetPrice;
-    private Integer assetPriceDiff;
+    private int assetPrice;
+    private int assetPriceDiff;
     private String companyTitle;
     private String companyDescription;
-    private Integer riskTypeId;
-    private Boolean favouriteStatus;
+    private int riskTypeId;
+    private boolean favouriteStatus;
 }

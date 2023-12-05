@@ -20,7 +20,7 @@ public class FavouritesService {
     private final AssetRepository assetRepository;
     private final UserRepository userRepository;
 
-    public List<AssetShortDto> getFavouriteAssets(Integer pageNumber, Integer pageSize) {
+    public List<AssetShortDto> getFavouriteAssets(int pageNumber, int pageSize) {
         Slice<Asset> favouriteAssets = assetRepository
                 .findByUsersContains(User.getCurrentUser(), PageRequest.of(pageNumber, pageSize));
 
@@ -29,7 +29,7 @@ public class FavouritesService {
                 .toList();
     }
 
-    public void addFavourite(Integer assetId) {
+    public boolean addFavourite(int assetId) {
         if (!assetRepository.existsById(assetId)) {
             throw new NoSuchElementException();
         }
@@ -38,15 +38,17 @@ public class FavouritesService {
         Asset asset = assetRepository.getReferenceById(assetId);
 
         if (user.getFavourites().contains(asset)) {
-            throw new IllegalArgumentException();
+            return false;
         }
 
         user.getFavourites().add(asset);
 
         userRepository.save(user);
+
+        return true;
     }
 
-    public void removeFavourite(Integer assetId) {
+    public void removeFavourite(int assetId) {
         if (!assetRepository.existsById(assetId)) {
             throw new NoSuchElementException();
         }
@@ -55,7 +57,7 @@ public class FavouritesService {
         Asset asset = assetRepository.getReferenceById(assetId);
 
         if (!user.getFavourites().contains(asset)) {
-            throw new IllegalArgumentException();
+            return;
         }
 
         user.getFavourites().remove(asset);

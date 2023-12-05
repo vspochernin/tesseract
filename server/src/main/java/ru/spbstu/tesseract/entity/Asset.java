@@ -17,7 +17,7 @@ public class Asset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "assets_id_seq")
-    private Integer id;
+    private int id;
 
     private String title;
     private String description;
@@ -38,14 +38,14 @@ public class Asset {
     @JsonIgnore
     Set<User> users;
 
-    public Integer getAssetPrice() {
+    public int getAssetPrice() {
         return prices.stream()
                 .max(Comparator.comparing(Price::getSetDatetime))
                 .map(Price::getPrice)
                 .orElseThrow();
     }
 
-    public Integer getAssetMonthPriceDiff(Integer currentPrice) {
+    public int getAssetMonthPriceDiff(int currentPrice) {
         return currentPrice - getAssetPriceMonthAgo().orElse(currentPrice);
     }
 

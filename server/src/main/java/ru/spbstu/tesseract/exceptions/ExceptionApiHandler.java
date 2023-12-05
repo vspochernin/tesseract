@@ -1,5 +1,7 @@
 package ru.spbstu.tesseract.exceptions;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,7 +29,7 @@ public class ExceptionApiHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorMessage> notValid(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorMessage> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
         return ResponseEntity
                 .status(errorType.getHttpStatus())
@@ -35,8 +37,24 @@ public class ExceptionApiHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorMessage> notValid(HttpMessageNotReadableException ex) {
+    public ResponseEntity<ErrorMessage> httpMessageNotReadableException(HttpMessageNotReadableException ex) {
         TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
+        return ResponseEntity
+                .status(errorType.getHttpStatus())
+                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, ex.toString()));
+    }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<ErrorMessage> numberFormatException(NumberFormatException ex) {
+        TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
+        return ResponseEntity
+                .status(errorType.getHttpStatus())
+                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, ex.toString()));
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ErrorMessage> noSuchElementException(NoSuchElementException ex) {
+        TesseractErrorType errorType = TesseractErrorType.NOT_FOUND;
         return ResponseEntity
                 .status(errorType.getHttpStatus())
                 .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, ex.toString()));

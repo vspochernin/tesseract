@@ -14,7 +14,7 @@ public class DiversificationAsset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "diversifications_assets_id_seq")
-    private Integer id;
+    private int id;
 
     @ManyToOne()
     @JoinColumn(name = "diversification_id")
@@ -25,9 +25,9 @@ public class DiversificationAsset {
     @JoinColumn(name = "asset_id")
     private Asset asset;
 
-    private Integer count;
+    private int count;
 
-    public DiversificationAsset(Asset asset, Integer count) {
+    public DiversificationAsset(Asset asset, int count) {
         this.asset = asset;
         this.count = count;
     }
