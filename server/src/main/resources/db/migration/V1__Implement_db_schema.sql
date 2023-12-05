@@ -36,13 +36,6 @@ CREATE TABLE prices
     FOREIGN KEY (asset_id) REFERENCES assets (id) ON DELETE CASCADE
 );
 
--- Создаем таблицу описания рисков
-CREATE TABLE risks
-(
-    id          SERIAL PRIMARY KEY,   -- автоувеличение
-    description VARCHAR(100) NOT NULL -- если кратко без пояснений писать тип рискованности - 25 хватит
-);
-
 -- Создаем таблицу пользователей
 CREATE TABLE users
 (
@@ -68,9 +61,8 @@ CREATE TABLE diversifications
     id              SERIAL PRIMARY KEY,                -- автоувеличение
     user_id         INTEGER                  NOT NULL,
     create_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-    risk_id         INTEGER                  NOT NULL,
+    risk_type_id    INTEGER                  NOT NULL,
     amount          INTEGER                  NOT NULL, -- общая стоимость диверсификации я полагаю
-    FOREIGN KEY (risk_id) REFERENCES risks (id) ON DELETE SET NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL
     -- можно и каскадное сделать
 );

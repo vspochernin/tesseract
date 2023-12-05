@@ -23,7 +23,7 @@ public class Diversification {
     @JoinColumn(name = "user_id")
     private User user;
     private Date createDatetime;
-    @Column(name = "risk_id")
+    @Column(name = "risk_type_id")
     @Enumerated(EnumType.ORDINAL)
     private RiskType riskType;
     private Integer amount;
