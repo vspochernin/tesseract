@@ -208,8 +208,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DiversificationsList'
-        '400':
-          description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
     post:
