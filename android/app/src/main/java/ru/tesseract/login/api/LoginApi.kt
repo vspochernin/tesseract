@@ -20,5 +20,5 @@ private class LoginRequest(
 @Single
 class LoginApi(private val client: ApiClient) {
     suspend fun login(login: String, password: String): ApiResponse<LoginResponse> =
-        client.post("/login/tesseract") { setBody(LoginRequest(login, password)) }
+        client.post("login/tesseract") { setBody(LoginRequest(login, password)) }
 }

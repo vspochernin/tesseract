@@ -15,13 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.sebaslogen.resaca.viewModelScoped
+import org.koin.compose.getKoin
+import org.koin.core.parameter.parametersOf
 import ru.tesseract.R
-import ru.tesseract.assets.domain.Asset
+import ru.tesseract.assets.domain.GeneralAssetInfo
 import ru.tesseract.ui.FavoriteIcon
 
 @Composable
 fun DiversificationAssetSummary(
-    asset: Asset,
+    asset: GeneralAssetInfo,
     quantity: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -41,14 +44,14 @@ fun DiversificationAssetSummary(
 
 @Composable
 fun AssetSummaryWithChange(
-    asset: Asset,
+    asset: GeneralAssetInfo,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AssetSummary(
         asset = asset,
         additionalInfo = {
-            Text(asset.annotatedPriceChange(), style = MaterialTheme.typography.titleMedium)
+            Text(asset.annotatedPriceDiff(), style = MaterialTheme.typography.titleMedium)
         },
         onClick = onClick,
         modifier = modifier,
@@ -57,39 +60,40 @@ fun AssetSummaryWithChange(
 
 @Composable
 private fun AssetSummary(
-    asset: Asset,
+    asset: GeneralAssetInfo,
     additionalInfo: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val koin = getKoin()
+    val viewModel: AssetSummaryViewModel = viewModelScoped(key = asset) { koin.get { parametersOf(asset) } }
     Column(modifier = modifier.clickable(onClick = onClick)) {
         Row(
-            modifier =
-                Modifier
-                    .padding(start = 8.dp, end = 16.dp)
-                    .padding(vertical = 12.dp),
+            modifier = Modifier
+                .padding(start = 8.dp, end = 16.dp)
+                .padding(vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            IconButton(onClick = {}) {
-                FavoriteIcon(isFavorite = asset.isFavorite)
+            IconButton(onClick = { viewModel.onClickFavorite() }) {
+                FavoriteIcon(isFavorite = viewModel.isFavorite)
             }
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    asset.name,
+                    asset.title,
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    asset.organization,
+                    asset.companyTitle,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
             Column(horizontalAlignment = Alignment.End) {
-                Text(asset.price, style = MaterialTheme.typography.titleMedium)
+                Text(asset.formattedPrice(), style = MaterialTheme.typography.titleMedium)
                 additionalInfo()
             }
         }
