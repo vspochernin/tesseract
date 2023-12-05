@@ -19,7 +19,7 @@ public class Diversification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "diversifications_id_seq")
     private Integer id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     private Date createDatetime;
