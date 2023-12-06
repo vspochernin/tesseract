@@ -1,7 +1,40 @@
+# Корректные данные
 POST http://localhost:8080/api/v1/login/tesseract
 Content-Type: application/json
 
 {
   "login": "vrazukrantov",
   "password": "1234"
+}
+
+###
+
+# Некорректный логин
+POST http://localhost:8080/api/v1/login/tesseract
+Content-Type: application/json
+
+{
+    "login": "vrazukrantov-incorrect",
+    "password": "1234"
+}
+
+###
+
+# Некорректный пароль
+POST http://localhost:8080/api/v1/login/tesseract
+Content-Type: application/json
+
+{
+    "login": "vrazukrantov",
+    "password": "1234-incorrect"
+}
+
+###
+
+# Некорректное тело
+POST http://localhost:8080/api/v1/login/tesseract
+Content-Type: application/json
+
+{
+    "incorrect": "body"
 }
