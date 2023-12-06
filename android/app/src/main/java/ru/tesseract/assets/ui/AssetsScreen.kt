@@ -13,122 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import org.koin.androidx.compose.koinViewModel
 import ru.tesseract.R
-import ru.tesseract.assets.domain.Asset
 import ru.tesseract.destinations.AssetScreenDestination
-import ru.tesseract.diversifications.domain.RiskTolerance
-
-val sampleAssets =
-    listOf(
-        Asset(
-            id = 0,
-            name = "АО «ЛИД» – Денежное требование №1",
-            organization = "АО «ЛИД»",
-            price = "220.33 ₽",
-            change = "+12.33 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = false,
-        ),
-        Asset(
-            id = 1,
-            name = "ООО «Фудсервис» – Денежное требование №1",
-            organization = "ООО «Фудсервис»",
-            price = "225.04 ₽",
-            change = "–10.24 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = false,
-        ),
-        Asset(
-            id = 2,
-            name = "ООО «Фудсервис» – Денежное требование №2",
-            organization = "ООО «Фудсервис»",
-            price = "211.89 ₽",
-            change = "+17.33 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = false,
-        ),
-        Asset(
-            id = 3,
-            name = "ИП Почернин Владислав Сергеевич – Денежное требование №1",
-            organization = "ИП Почернин Владислав Сергеевич",
-            price = "228.00 ₽",
-            change = "+2.53 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = true,
-        ),
-        Asset(
-            id = 4,
-            name = "ООО «Новый Горизонт» – Денежное требование №1",
-            organization = "ООО «Новый Горизонт»",
-            price = "22.00 ₽",
-            change = "+1.44 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = false,
-        ),
-        Asset(
-            id = 5,
-            name = "ООО «Сетевые технологии» – Денежное требование №1",
-            organization = "ООО «Сетевые технологии»",
-            price = "137.00 ₽",
-            change = "+0.41 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = false,
-        ),
-        Asset(
-            id = 6,
-            name = "ООО «Сетевые технологии» – Денежное требование №2",
-            organization = "ООО «Сетевые технологии»",
-            price = "17.00 ₽",
-            change = "+12.33 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = false,
-        ),
-        Asset(
-            id = 7,
-            name = "ООО «Сетевые технологии» – Денежное требование №3",
-            organization = "ООО «Сетевые технологии»",
-            price = "13.00 ₽",
-            change = "+12.33 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = false,
-        ),
-        Asset(
-            id = 8,
-            name = "ИП Мурзаканов Ислам Мухамадинович – Денежное требование №1",
-            organization = "ИП Мурзаканов Ислам Мухамадинович",
-            price = "2445.00 ₽",
-            change = "+140.12 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = true,
-        ),
-        Asset(
-            id = 9,
-            name = "ИП Шиляев Владислав Сергеевич – Денежное требование №1",
-            organization = "ИП Шиляев Владислав Сергеевич",
-            price = "1212.00 ₽",
-            change = "+55.23 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = true,
-        ),
-        Asset(
-            id = 10,
-            name = "ИП Разукрантов Владислав Евгеньевич – Денежное требование №1",
-            organization = "ИП Разукрантов Владислав Евгеньевич",
-            price = "2124.00 ₽",
-            change = "+123.67 ₽",
-            riskTolerance = RiskTolerance.Low,
-            isFavorite = true,
-        ),
-    )
+import ru.tesseract.ui.loadingStates
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph(start = true)
 @Destination
 @Composable
-fun AssetsScreen(navigator: DestinationsNavigator) {
+fun AssetsScreen(navigator: DestinationsNavigator, viewModel: AssetsViewModel = koinViewModel()) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
@@ -138,20 +36,24 @@ fun AssetsScreen(navigator: DestinationsNavigator) {
             )
         },
     ) { padding ->
+        val assets = viewModel.getAll().collectAsLazyPagingItems()
         LazyColumn(
             contentPadding = padding,
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
-            items(sampleAssets) {
-                AssetSummaryWithChange(
-                    asset = it,
-                    onClick = { navigator.navigate(AssetScreenDestination(it.id)) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
+            items(assets.itemSnapshotList, key = { it?.id ?: 0 }) { asset ->
+                if (asset != null) {
+                    AssetSummaryWithChange(
+                        asset = asset,
+                        onClick = { navigator.navigate(AssetScreenDestination(asset.id)) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
+            loadingStates(assets)
         }
     }
 }
+

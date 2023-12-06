@@ -21,5 +21,5 @@ private class RegisterRequest(
 @Single
 class RegisterApi(private val client: ApiClient) {
     suspend fun register(login: String, email: String, password: String): ApiResponse<RegisterResponse> =
-        client.post("/users") { setBody(RegisterRequest(login, email, password)) }
+        client.post("users") { setBody(RegisterRequest(login, email, password)) }
 }

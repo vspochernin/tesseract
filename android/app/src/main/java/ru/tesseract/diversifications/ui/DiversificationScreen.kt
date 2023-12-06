@@ -1,7 +1,6 @@
 package ru.tesseract.diversifications.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -25,11 +24,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ru.tesseract.R
-import ru.tesseract.assets.ui.DiversificationAssetSummary
-import ru.tesseract.assets.ui.sampleAssets
-import ru.tesseract.destinations.AssetScreenDestination
 import ru.tesseract.diversifications.domain.RiskTolerance
-import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
@@ -91,14 +86,6 @@ private fun DiversificationAssets(navigator: DestinationsNavigator) {
         style = MaterialTheme.typography.labelLarge,
         modifier = Modifier.padding(horizontal = 16.dp),
     )
-    sampleAssets.shuffled().take(5).forEach { asset ->
-        DiversificationAssetSummary(
-            asset = asset,
-            quantity = Random.nextInt(1, 6),
-            onClick = { navigator.navigate(AssetScreenDestination(asset.id)) },
-            modifier = Modifier.fillMaxWidth(),
-        )
-    }
 }
 
 @Composable

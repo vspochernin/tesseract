@@ -19,3 +19,8 @@ inline fun <T> ApiResponse<T>.onApiError(body: (ApiErrorType) -> Unit): ApiRespo
     if (this is ApiResponse.ApiError) body(errorType)
     return this
 }
+
+inline fun <T> ApiResponse<T>.onFailure(body: () -> Unit): ApiResponse<T> {
+    if (this !is ApiResponse.Success) body()
+    return this
+}

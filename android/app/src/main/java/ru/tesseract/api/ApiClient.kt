@@ -3,14 +3,16 @@ package ru.tesseract.api
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.header
 import io.ktor.client.request.request
 import io.ktor.http.HttpMethod
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.koin.core.annotation.Single
+import ru.tesseract.LoginState
 
 @Single
-class ApiClient(val httpClient: HttpClient) {
+class ApiClient(val httpClient: HttpClient, val loginState: LoginState) {
     val apiErrors = MutableSharedFlow<ApiErrorType>()
     val networkErrors = MutableSharedFlow<ApiResponse.NetworkError>()
 
@@ -19,7 +21,12 @@ class ApiClient(val httpClient: HttpClient) {
         block: HttpRequestBuilder.() -> Unit,
     ): ApiResponse<T> {
         return try {
-            val response = httpClient.request(url, block)
+            val response = httpClient.request(url) {
+                loginState.token.value?.let {
+                    header("Authorization", "Bearer $it")
+                }
+                block()
+            }
             if (response.status.isSuccess()) {
                 ApiResponse.Success(response.body())
             } else {
