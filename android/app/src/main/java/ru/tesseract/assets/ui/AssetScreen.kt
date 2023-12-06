@@ -101,7 +101,7 @@ fun AssetScreen(
 private fun FavoriteButton(asset: DetailedAssetInfo?) {
     if (asset != null) {
         val favoriteButtonViewModel: AssetFavoriteButtonViewModel =
-            koinViewModel { parametersOf(asset.generalInfo) }
+            koinViewModel { parametersOf(asset.generalInfo.id, asset.generalInfo.isFavorite) }
         IconButton(onClick = { favoriteButtonViewModel.onClickFavorite() }) {
             FavoriteIcon(isFavorite = favoriteButtonViewModel.isFavorite)
         }

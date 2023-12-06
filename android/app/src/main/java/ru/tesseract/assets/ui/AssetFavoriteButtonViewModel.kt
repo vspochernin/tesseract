@@ -15,10 +15,11 @@ import ru.tesseract.assets.domain.GeneralAssetInfo
 
 @Factory
 class AssetFavoriteButtonViewModel(
-    private val asset: GeneralAssetInfo,
+    private val id: Int,
+    initialIsFavorite: Boolean,
     private val assetsApi: AssetsApi,
 ) : ViewModel() {
-    private var optimisticIsFavorite by mutableStateOf(asset.isFavorite)
+    private var optimisticIsFavorite by mutableStateOf(initialIsFavorite)
     private val lock = Mutex()
 
     val isFavorite @Composable get() = optimisticIsFavorite
@@ -27,9 +28,9 @@ class AssetFavoriteButtonViewModel(
         if (lock.tryLock().not()) return@launch
         optimisticIsFavorite = optimisticIsFavorite.not()
         if (optimisticIsFavorite) {
-            assetsApi.addFavorite(asset.id)
+            assetsApi.addFavorite(id)
         } else {
-            assetsApi.removeFavorite(asset.id)
+            assetsApi.removeFavorite(id)
         }.onFailure {
             optimisticIsFavorite = optimisticIsFavorite.not()
         }
