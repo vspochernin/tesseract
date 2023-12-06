@@ -13,17 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import org.koin.androidx.compose.koinViewModel
 import ru.tesseract.R
 import ru.tesseract.destinations.AssetScreenDestination
+import ru.tesseract.ui.loadingStates
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
 @Destination
 @Composable
-fun FavoritesScreen(navigator: DestinationsNavigator) {
+fun FavoritesScreen(navigator: DestinationsNavigator, viewModel: FavoritesViewModel = koinViewModel()) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
@@ -33,20 +36,23 @@ fun FavoritesScreen(navigator: DestinationsNavigator) {
             )
         },
     ) { padding ->
+        val assets = viewModel.getAll().collectAsLazyPagingItems()
         LazyColumn(
             contentPadding = padding,
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
-            items(sampleAssets.filter { it.isFavorite }) {
-                AssetSummaryWithChange(
-                    asset = it,
-                    onClick = { navigator.navigate(AssetScreenDestination(it.id)) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
+            items(assets.itemSnapshotList) { asset ->
+                if (asset != null) {
+                    AssetSummaryWithChange(
+                        asset = asset,
+                        onClick = { navigator.navigate(AssetScreenDestination(asset.id)) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
+            loadingStates(assets)
         }
     }
 }

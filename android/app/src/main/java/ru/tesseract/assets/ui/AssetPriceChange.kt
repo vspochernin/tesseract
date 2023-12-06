@@ -14,7 +14,7 @@ import ru.tesseract.assets.domain.GeneralAssetInfo
 @Composable
 fun GeneralAssetInfo.annotatedPriceDiff() =
     buildAnnotatedString {
-        val diff = "%.2f".format(priceDiff.toDouble() / 100)
+        val diff = "%.2f ₽".format(priceDiff.toDouble() / 100)
         val diffString = (if (priceDiff > 0) "+" else "") + diff
         withStyle(
             SpanStyle(
