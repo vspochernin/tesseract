@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.spbstu.tesseract.dto.CreateDiversificationRequestDto;
 import ru.spbstu.tesseract.dto.DiversificationLongDto;
 import ru.spbstu.tesseract.dto.DiversificationShortDto;
-import ru.spbstu.tesseract.entity.Diversification;
 import ru.spbstu.tesseract.service.DiversificationService;
 
 @RestController
@@ -54,24 +53,6 @@ public class DiversificationController {
     @PostMapping("/diversifications")
     public ResponseEntity createDiversification(@Valid @RequestBody CreateDiversificationRequestDto request) {
         diversificationService.createDiversification(request);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
-    }
-
-    @GetMapping("/testDiversifications")
-    public ResponseEntity<List<Diversification>> getAllDiversifications() {
-        List<Diversification> allDiversifications = diversificationService.getAllDiversifications();
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(allDiversifications);
-    }
-
-    @PostMapping("/testDiversifications")
-    public ResponseEntity addDiversification() {
-        diversificationService.addDiversification();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
