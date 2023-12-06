@@ -33,7 +33,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ru.tesseract.R
-import ru.tesseract.diversifications.domain.RiskTolerance
+import ru.tesseract.diversifications.domain.RiskLevel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
@@ -75,7 +75,7 @@ fun NewDiversificationScreen(navigator: DestinationsNavigator) {
                 modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
             )
             Column(modifier = Modifier.selectableGroup()) {
-                RiskTolerance.entries.forEach { riskTolerance ->
+                RiskLevel.entries.forEach { riskTolerance ->
                     Row(
                         modifier =
                             Modifier

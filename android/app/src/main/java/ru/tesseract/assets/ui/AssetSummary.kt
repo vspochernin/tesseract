@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -66,7 +67,7 @@ private fun AssetSummary(
     modifier: Modifier = Modifier,
 ) {
     val koin = getKoin()
-    val viewModel: AssetSummaryViewModel = viewModelScoped(key = asset) { koin.get { parametersOf(asset) } }
+    val viewModel: AssetFavoriteButtonViewModel = viewModelScoped(key = asset) { koin.get { parametersOf(asset) } }
     Column(modifier = modifier.clickable(onClick = onClick)) {
         Row(
             modifier = Modifier
@@ -93,11 +94,11 @@ private fun AssetSummary(
                 )
             }
             Column(horizontalAlignment = Alignment.End) {
-                Text(asset.formattedPrice(), style = MaterialTheme.typography.titleMedium)
+                Text(formatPrice(asset.price), style = MaterialTheme.typography.titleMedium)
                 additionalInfo()
             }
         }
-        Divider(
+        HorizontalDivider(
             color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
             modifier = Modifier.padding(start = 56.dp),
         )

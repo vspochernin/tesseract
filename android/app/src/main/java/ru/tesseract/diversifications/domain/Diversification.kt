@@ -1,9 +1,12 @@
 package ru.tesseract.diversifications.domain
 
 import androidx.annotation.StringRes
+import kotlinx.datetime.Instant
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ru.tesseract.R
 
-enum class RiskTolerance(
+enum class RiskLevel(
     @StringRes val resId: Int,
     @StringRes val explicitResId: Int,
 ) {
@@ -13,9 +16,16 @@ enum class RiskTolerance(
     Combined(R.string.risk_tolerance_combined, R.string.risk_tolerance_combined_risk),
 }
 
+@Serializable
 data class Diversification(
+    @SerialName("diversificationId")
     val id: Long,
-    val date: String,
-    val riskTolerance: RiskTolerance,
-    val sum: String,
+    @SerialName("createDatetime")
+    val at: Instant,
+    @SerialName("riskTypeId")
+    val riskLevelOrdinal: Int,
+    @SerialName("amount")
+    val amount: Int,
 )
+
+val Diversification.riskLevel get() = RiskLevel.entries[riskLevelOrdinal]
