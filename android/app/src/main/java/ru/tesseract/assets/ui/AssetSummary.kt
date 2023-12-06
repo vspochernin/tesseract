@@ -67,7 +67,7 @@ private fun AssetSummary(
     modifier: Modifier = Modifier,
 ) {
     val koin = getKoin()
-    val viewModel: AssetSummaryViewModel = viewModelScoped(key = asset) { koin.get { parametersOf(asset) } }
+    val viewModel: AssetFavoriteButtonViewModel = viewModelScoped(key = asset) { koin.get { parametersOf(asset) } }
     Column(modifier = modifier.clickable(onClick = onClick)) {
         Row(
             modifier = Modifier

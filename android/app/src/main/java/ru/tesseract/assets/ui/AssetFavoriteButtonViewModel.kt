@@ -14,7 +14,7 @@ import ru.tesseract.assets.api.AssetsApi
 import ru.tesseract.assets.domain.GeneralAssetInfo
 
 @Factory
-class AssetSummaryViewModel(
+class AssetFavoriteButtonViewModel(
     private val asset: GeneralAssetInfo,
     private val assetsApi: AssetsApi,
 ) : ViewModel() {

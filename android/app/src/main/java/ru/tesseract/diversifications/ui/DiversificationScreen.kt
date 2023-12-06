@@ -59,7 +59,7 @@ fun DiversificationScreen(
         ) {
             Date(TODO())
             Divider(modifier = Modifier.padding(16.dp))
-            RiskTolerance(TODO())
+            RiskLevel(TODO())
             Divider(modifier = Modifier.padding(16.dp))
             DiversificationSum(TODO())
             Divider(modifier = Modifier.padding(16.dp))
@@ -100,7 +100,7 @@ private fun DiversificationSum(sum: String) {
 }
 
 @Composable
-fun RiskTolerance(riskLevel: RiskLevel) {
+fun RiskLevel(riskLevel: RiskLevel) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = stringResource(id = R.string.risk_tolerance),
