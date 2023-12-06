@@ -350,11 +350,11 @@ VALUES (20, 5010000, '2023-11-12 00:00:00+03');
 --другой наполненным (несколько избранных и хотя бы одна диверсификация).
 -- пустой
 INSERT INTO users(login, email, password)
-VALUES ('vspochernin', 'vspochernin@gmail.com', '$2y$10$YvrT6vrC2Po85mXYPZ4lL.sAQ8Mef5D2j4X9.N8pNf8lP4T.UIeXG');
+VALUES ('vspochernin', 'vspochernin@gmail.com', '$2a$10$SGRw6G/5NR5WBIRJjq2HJuVFQSJsfK.dDjPx2pWYDENOWUOXCDoVy');
 
 --полный (будет две диверсификации + четыре избранных)
 INSERT INTO users(login, email, password)
-VALUES ('vrazukrantov', 'vrazbusiness@mail.ru', '$2y$10$YvrT6vrC2Po85mXYPZ4lL.sAQ8Mef5D2j4X9.N8pNf8lP4T.UIeXG');
+VALUES ('vrazukrantov', 'vrazbusiness@mail.ru', '$2a$10$SGRw6G/5NR5WBIRJjq2HJuVFQSJsfK.dDjPx2pWYDENOWUOXCDoVy');
 
 -- Добавляем данные в таблицу связи пользователей и активов (избранные)
 INSERT INTO users_assets(user_id, asset_id)
@@ -372,12 +372,12 @@ VALUES (2, 2);
 -- Добавляем данные в таблицу диверсификаций diversifications 
 -- диверсификация: комбинированная
 INSERT INTO diversifications(user_id, create_datetime, risk_type_id, amount)
-VALUES (2, '2023-11-23 00:00:00+03', 3, 5000000);
+VALUES (2, '2023-12-27 00:00:00+03', 3, 5000000);
 
 -- update diversifications set amount = 100000 where id=2
 -- диверсификация: низкорискованная
 INSERT INTO diversifications(user_id, create_datetime, risk_type_id, amount)
-VALUES (2, '2023-11-23 00:00:00+03', 2, 15000000);
+VALUES (2, '2023-12-28 00:00:00+03', 2, 15000000);
 
 -- Заполняем таблицу активов в диверсификации
 -- первая: три актива 1, десять активов 3, один актив 4

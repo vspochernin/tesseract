@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.auth;
+package ru.spbstu.tesseract.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
+public class AuthenticationResponseDto {
 
     private String token;
 }

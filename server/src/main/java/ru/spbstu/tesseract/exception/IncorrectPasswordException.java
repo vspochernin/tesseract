@@ -1,9 +1,9 @@
-package ru.spbstu.tesseract.exceptions;
+package ru.spbstu.tesseract.exception;
 
 public class IncorrectPasswordException extends TesseractException {
 
     @Override
     public TesseractErrorType getErrorType() {
-        return TesseractErrorType.INCORRECT_PASSWORD;
+        return TesseractErrorType.INVALID_PASSWORD;
     }
 }

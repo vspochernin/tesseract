@@ -1,16 +1,22 @@
-package ru.spbstu.tesseract.auth;
+package ru.spbstu.tesseract.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.spbstu.tesseract.dto.AuthenticationRequestDto;
+import ru.spbstu.tesseract.dto.AuthenticationResponseDto;
+import ru.spbstu.tesseract.auth.FieldValidator;
+import ru.spbstu.tesseract.dto.PasswordRequestDto;
+import ru.spbstu.tesseract.dto.RegisterRequestDto;
 import ru.spbstu.tesseract.auth.config.JwtService;
 import ru.spbstu.tesseract.entity.User;
+import ru.spbstu.tesseract.exception.PasswordDoesNotMatchException;
 import ru.spbstu.tesseract.repository.UserRepository;
-import ru.spbstu.tesseract.exceptions.IncorrectLoginException;
-import ru.spbstu.tesseract.exceptions.IncorrectPasswordException;
-import ru.spbstu.tesseract.exceptions.LoginAlreadyExistsException;
+import ru.spbstu.tesseract.exception.IncorrectLoginException;
+import ru.spbstu.tesseract.exception.IncorrectPasswordException;
+import ru.spbstu.tesseract.exception.LoginAlreadyExistsException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +27,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponseDto register(RegisterRequestDto request) {
         String login = request.getLogin();
         String email = request.getEmail();
         String password = request.getPassword();
@@ -36,12 +42,12 @@ public class AuthenticationService {
 
         repository.save(user);
         String jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDto.builder()
                 .token(jwtToken)
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponseDto authenticate(AuthenticationRequestDto request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getLogin(),
@@ -53,9 +59,29 @@ public class AuthenticationService {
                 .orElseThrow();
 
         String jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDto.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    public void changePassword(PasswordRequestDto request) {
+        String oldPassword = request.getOldPassword();
+        String newPassword = request.getNewPassword();
+
+        if (!FieldValidator.isValidPassword(newPassword)) {
+            throw new IncorrectPasswordException();
+        }
+
+        User currentUser = User.getCurrentUser();
+        String currentUserEncodedPassword = currentUser.getPassword();
+
+        if (!passwordEncoder.matches(oldPassword, currentUserEncodedPassword)) {
+            throw new PasswordDoesNotMatchException();
+        }
+
+        currentUser.setPassword(passwordEncoder.encode(newPassword));
+
+        repository.save(currentUser);
     }
 
     private void validateFields(String login, String email, String password) {

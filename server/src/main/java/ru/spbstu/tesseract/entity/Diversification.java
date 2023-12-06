@@ -1,9 +1,7 @@
 package ru.spbstu.tesseract.entity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,7 +35,7 @@ public class Diversification {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    private Date createDatetime;
+    private ZonedDateTime createDatetime;
     @Column(name = "risk_type_id")
     @Enumerated(EnumType.ORDINAL)
     private RiskType riskType;
@@ -48,7 +46,7 @@ public class Diversification {
 
     public Diversification(
             User user,
-            Date createDatetime,
+            ZonedDateTime createDatetime,
             RiskType riskType,
             int amount,
             DiversificationAsset... diversificationsAssets)
@@ -62,11 +60,5 @@ public class Diversification {
         }
         this.diversificationAssetSet = Stream.of(diversificationsAssets)
                 .collect(Collectors.toSet());
-    }
-
-    public String convertCreateDatetimeToString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("MSK"));
-        return simpleDateFormat.format(createDatetime);
     }
 }

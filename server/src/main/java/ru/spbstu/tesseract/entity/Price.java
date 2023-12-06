@@ -1,9 +1,14 @@
 package ru.spbstu.tesseract.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import java.time.ZonedDateTime;
 
-import java.util.Date;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Data
@@ -15,5 +20,5 @@ public class Price {
     @SequenceGenerator(name = "assets_id_seq")
     private int id;
     private int price;
-    private Date setDatetime;
+    private ZonedDateTime setDatetime;
 }

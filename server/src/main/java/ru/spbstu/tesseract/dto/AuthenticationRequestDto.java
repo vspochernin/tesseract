@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.auth;
+package ru.spbstu.tesseract.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class AuthenticationRequestDto {
 
     @NotNull
     private String login;

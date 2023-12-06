@@ -11,7 +11,7 @@ public class DiversificationShortDto {
     public static DiversificationShortDto fromDiversification(Diversification diversification) {
         return DiversificationShortDto.builder()
                 .diversificationId(diversification.getId())
-                .createDatetime(diversification.convertCreateDatetimeToString())
+                .createDatetime(diversification.getCreateDatetime().toString())
                 .riskTypeId(diversification.getRiskType().ordinal())
                 .amount(diversification.getAmount())
                 .build();
