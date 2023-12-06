@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "ru.tesseract"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -76,6 +76,7 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("androidx.paging:paging-compose:3.2.1")
     implementation("com.github.sebaslogen.resaca:resaca:3.1.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
     ksp("io.insert-koin:koin-ksp-compiler:1.3.0")
     implementation("io.github.raamcosta.compose-destinations:animations-core:1.9.54")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.9.54")

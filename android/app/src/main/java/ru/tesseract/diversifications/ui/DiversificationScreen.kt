@@ -24,7 +24,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ru.tesseract.R
-import ru.tesseract.diversifications.domain.RiskTolerance
+import ru.tesseract.diversifications.domain.RiskLevel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
@@ -34,7 +34,7 @@ fun DiversificationScreen(
     diversificationId: Long,
     navigator: DestinationsNavigator,
 ) {
-    val diversification = sampleDiversifications.first { it.id == diversificationId }
+    val diversification = TODO()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
@@ -57,11 +57,11 @@ fun DiversificationScreen(
                     .padding(padding)
                     .padding(vertical = 16.dp),
         ) {
-            Date(diversification.date)
+            Date(TODO())
             Divider(modifier = Modifier.padding(16.dp))
-            RiskTolerance(diversification.riskTolerance)
+            RiskTolerance(TODO())
             Divider(modifier = Modifier.padding(16.dp))
-            DiversificationSum(diversification.sum)
+            DiversificationSum(TODO())
             Divider(modifier = Modifier.padding(16.dp))
             DiversificationAssets(navigator)
         }
@@ -100,14 +100,14 @@ private fun DiversificationSum(sum: String) {
 }
 
 @Composable
-fun RiskTolerance(riskTolerance: RiskTolerance) {
+fun RiskTolerance(riskLevel: RiskLevel) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = stringResource(id = R.string.risk_tolerance),
             style = MaterialTheme.typography.labelLarge,
         )
         Text(
-            text = stringResource(id = riskTolerance.resId),
+            text = stringResource(id = riskLevel.resId),
             style = MaterialTheme.typography.headlineSmall,
         )
     }

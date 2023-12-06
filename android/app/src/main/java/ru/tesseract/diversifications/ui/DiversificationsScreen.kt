@@ -23,36 +23,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import org.koin.androidx.compose.koinViewModel
 import ru.tesseract.R
 import ru.tesseract.destinations.DiversificationScreenDestination
 import ru.tesseract.destinations.NewDiversificationScreenDestination
-import ru.tesseract.diversifications.domain.Diversification
-import ru.tesseract.diversifications.domain.RiskTolerance
-
-val sampleDiversifications =
-    listOf(
-        Diversification(
-            id = 0,
-            date = "8 октября 2023 12:01",
-            riskTolerance = RiskTolerance.Medium,
-            sum = "5000.00 ₽",
-        ),
-        Diversification(
-            id = 1,
-            date = "8 октября 2023 12:04",
-            riskTolerance = RiskTolerance.Low,
-            sum = "25000.00 ₽",
-        ),
-    )
+import ru.tesseract.ui.loadingStates
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
 @Destination
 @Composable
-fun DiversificationsScreen(navigator: DestinationsNavigator) {
+fun DiversificationsScreen(
+    navigator: DestinationsNavigator,
+    viewModel: DiversificationsViewModel = koinViewModel(),
+) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
@@ -62,21 +50,20 @@ fun DiversificationsScreen(navigator: DestinationsNavigator) {
             )
         },
     ) { padding ->
+        val diversifications = viewModel.diversifications.collectAsLazyPagingItems()
         LazyColumn(
             contentPadding = padding,
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
             item {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     TextButton(
                         onClick = { navigator.navigate(NewDiversificationScreenDestination) },
-                        modifier =
-                            Modifier
-                                .align(Alignment.Center)
-                                .padding(16.dp),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
                     ) {
                         Icon(Icons.Default.Add, contentDescription = null)
                         Spacer(modifier = Modifier.size(8.dp))
@@ -84,13 +71,16 @@ fun DiversificationsScreen(navigator: DestinationsNavigator) {
                     }
                 }
             }
-            items(sampleDiversifications) {
-                DiversificationSummary(
-                    diversification = it,
-                    onClick = { navigator.navigate(DiversificationScreenDestination(it.id)) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
+            items(diversifications.itemSnapshotList) {
+                if (it != null) {
+                    DiversificationSummary(
+                        diversification = it,
+                        onClick = { navigator.navigate(DiversificationScreenDestination(it.id)) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
+            loadingStates(diversifications)
         }
     }
 }
