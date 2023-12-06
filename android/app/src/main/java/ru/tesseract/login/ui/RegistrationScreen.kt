@@ -16,7 +16,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -53,7 +53,7 @@ fun RegistrationScreen(navigator: DestinationsNavigator) {
                 title = { Text(stringResource(id = R.string.registration_screen_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                     }
                 },
             )
@@ -100,7 +100,10 @@ private fun RegisterForm(
             isError = viewModel.displayLoginError,
         )
         AnimatedVisibility(visible = viewModel.displayLoginError) {
-            Text(stringResource(id = R.string.error_incorrect_login), color = MaterialTheme.colorScheme.error)
+            Text(
+                stringResource(id = R.string.error_incorrect_login),
+                color = MaterialTheme.colorScheme.error,
+            )
         }
         OutlinedTextField(
             value = viewModel.email,
@@ -113,7 +116,10 @@ private fun RegisterForm(
             isError = viewModel.displayEmailError,
         )
         AnimatedVisibility(visible = viewModel.displayEmailError) {
-            Text(stringResource(id = R.string.validation_invalid_email), color = MaterialTheme.colorScheme.error)
+            Text(
+                stringResource(id = R.string.validation_invalid_email),
+                color = MaterialTheme.colorScheme.error,
+            )
         }
         OutlinedTextField(
             value = viewModel.password,
@@ -127,7 +133,10 @@ private fun RegisterForm(
             isError = viewModel.displayPasswordError,
         )
         AnimatedVisibility(visible = viewModel.displayPasswordError) {
-            Text(stringResource(id = R.string.error_incorrect_password), color = MaterialTheme.colorScheme.error)
+            Text(
+                stringResource(id = R.string.error_incorrect_password),
+                color = MaterialTheme.colorScheme.error,
+            )
         }
         OutlinedTextField(
             value = viewModel.confirmPassword,
@@ -140,7 +149,10 @@ private fun RegisterForm(
             isError = viewModel.displayConfirmPasswordError,
         )
         AnimatedVisibility(visible = viewModel.displayConfirmPasswordError) {
-            Text(stringResource(id = R.string.validation_incorrect_confirm_password), color = MaterialTheme.colorScheme.error)
+            Text(
+                stringResource(id = R.string.validation_incorrect_confirm_password),
+                color = MaterialTheme.colorScheme.error,
+            )
         }
         Button(
             onClick = { viewModel.onRegister(dismiss = { navigator.popBackStack() }) },

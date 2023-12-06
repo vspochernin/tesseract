@@ -21,7 +21,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -128,12 +128,11 @@ private fun LoginForm(
         Box(
             modifier = Modifier.padding(vertical = 16.dp),
         ) {
-            Divider(modifier = Modifier.align(Alignment.Center))
+            HorizontalDivider(modifier = Modifier.align(Alignment.Center))
             Text(
                 stringResource(id = R.string.login_screen_or_with_login),
                 style = MaterialTheme.typography.labelMedium,
-                modifier =
-                Modifier
+                modifier = Modifier
                     .align(Alignment.Center)
                     .background(MaterialTheme.colorScheme.background)
                     .padding(horizontal = 16.dp),
@@ -165,7 +164,10 @@ private fun LoginForm(
             enabled = isSignInEnabled,
         ) {
             if (isLoggingIn) {
-                CircularProgressIndicator(Modifier.size(16.dp), color = MaterialTheme.colorScheme.onBackground)
+                CircularProgressIndicator(
+                    Modifier.size(16.dp),
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
             } else {
                 Text(text = stringResource(id = R.string.login_screen_login_button))
             }

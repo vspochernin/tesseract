@@ -21,8 +21,8 @@ class ChangePasswordViewModel(
     var oldPassword by mutableStateOf("")
     var password by mutableStateOf("")
     var confirmPassword by mutableStateOf("")
-    var allowError by mutableStateOf(false)
-    var isChangingPassword by mutableStateOf(false)
+    private var allowError by mutableStateOf(false)
+    private var isChangingPassword by mutableStateOf(false)
     val isButtonEnabled by derivedStateOf {
         !isChangingPassword &&
                 oldPassword.isNotEmpty() &&
