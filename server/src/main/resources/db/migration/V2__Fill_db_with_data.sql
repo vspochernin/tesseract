@@ -350,11 +350,11 @@ VALUES (20, 5010000, '2023-11-12 00:00:00+03');
 --другой наполненным (несколько избранных и хотя бы одна диверсификация).
 -- пустой
 INSERT INTO users(login, email, password)
-VALUES ('vspochernin', 'vspochernin@gmail.com', '$2y$10$YvrT6vrC2Po85mXYPZ4lL.sAQ8Mef5D2j4X9.N8pNf8lP4T.UIeXG');
+VALUES ('vspochernin', 'vspochernin@gmail.com', '$2a$10$SGRw6G/5NR5WBIRJjq2HJuVFQSJsfK.dDjPx2pWYDENOWUOXCDoVy');
 
 --полный (будет две диверсификации + четыре избранных)
 INSERT INTO users(login, email, password)
-VALUES ('vrazukrantov', 'vrazbusiness@mail.ru', '$2y$10$YvrT6vrC2Po85mXYPZ4lL.sAQ8Mef5D2j4X9.N8pNf8lP4T.UIeXG');
+VALUES ('vrazukrantov', 'vrazbusiness@mail.ru', '$2a$10$SGRw6G/5NR5WBIRJjq2HJuVFQSJsfK.dDjPx2pWYDENOWUOXCDoVy');
 
 -- Добавляем данные в таблицу связи пользователей и активов (избранные)
 INSERT INTO users_assets(user_id, asset_id)

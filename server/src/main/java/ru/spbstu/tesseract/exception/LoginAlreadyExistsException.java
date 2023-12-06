@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.exceptions;
+package ru.spbstu.tesseract.exception;
 
 public class LoginAlreadyExistsException extends TesseractException {
 

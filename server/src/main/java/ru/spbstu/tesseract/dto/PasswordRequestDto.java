@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.auth;
+package ru.spbstu.tesseract.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,13 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class PasswordRequestDto {
 
     @NotNull
-    private String login;
+    private String oldPassword;
     @NotNull
-    // @Email TODO: add annotation in prod.
-    private String email;
-    @NotNull
-    private String password;
+    private String newPassword;
 }

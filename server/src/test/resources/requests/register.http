@@ -1,3 +1,4 @@
+# Корректные данные.
 POST http://localhost:8080/api/v1/register
 Content-Type: application/json
 
@@ -6,3 +7,40 @@ Content-Type: application/json
   "email": "newUserEmail",
   "password": "newUserPass123"
 }
+
+###
+
+# Некорректный логин.
+POST http://localhost:8080/api/v1/register
+Content-Type: application/json
+
+{
+    "login": "a",
+    "email": "newUserEmail",
+    "password": "newUserPass123"
+}
+
+###
+
+# Некорректный пароль.
+POST http://localhost:8080/api/v1/register
+Content-Type: application/json
+
+{
+    "login": "newUserLogin",
+    "email": "newUserEmail",
+    "password": "a"
+}
+
+###
+
+# Некорректное тело.
+POST http://localhost:8080/api/v1/register
+Content-Type: application/json
+
+
+{
+    "incorrect": "body"
+}
+
+###
