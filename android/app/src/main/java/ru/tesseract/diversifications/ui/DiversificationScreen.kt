@@ -24,7 +24,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ru.tesseract.R
-import ru.tesseract.diversifications.domain.RiskTolerance
+import ru.tesseract.diversifications.domain.RiskLevel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
@@ -59,7 +59,7 @@ fun DiversificationScreen(
         ) {
             Date(diversification.date)
             Divider(modifier = Modifier.padding(16.dp))
-            RiskTolerance(diversification.riskTolerance)
+            RiskLevel(diversification.riskLevel)
             Divider(modifier = Modifier.padding(16.dp))
             DiversificationSum(diversification.sum)
             Divider(modifier = Modifier.padding(16.dp))
@@ -100,14 +100,14 @@ private fun DiversificationSum(sum: String) {
 }
 
 @Composable
-fun RiskTolerance(riskTolerance: RiskTolerance) {
+fun RiskLevel(riskLevel: RiskLevel) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = stringResource(id = R.string.risk_tolerance),
             style = MaterialTheme.typography.labelLarge,
         )
         Text(
-            text = stringResource(id = riskTolerance.resId),
+            text = stringResource(id = riskLevel.resId),
             style = MaterialTheme.typography.headlineSmall,
         )
     }

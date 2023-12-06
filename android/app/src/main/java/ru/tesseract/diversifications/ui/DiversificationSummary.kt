@@ -38,7 +38,7 @@ fun DiversificationSummary(
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    stringResource(id = diversification.riskTolerance.explicitResId),
+                    stringResource(id = diversification.riskLevel.explicitResId),
                     style = MaterialTheme.typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis,
                 )

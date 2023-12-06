@@ -30,20 +30,20 @@ import ru.tesseract.R
 import ru.tesseract.destinations.DiversificationScreenDestination
 import ru.tesseract.destinations.NewDiversificationScreenDestination
 import ru.tesseract.diversifications.domain.Diversification
-import ru.tesseract.diversifications.domain.RiskTolerance
+import ru.tesseract.diversifications.domain.RiskLevel
 
 val sampleDiversifications =
     listOf(
         Diversification(
             id = 0,
             date = "8 октября 2023 12:01",
-            riskTolerance = RiskTolerance.Medium,
+            riskLevel = RiskLevel.Medium,
             sum = "5000.00 ₽",
         ),
         Diversification(
             id = 1,
             date = "8 октября 2023 12:04",
-            riskTolerance = RiskTolerance.Low,
+            riskLevel = RiskLevel.Low,
             sum = "25000.00 ₽",
         ),
     )
