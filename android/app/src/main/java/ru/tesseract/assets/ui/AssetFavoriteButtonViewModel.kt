@@ -11,7 +11,6 @@ import kotlinx.coroutines.sync.Mutex
 import org.koin.core.annotation.Factory
 import ru.tesseract.api.onFailure
 import ru.tesseract.assets.api.AssetsApi
-import ru.tesseract.assets.domain.GeneralAssetInfo
 
 @Factory
 class AssetFavoriteButtonViewModel(

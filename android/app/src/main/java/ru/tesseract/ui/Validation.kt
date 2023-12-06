@@ -21,6 +21,11 @@ object Validation {
         return '@' in value
     }
 
+    fun isDiversificationAmountValid(value: String): Boolean {
+        val amount = value.toIntOrNull() ?: return false
+        return amount in 1..1_000_000
+    }
+
     fun isConfirmPasswordValid(a: String, b: String) = a == b
 
     private fun Char.isLatinLetter() = this in 'a'..'z' || this in 'A'..'Z'

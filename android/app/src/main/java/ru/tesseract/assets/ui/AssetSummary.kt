@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +30,7 @@ fun DiversificationAssetSummary(
     modifier: Modifier = Modifier,
 ) {
     AssetSummary(
+        key = asset,
         id = asset.id,
         title = asset.title,
         companyTitle = asset.companyTitle,
@@ -54,6 +54,7 @@ fun AssetSummaryWithChange(
     modifier: Modifier = Modifier,
 ) {
     AssetSummary(
+        key = asset,
         id = asset.id,
         title = asset.title,
         companyTitle = asset.companyTitle,
@@ -69,6 +70,7 @@ fun AssetSummaryWithChange(
 
 @Composable
 private fun AssetSummary(
+    key: Any,
     id: Int,
     title: String,
     companyTitle: String,
@@ -79,7 +81,7 @@ private fun AssetSummary(
     modifier: Modifier = Modifier,
 ) {
     val koin = getKoin()
-    val viewModel: AssetFavoriteButtonViewModel = viewModelScoped(key = id) {
+    val viewModel: AssetFavoriteButtonViewModel = viewModelScoped(key = key) {
         koin.get { parametersOf(id, isFavorite) }
     }
     Column(modifier = modifier.clickable(onClick = onClick)) {

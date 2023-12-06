@@ -5,10 +5,10 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.PieChart
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -43,7 +43,11 @@ enum class MainNavigationBarItem(
     val icon: ImageVector,
     @StringRes val label: Int,
 ) {
-    Assets(AssetsScreenDestination, Icons.Default.TrendingUp, R.string.navigation_assets),
+    Assets(
+        AssetsScreenDestination,
+        Icons.AutoMirrored.Filled.TrendingUp,
+        R.string.navigation_assets,
+    ),
     Favorites(FavoritesScreenDestination, Icons.Default.Favorite, R.string.navigation_favorites),
     Diversifications(
         DiversificationsScreenDestination,

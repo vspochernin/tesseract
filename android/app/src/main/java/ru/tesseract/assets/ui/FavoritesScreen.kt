@@ -43,7 +43,7 @@ fun FavoritesScreen(navigator: DestinationsNavigator, viewModel: FavoritesViewMo
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
-            items(assets.itemSnapshotList) { asset ->
+            items(assets.itemSnapshotList, key = { it?.id ?: -1 }) { asset ->
                 if (asset != null) {
                     AssetSummaryWithChange(
                         asset = asset,

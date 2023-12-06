@@ -71,7 +71,7 @@ fun DiversificationsScreen(
                     }
                 }
             }
-            items(diversifications.itemSnapshotList) {
+            items(diversifications.itemSnapshotList, key = { it?.id ?: -1 }) {
                 if (it != null) {
                     DiversificationSummary(
                         diversification = it,

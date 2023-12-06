@@ -43,7 +43,7 @@ fun AssetsScreen(navigator: DestinationsNavigator, viewModel: AssetsViewModel = 
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
-            items(assets.itemSnapshotList, key = { it?.id ?: 0 }) { asset ->
+            items(assets.itemSnapshotList, key = { it?.id ?: -1 }) { asset ->
                 if (asset != null) {
                     AssetSummaryWithChange(
                         asset = asset,

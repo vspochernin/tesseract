@@ -20,6 +20,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -217,13 +218,11 @@ private fun ThemeDialog(
     dismiss: () -> Unit,
 ) {
     BasicAlertDialog(onDismissRequest = { dismiss() }) {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
-            shape = MaterialTheme.shapes.large,
-        ) {
+        Surface(shape = MaterialTheme.shapes.large) {
             Column {
                 ThemeSetting.entries.forEach { setting ->
                     ListItem(
+                        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                         headlineContent = {
                             Text(stringResource(id = setting.displayName))
                         },

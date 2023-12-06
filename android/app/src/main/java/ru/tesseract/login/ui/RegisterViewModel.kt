@@ -29,10 +29,10 @@ class RegisterViewModel(
                 confirmPassword.isNotEmpty()
     }
 
-    var allowLoginError by mutableStateOf(false)
-    var allowEmailError by mutableStateOf(false)
-    var allowPasswordError by mutableStateOf(false)
-    var allowConfirmPasswordError by mutableStateOf(false)
+    private var allowLoginError by mutableStateOf(false)
+    private var allowEmailError by mutableStateOf(false)
+    private var allowPasswordError by mutableStateOf(false)
+    private var allowConfirmPasswordError by mutableStateOf(false)
 
     private val isLoginValid by derivedStateOf { Validation.isLoginValid(login) }
     private val isEmailValid by derivedStateOf { Validation.isEmailValid(email) }
