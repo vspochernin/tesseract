@@ -117,7 +117,11 @@ fun NewDiversificationScreen(
                 }
             }
             Button(
-                onClick = { viewModel.onCreate { navigator.popBackStack() } },
+                onClick = {
+                    viewModel.onCreate {
+                        navigator.popBackStack()
+                    }
+                },
                 modifier = Modifier.align(Alignment.End),
                 enabled = viewModel.isButtonEnabled,
             ) {

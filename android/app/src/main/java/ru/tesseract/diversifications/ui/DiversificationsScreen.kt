@@ -1,5 +1,6 @@
 package ru.tesseract.diversifications.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.getKoin
 import ru.tesseract.R
 import ru.tesseract.destinations.DiversificationScreenDestination
 import ru.tesseract.destinations.NewDiversificationScreenDestination
@@ -74,7 +76,7 @@ fun DiversificationsScreen(
                     }
                 }
             }
-            items(diversifications.itemSnapshotList) {
+            items(diversifications.itemSnapshotList, key = { it?.id ?: -1 }) {
                 if (it != null) {
                     DiversificationSummary(
                         diversification = it,

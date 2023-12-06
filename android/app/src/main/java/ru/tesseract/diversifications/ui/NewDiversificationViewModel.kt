@@ -26,7 +26,7 @@ class NewDiversificationViewModel(
     private val isValid by derivedStateOf { isAmountValid && riskLevel != null }
     val isButtonEnabled by derivedStateOf { isValid && !isLoading }
 
-    fun onCreate(dismiss: () -> Unit) = viewModelScope.launch {
+    fun onCreate(dismiss: suspend () -> Unit) = viewModelScope.launch {
         if (isLoading || !isValid) return@launch
         val amount = amountField.toIntOrNull() ?: return@launch
         val riskLevel = riskLevel ?: return@launch
