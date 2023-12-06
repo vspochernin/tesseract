@@ -66,4 +66,8 @@
     <string name="settings_screen_password_changed">Пароль успешно изменён</string>
     <string name="error_not_found">Ресурс не найден</string>
     <string name="error_password_does_not_match">Неправильный пароль</string>
+    <string name="error_too_big_amount">Сумма не может быть больше 1000000</string>
+    <string name="validation_invalid_amount">Сумма должна быть целым числом не более 1000000</string>
+    <string name="error_no_assets_with_such_risk">На данный момент отсутствуют активы с выбранным типом рискованности</string>
+    <string name="error_too_little_amount">Запрашиваемая сумма диверсификации меньше минимальной стоимости актива выбранной рискованности</string>
 </resources>
