@@ -230,6 +230,8 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
+        '404':
+          description: Отсутствуют активы с выбранным типом рискованности
   /diversifications/{id}:
     get:
       tags:

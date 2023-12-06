@@ -15,3 +15,51 @@ GET http://localhost:8080/api/v1/diversifications/1001
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
 
 ###
+
+# Создать диверсификацию - корректные данные.
+POST http://localhost:8080/api/v1/diversifications
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Content-Type: application/json
+
+{
+    "amount": 50000000,
+    "riskTypeId": 3
+}
+
+###
+
+# Создать диверсификацию - слишком большая сумма.
+POST http://localhost:8080/api/v1/diversifications
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Content-Type: application/json
+
+{
+    "amount": 500000000,
+    "riskTypeId": 3
+}
+
+###
+
+# Создать диверсификацию - слишком малая сумма.
+POST http://localhost:8080/api/v1/diversifications
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Content-Type: application/json
+
+{
+    "amount": 1,
+    "riskTypeId": 3
+}
+
+###
+
+# Создать диверсификацию - некорректный запрос.
+POST http://localhost:8080/api/v1/diversifications
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Content-Type: application/json
+
+{
+    "amount": "qwe",
+    "riskTypeId": 3
+}
+
+###

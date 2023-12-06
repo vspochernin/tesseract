@@ -1,9 +1,9 @@
 package ru.spbstu.tesseract.entity;
 
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -49,7 +49,7 @@ public class Diversification {
             ZonedDateTime createDatetime,
             RiskType riskType,
             int amount,
-            DiversificationAsset... diversificationsAssets)
+            List<DiversificationAsset> diversificationsAssets)
     {
         this.user = user;
         this.createDatetime = createDatetime;
@@ -58,7 +58,6 @@ public class Diversification {
         for (DiversificationAsset diversificationAsset : diversificationsAssets) {
             diversificationAsset.setDiversification(this);
         }
-        this.diversificationAssetSet = Stream.of(diversificationsAssets)
-                .collect(Collectors.toSet());
+        this.diversificationAssetSet = new HashSet<>(diversificationsAssets);
     }
 }

@@ -56,7 +56,7 @@ public class Asset {
     }
 
     public RiskType getRiskType() {
-        // TODO: will be implemented in 48.
+        // TODO: mock, will be implemented in 48.
 
         return RiskType.getById(id % RiskType.values().length);
     }
