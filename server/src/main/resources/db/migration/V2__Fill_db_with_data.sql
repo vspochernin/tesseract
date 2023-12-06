@@ -203,6 +203,9 @@ INSERT INTO prices(asset_id, price, set_datetime)
 VALUES (2, 10000000, '2023-11-23 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
+VALUES (3, 9900000, '2023-11-10 00:00:00+03');
+
+INSERT INTO prices(asset_id, price, set_datetime)
 VALUES (3, 10000000, '2023-12-10 00:00:00+03');
 
 INSERT INTO prices(asset_id, price, set_datetime)
@@ -372,7 +375,7 @@ VALUES (2, 2);
 -- Добавляем данные в таблицу диверсификаций diversifications 
 -- диверсификация: комбинированная
 INSERT INTO diversifications(user_id, create_datetime, risk_type_id, amount)
-VALUES (2, '2023-12-27 00:00:00+03', 3, 5000000);
+VALUES (1, '2023-12-27 00:00:00+03', 3, 5000000);
 
 -- update diversifications set amount = 100000 where id=2
 -- диверсификация: низкорискованная

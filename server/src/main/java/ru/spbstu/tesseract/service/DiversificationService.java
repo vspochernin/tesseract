@@ -23,43 +23,18 @@ import ru.spbstu.tesseract.exception.TooBigAmountException;
 import ru.spbstu.tesseract.exception.TooLittleAmountException;
 import ru.spbstu.tesseract.repository.AssetRepository;
 import ru.spbstu.tesseract.repository.DiversificationRepository;
-import ru.spbstu.tesseract.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
 public class DiversificationService {
 
     private final DiversificationRepository diversificationRepository;
-    private final UserRepository userRepository;
     private final AssetRepository assetRepository;
 
-    public List<Diversification> getAllDiversifications() {
-        return diversificationRepository.findAll();
-    }
-
-    public void addDiversification() {
-        User user = userRepository.getReferenceById(1);
-
-        Asset asset1 = assetRepository.getReferenceById(1);
-        Asset asset2 = assetRepository.getReferenceById(2);
-        Asset asset3 = assetRepository.getReferenceById(3);
-
-        Diversification diversification = new Diversification(
-                user,
-                ZonedDateTime.now(),
-                RiskType.HIGH,
-                123456,
-                List.of(
-                        new DiversificationAsset(asset1, 1123),
-                        new DiversificationAsset(asset2, 2123),
-                        new DiversificationAsset(asset3, 3123)));
-
-        diversificationRepository.save(diversification);
-    }
-
     public List<DiversificationShortDto> getDiversifications(int pageNumber, int pageSize) {
+        User currentUser = User.getCurrentUser();
         Slice<Diversification> diversifications =
-                diversificationRepository.findBy(PageRequest.of(pageNumber, pageSize));
+                diversificationRepository.findAllByUser(currentUser, PageRequest.of(pageNumber, pageSize));
 
         return diversifications.getContent().stream()
                 .map(DiversificationShortDto::fromDiversification)
@@ -67,7 +42,9 @@ public class DiversificationService {
     }
 
     public DiversificationLongDto getDiversification(int diversificationId) {
-        Optional<Diversification> diversificationO = diversificationRepository.findById(diversificationId);
+        User currentUser = User.getCurrentUser();
+        Optional<Diversification> diversificationO =
+                diversificationRepository.findByIdAndUser(diversificationId, currentUser);
 
         return diversificationO
                 .map(DiversificationLongDto::fromDiversification)
