@@ -1,7 +1,6 @@
 package ru.tesseract.api
 
 import kotlinx.serialization.Serializable
-import java.lang.Exception
 
 sealed class ApiResponse<out T> {
     data class Success<out T>(val data: T) : ApiResponse<T>()

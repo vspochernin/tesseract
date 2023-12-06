@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import org.koin.core.annotation.Factory
 import ru.tesseract.LoginState
-import ru.tesseract.api.ApiClient
 
 @Factory
 class RootViewModel(
