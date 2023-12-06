@@ -32,5 +32,14 @@ enum class ApiErrorType(@StringRes val message: Int) {
     NotFound(R.string.error_not_found),
 
     @SerialName("PASSWORD_DOES_NOT_MATCH")
-    PasswordDoesNotMatch(R.string.error_password_does_not_match)
+    PasswordDoesNotMatch(R.string.error_password_does_not_match),
+
+    @SerialName("TOO_BIG_AMOUNT")
+    TooBigAmount(R.string.error_too_big_amount),
+
+    @SerialName("NO_ASSETS_WITH_SUCH_RISK_TYPE")
+    NoAssetsWithSuchRiskType(R.string.error_no_assets_with_such_risk),
+
+    @SerialName("TOO_LITTLE_AMOUNT")
+    TooLittleAmount(R.string.error_too_little_amount),
 }
