@@ -10,11 +10,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
 import ru.tesseract.api.onSuccess
 import ru.tesseract.login.api.RegisterApi
-
-private val SpecialSymbols = setOf(
-    '!', '@', '#', '$', '%', '&', '*', '(', ')', '-', '_', '+', '=',
-    ';', ':', ',', '.', '/', '?', '\\', '|', '[', ']', '{', '}',
-)
+import ru.tesseract.ui.Validation
 
 @Factory
 class RegisterViewModel(
@@ -38,20 +34,11 @@ class RegisterViewModel(
     var allowPasswordError by mutableStateOf(false)
     var allowConfirmPasswordError by mutableStateOf(false)
 
-    private val isLoginValid by derivedStateOf {
-        login.length in 3..16 && login.all { it.isLatinLetter() || it.isDigit() }
-    }
-    private val isEmailValid by derivedStateOf {
-        '@' in email
-    }
-    private val isPasswordValid by derivedStateOf {
-        password.length in 6..30 &&
-                password.all { it.isLatinLetter() || it.isDigit() || it.isSpecialSymbol() } &&
-                password.any { it.isLatinLetter() } &&
-                password.any { it.isDigit() || it.isSpecialSymbol() }
-    }
+    private val isLoginValid by derivedStateOf { Validation.isLoginValid(login) }
+    private val isEmailValid by derivedStateOf { Validation.isEmailValid(email) }
+    private val isPasswordValid by derivedStateOf { Validation.isPasswordValid(password) }
     private val isConfirmPasswordValid by derivedStateOf {
-        password == confirmPassword
+        Validation.isConfirmPasswordValid(password, confirmPassword)
     }
 
     val displayLoginError by derivedStateOf { !isLoginValid && allowLoginError }
@@ -72,7 +59,4 @@ class RegisterViewModel(
             isRegistering = false
         }
     }
-
-    private fun Char.isLatinLetter() = this in 'a'..'z' || this in 'A'..'Z'
-    private fun Char.isSpecialSymbol() = this in SpecialSymbols
 }

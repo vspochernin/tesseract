@@ -31,6 +31,7 @@
     <string name="settings_screen_confirm_new_password">Confirm new password</string>
     <string name="settings_screen_change_password_button">Change password</string>
     <string name="settings_screen_change_password">Change password</string>
+    <string name="settings_screen_password_changed">Password changed successfully</string>
     <string name="asset_screen_title">Asset details</string>
     <string name="asset_screen_organization">Organization</string>
     <string name="asset_screen_price">Price</string>
@@ -58,8 +59,10 @@
     <string name="error_incorrect_password">Incorrect password</string>
     <string name="error_bad_credentials">Incorrect login or password</string>
     <string name="error_bad_request_body">Bad request</string>
+    <string name="error_not_found">Not found</string>
+    <string name="error_password_does_not_match">Incorrect password</string>
     <string name="error_network_error">Network error</string>
-    <string name="error_dismiss">OK</string>
+    <string name="ok">OK</string>
     <string name="validation_incorrect_confirm_password">Password confirmation doesn\'t match</string>
     <string name="validation_invalid_email">Invalid email</string>
 </resources>

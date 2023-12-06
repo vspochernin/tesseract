@@ -1,5 +1,6 @@
 package ru.tesseract.settings.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,11 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +25,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,8 +34,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -73,7 +82,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) {
 
 @Composable
 private fun HeadingItem(text: String) {
-    Divider(color = MaterialTheme.colorScheme.outlineVariant)
+    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
     Text(
         text = text,
         style = MaterialTheme.typography.titleLarge,
@@ -83,11 +92,23 @@ private fun HeadingItem(text: String) {
 }
 
 @Composable
-private fun ChangePasswordItem() {
+private fun ChangePasswordItem(viewModel: ChangePasswordViewModel = koinViewModel()) {
+    if (viewModel.showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = { viewModel.showSuccessDialog = false },
+            confirmButton = {
+                TextButton(onClick = { viewModel.showSuccessDialog = false }) {
+                    Text(text = stringResource(id = R.string.ok))
+                }
+            },
+            text = { Text(text = stringResource(id = R.string.settings_screen_password_changed)) },
+        )
+    }
     Column(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        val focusManager = LocalFocusManager.current
         val textFieldModifier = Modifier.fillMaxWidth()
         Text(
             stringResource(id = R.string.settings_screen_change_password),
@@ -95,23 +116,46 @@ private fun ChangePasswordItem() {
         )
         OutlinedTextField(
             label = { Text(stringResource(id = R.string.settings_screen_old_password)) },
-            value = "",
-            onValueChange = {},
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
+            visualTransformation = PasswordVisualTransformation(),
+            value = viewModel.oldPassword,
+            onValueChange = { viewModel.oldPassword = it },
             modifier = textFieldModifier,
         )
         OutlinedTextField(
-            label = { Text(stringResource(id = R.string.settings_screen_new_password)) },
-            value = "",
-            onValueChange = {},
+            value = viewModel.password,
+            onValueChange = { viewModel.password = it },
+            label = { Text(stringResource(id = R.string.login_password_field)) },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
+            visualTransformation = PasswordVisualTransformation(),
             modifier = textFieldModifier,
+            isError = viewModel.displayPasswordError,
         )
+        AnimatedVisibility(visible = viewModel.displayPasswordError) {
+            Text(stringResource(id = R.string.error_incorrect_password), color = MaterialTheme.colorScheme.error)
+        }
         OutlinedTextField(
-            label = { Text(stringResource(id = R.string.settings_screen_confirm_new_password)) },
-            value = "",
-            onValueChange = {},
+            value = viewModel.confirmPassword,
+            onValueChange = { viewModel.confirmPassword = it },
+            label = { Text(stringResource(id = R.string.registration_screen_confirm_password_field)) },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrect = false),
+            visualTransformation = PasswordVisualTransformation(),
             modifier = textFieldModifier,
+            isError = viewModel.displayConfirmPasswordError,
         )
-        Button(onClick = { /*TODO*/ }, enabled = false, modifier = Modifier.align(Alignment.End)) {
+        AnimatedVisibility(visible = viewModel.displayConfirmPasswordError) {
+            Text(stringResource(id = R.string.validation_incorrect_confirm_password), color = MaterialTheme.colorScheme.error)
+        }
+        Button(
+            onClick = { viewModel.onChange() },
+            enabled = viewModel.isButtonEnabled,
+            modifier = Modifier.align(Alignment.End),
+        ) {
             Text(stringResource(id = R.string.settings_screen_change_password_button))
         }
     }
@@ -121,8 +165,7 @@ private fun ChangePasswordItem() {
 private fun LogOutItem(onClick: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier =
-        Modifier
+        modifier = Modifier
             .clickable(onClick = onClick)
             .defaultMinSize(minHeight = 48.dp)
             .fillMaxWidth(),
@@ -151,8 +194,7 @@ private fun ThemeItem(
             .defaultMinSize(minHeight = 48.dp),
     ) {
         Column(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .weight(1f)
                 .padding(16.dp),
         ) {
@@ -174,10 +216,10 @@ private fun ThemeDialog(
     setValue: (ThemeSetting) -> Unit,
     dismiss: () -> Unit,
 ) {
-    AlertDialog(onDismissRequest = { dismiss() }) {
+    BasicAlertDialog(onDismissRequest = { dismiss() }) {
         Surface(
             color = MaterialTheme.colorScheme.background,
-            shape = MaterialTheme.shapes.large
+            shape = MaterialTheme.shapes.large,
         ) {
             Column {
                 ThemeSetting.entries.forEach { setting ->
