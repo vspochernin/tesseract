@@ -40,7 +40,7 @@ fun ErrorHandling(viewModel: ErrorHandlingViewModel = koinViewModel()) {
             },
             confirmButton = {
                 TextButton(onClick = { error = null }) {
-                    Text(stringResource(id = R.string.error_dismiss))
+                    Text(stringResource(id = R.string.ok))
                 }
             },
         )

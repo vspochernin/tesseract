@@ -27,4 +27,10 @@ enum class ApiErrorType(@StringRes val message: Int) {
 
     @SerialName("BAD_REQUEST_BODY")
     BadRequestBody(R.string.error_bad_request_body),
+
+    @SerialName("NOT_FOUND")
+    NotFound(R.string.error_not_found),
+
+    @SerialName("PASSWORD_DOES_NOT_MATCH")
+    PasswordDoesNotMatch(R.string.error_password_does_not_match)
 }
