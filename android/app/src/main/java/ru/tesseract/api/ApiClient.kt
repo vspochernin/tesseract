@@ -39,7 +39,7 @@ class ApiClient(val httpClient: HttpClient, val loginState: LoginState) {
 
     suspend inline fun <reified T> post(
         url: String,
-        block: HttpRequestBuilder.() -> Unit,
+        block: HttpRequestBuilder.() -> Unit = {},
     ): ApiResponse<T> = request(url) {
         method = HttpMethod.Post
         block()
@@ -47,7 +47,7 @@ class ApiClient(val httpClient: HttpClient, val loginState: LoginState) {
 
     suspend inline fun <reified T> get(
         url: String,
-        block: HttpRequestBuilder.() -> Unit,
+        block: HttpRequestBuilder.() -> Unit = {},
     ): ApiResponse<T> = request(url) {
         method = HttpMethod.Get
         block()
@@ -55,7 +55,7 @@ class ApiClient(val httpClient: HttpClient, val loginState: LoginState) {
 
     suspend inline fun <reified T> put(
         url: String,
-        block: HttpRequestBuilder.() -> Unit,
+        block: HttpRequestBuilder.() -> Unit = {},
     ): ApiResponse<T> = request(url) {
         method = HttpMethod.Put
         block()
@@ -63,7 +63,7 @@ class ApiClient(val httpClient: HttpClient, val loginState: LoginState) {
 
     suspend inline fun <reified T> delete(
         url: String,
-        block: HttpRequestBuilder.() -> Unit,
+        block: HttpRequestBuilder.() -> Unit = {},
     ): ApiResponse<T> = request(url) {
         method = HttpMethod.Delete
         block()

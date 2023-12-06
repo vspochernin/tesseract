@@ -3,7 +3,7 @@ package ru.tesseract.diversifications.domain
 import androidx.annotation.StringRes
 import ru.tesseract.R
 
-enum class RiskTolerance(
+enum class RiskLevel(
     @StringRes val resId: Int,
     @StringRes val explicitResId: Int,
 ) {
@@ -16,6 +16,6 @@ enum class RiskTolerance(
 data class Diversification(
     val id: Long,
     val date: String,
-    val riskTolerance: RiskTolerance,
+    val riskLevel: RiskLevel,
     val sum: String,
 )
