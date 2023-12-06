@@ -19,7 +19,7 @@ enum class RiskLevel(
 @Serializable
 data class Diversification(
     @SerialName("diversificationId")
-    val id: Long,
+    val id: Int,
     @SerialName("createDatetime")
     val at: Instant,
     @SerialName("riskTypeId")

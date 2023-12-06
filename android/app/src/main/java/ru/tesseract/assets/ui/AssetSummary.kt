@@ -21,20 +21,24 @@ import org.koin.compose.getKoin
 import org.koin.core.parameter.parametersOf
 import ru.tesseract.R
 import ru.tesseract.assets.domain.GeneralAssetInfo
+import ru.tesseract.diversifications.domain.DiversificationAsset
 import ru.tesseract.ui.FavoriteIcon
 
 @Composable
 fun DiversificationAssetSummary(
-    asset: GeneralAssetInfo,
-    quantity: Int,
+    asset: DiversificationAsset,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AssetSummary(
-        asset = asset,
+        id = asset.id,
+        title = asset.title,
+        companyTitle = asset.companyTitle,
+        price = asset.oldPrice,
+        isFavorite = asset.isFavorite,
         additionalInfo = {
             Text(
-                text = stringResource(id = R.string.asset_quantity, quantity),
+                text = stringResource(id = R.string.asset_quantity, asset.count),
                 style = MaterialTheme.typography.titleSmall,
             )
         },
@@ -50,7 +54,11 @@ fun AssetSummaryWithChange(
     modifier: Modifier = Modifier,
 ) {
     AssetSummary(
-        asset = asset,
+        id = asset.id,
+        title = asset.title,
+        companyTitle = asset.companyTitle,
+        price = asset.price,
+        isFavorite = asset.isFavorite,
         additionalInfo = {
             Text(asset.annotatedPriceDiff(), style = MaterialTheme.typography.titleMedium)
         },
@@ -61,13 +69,19 @@ fun AssetSummaryWithChange(
 
 @Composable
 private fun AssetSummary(
-    asset: GeneralAssetInfo,
+    id: Int,
+    title: String,
+    companyTitle: String,
+    price: Int,
+    isFavorite: Boolean,
     additionalInfo: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val koin = getKoin()
-    val viewModel: AssetFavoriteButtonViewModel = viewModelScoped(key = asset) { koin.get { parametersOf(asset) } }
+    val viewModel: AssetFavoriteButtonViewModel = viewModelScoped(key = id) {
+        koin.get { parametersOf(id, isFavorite) }
+    }
     Column(modifier = modifier.clickable(onClick = onClick)) {
         Row(
             modifier = Modifier
@@ -81,20 +95,20 @@ private fun AssetSummary(
             }
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    asset.title,
+                    title,
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    asset.companyTitle,
+                    companyTitle,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
             Column(horizontalAlignment = Alignment.End) {
-                Text(formatPrice(asset.price), style = MaterialTheme.typography.titleMedium)
+                Text(formatPrice(price), style = MaterialTheme.typography.titleMedium)
                 additionalInfo()
             }
         }
