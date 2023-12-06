@@ -34,7 +34,7 @@ fun DiversificationScreen(
     diversificationId: Long,
     navigator: DestinationsNavigator,
 ) {
-    val diversification = sampleDiversifications.first { it.id == diversificationId }
+    val diversification = TODO()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
@@ -57,11 +57,11 @@ fun DiversificationScreen(
                     .padding(padding)
                     .padding(vertical = 16.dp),
         ) {
-            Date(diversification.date)
+            Date(TODO())
             Divider(modifier = Modifier.padding(16.dp))
-            RiskLevel(diversification.riskLevel)
+            RiskLevel(TODO())
             Divider(modifier = Modifier.padding(16.dp))
-            DiversificationSum(diversification.sum)
+            DiversificationSum(TODO())
             Divider(modifier = Modifier.padding(16.dp))
             DiversificationAssets(navigator)
         }

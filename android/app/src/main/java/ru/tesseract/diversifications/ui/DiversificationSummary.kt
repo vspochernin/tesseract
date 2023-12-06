@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.toJavaInstant
+import ru.tesseract.assets.ui.formatPrice
 import ru.tesseract.diversifications.domain.Diversification
+import ru.tesseract.diversifications.domain.riskLevel
+import ru.tesseract.ui.DefaultDateTimeFormatter
 
 @Composable
 fun DiversificationSummary(
@@ -24,15 +28,13 @@ fun DiversificationSummary(
 ) {
     Column(modifier = modifier.clickable(onClick = onClick)) {
         Row(
-            modifier =
-                Modifier
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    diversification.date,
+                    DefaultDateTimeFormatter.format(diversification.at.toJavaInstant()),
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
@@ -43,9 +45,9 @@ fun DiversificationSummary(
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-            Text(diversification.sum, style = MaterialTheme.typography.titleMedium)
+            Text(formatPrice(diversification.amount), style = MaterialTheme.typography.titleMedium)
         }
-        Divider(
+        HorizontalDivider(
             color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
             modifier = Modifier.padding(start = 16.dp),
         )

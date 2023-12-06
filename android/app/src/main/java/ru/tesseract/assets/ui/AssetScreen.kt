@@ -73,7 +73,7 @@ fun AssetScreen(
                 AssetDescription(title = asset.generalInfo.title, description = asset.description)
                 HorizontalDivider(modifier = Modifier.padding(16.dp))
                 Price(
-                    price = asset.generalInfo.formattedPrice(),
+                    price = formatPrice(asset.generalInfo.price),
                     priceDiff = asset.generalInfo.annotatedPriceDiff(),
                 )
                 HorizontalDivider(modifier = Modifier.padding(16.dp))
