@@ -21,7 +21,7 @@ public class Asset {
 
     private String title;
     private String description;
-    private Date releaseDatetime;
+    private ZonedDateTime releaseDatetime;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -46,7 +46,7 @@ public class Asset {
     }
 
     public int getAssetMonthPriceDiff(int currentPrice) {
-        return currentPrice - getAssetPriceMonthAgo().orElse(currentPrice);
+        return currentPrice - getOldPrice(ZonedDateTime.now().minusMonths(1)).orElse(currentPrice);
     }
 
     public boolean isAssetFavourite() {
@@ -61,11 +61,11 @@ public class Asset {
         return RiskType.getById(id % RiskType.values().length);
     }
 
-    private Optional<Integer> getAssetPriceMonthAgo() {
+    public Optional<Integer> getOldPrice(ZonedDateTime atTheMoment) {
         return prices.stream()
                 .filter(price -> price.getSetDatetime()
                         .toInstant()
-                        .isBefore(ZonedDateTime.now().minusMonths(1).toInstant()))
+                        .isBefore(atTheMoment.toInstant()))
                 .max(Comparator.comparing(Price::getSetDatetime))
                 .map(Price::getPrice);
     }
