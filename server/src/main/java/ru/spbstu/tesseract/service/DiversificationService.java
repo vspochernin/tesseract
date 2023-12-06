@@ -77,7 +77,7 @@ public class DiversificationService {
     public void createDiversification(CreateDiversificationRequestDto request) {
         int amount = request.getAmount();
 
-        if (amount > 1_000_000) {
+        if (amount > 100_000_000) {
             throw new TooBigAmountException();
         }
 
@@ -118,12 +118,14 @@ public class DiversificationService {
 
         User currentUser = User.getCurrentUser();
 
-        new Diversification(
+        Diversification createdDiversification = new Diversification(
                 currentUser,
                 ZonedDateTime.now(),
                 riskType,
                 actualAmount,
                 diversificationAssets
         );
+
+        diversificationRepository.save(createdDiversification);
     }
 }
