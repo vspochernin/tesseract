@@ -23,6 +23,7 @@ public class AssetDiversificationDto {
                 .oldPrice(asset.getOldPrice(diversification.getCreateDatetime())
                         .orElseThrow(() -> new NoSuchElementException("Cannot find price")))
                 .count(diversificationAsset.getCount())
+                .favouriteStatus(asset.isAssetFavourite())
                 .build();
     }
 
@@ -31,4 +32,5 @@ public class AssetDiversificationDto {
     private String companyTitle;
     private int oldPrice;
     private int count;
+    private boolean favouriteStatus;
 }

@@ -398,9 +398,11 @@ components:
           type: string
         oldPrice:
           type: integer
-          description: Старая цена актива (то есть цена на момент создания диверсификации), в копейках 
+          description: Старая цена актива (то есть цена на момент создания диверсификации), в копейках
         count:
           type: integer
+        favouriteStatus:
+          type: boolean
     SpecifiedDiversification:
       type: object
       properties:
