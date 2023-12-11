@@ -78,6 +78,7 @@ fun LoginScreen(
                 isSignInEnabled = viewModel.isSignInEnabled,
                 isLoggingIn = viewModel.isLoggingIn,
                 onLogin = viewModel::onLogin,
+                onGoogleLogin = viewModel::onGoogleLogin,
                 onRegister = { navigator.navigate(RegistrationScreenDestination) },
                 modifier = Modifier
                     .widthIn(max = 360.dp)
@@ -100,6 +101,7 @@ private fun LoginForm(
     isSignInEnabled: Boolean,
     isLoggingIn: Boolean,
     onLogin: () -> Unit,
+    onGoogleLogin: (String) -> Unit,
     onRegister: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -120,8 +122,8 @@ private fun LoginForm(
         )
         Spacer(Modifier.size(24.dp))
         GoogleSignInButton(
-            onTokenReceived = { onLogin() },
-            onDialogDismissed = { TODO() },
+            onTokenReceived = { onGoogleLogin(it) },
+            onDialogDismissed = { },
             enabled = true,
             modifier = Modifier.fillMaxWidth(),
         )

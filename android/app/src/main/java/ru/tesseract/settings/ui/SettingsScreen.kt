@@ -70,12 +70,15 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) {
                 .verticalScroll(rememberScrollState())
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
+            val state = viewModel.state
             ThemeItem(
-                value = viewModel.state.themeSetting,
+                value = state.themeSetting,
                 setValue = viewModel::onSetTheme,
             )
             HeadingItem(stringResource(id = R.string.settings_screen_account))
-            ChangePasswordItem()
+            if (state.allowChangingPassword) {
+                ChangePasswordItem()
+            }
             LogOutItem(onClick = viewModel::onLogOut)
         }
     }

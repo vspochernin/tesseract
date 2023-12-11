@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
+import ru.tesseract.LoginMethod
 import ru.tesseract.LoginState
 import ru.tesseract.api.ApiErrorType
 import ru.tesseract.api.onApiError
@@ -27,11 +28,19 @@ class LoginViewModel(
     fun onLogin() = viewModelScope.launch {
         isLoggingIn = true
         loginApi.login(login.value, password.value).onSuccess { response ->
-            loginState.setToken(response.token)
+            loginState.setToken(response.token, LoginMethod.Tesseract)
         }.onApiError { error ->
             if (error == ApiErrorType.BadCredentials) {
                 password.value = ""
             }
+        }
+        isLoggingIn = false
+    }
+
+    fun onGoogleLogin(token: String) = viewModelScope.launch {
+        isLoggingIn = true
+        loginApi.loginWithGoogle(token).onSuccess { response ->
+            loginState.setToken(response.token, LoginMethod.Google)
         }
         isLoggingIn = false
     }

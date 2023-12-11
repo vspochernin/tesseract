@@ -17,8 +17,16 @@ private class LoginRequest(
     val password: String,
 )
 
+@Serializable
+private class GoogleLoginRequest(
+    val token: String,
+)
+
 @Single
 class LoginApi(private val client: ApiClient) {
     suspend fun login(login: String, password: String): ApiResponse<LoginResponse> =
         client.post("login/tesseract") { setBody(LoginRequest(login, password)) }
+
+    suspend fun loginWithGoogle(token: String): ApiResponse<LoginResponse> =
+        client.post("login/google") { setBody(GoogleLoginRequest(token)) }
 }
