@@ -29,7 +29,7 @@ import com.google.android.gms.common.api.ApiException
 import ru.tesseract.R
 
 private const val ClientId =
-    "813296813934-87d70t4effnrot1fj30hjbc63ddld1g2.apps.googleusercontent.com"
+    "813296813934-67lfi6p0kqb1pv3pf3uqekj9hu7heuk9.apps.googleusercontent.com "
 
 @Composable
 fun GoogleSignInButton(
