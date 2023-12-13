@@ -17,33 +17,41 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.common.api.ApiException
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import kotlinx.coroutines.launch
 import ru.tesseract.R
 
 private const val ClientId =
-    "813296813934-67lfi6p0kqb1pv3pf3uqekj9hu7heuk9.apps.googleusercontent.com "
+    "813296813934-9dlvchpp3bnk8gt1h5seg19bkh5cn18d.apps.googleusercontent.com"
 
 @Composable
 fun GoogleSignInButton(
     onTokenReceived: (String) -> Unit,
-    onDialogDismissed: () -> Unit,
+    onFailure: (Exception) -> Unit,
     enabled: Boolean,
     modifier: Modifier,
 ) {
     val client = rememberSignInClient(
         onTokenReceived = onTokenReceived,
-        onDialogDismissed = onDialogDismissed,
+        onFailure = onFailure,
     )
+    val coroutineScope = rememberCoroutineScope()
     ElevatedButton(
-        onClick = client::signIn,
+        onClick = { coroutineScope.launch { client.signIn() } },
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
@@ -67,61 +75,48 @@ fun GoogleSignInButton(
 }
 
 private fun interface SignInClient {
-    fun signIn()
+    suspend fun signIn()
 }
 
 @Composable
 private fun rememberSignInClient(
     onTokenReceived: (String) -> Unit,
-    onDialogDismissed: () -> Unit,
+    onFailure: (Exception) -> Unit,
 ): SignInClient {
     val activity = LocalContext.current.findActivity()
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartIntentSenderForResult(),
-    ) { result ->
-        try {
-            if (result.resultCode == Activity.RESULT_OK) {
-                val client = Identity.getSignInClient(activity)
-                val credentials = client.getSignInCredentialFromIntent(result.data)
-                credentials.googleIdToken?.let { token ->
-                    onTokenReceived(token)
-                }
-            } else {
-                onDialogDismissed()
-            }
-        } catch (e: ApiException) {
-            onDialogDismissed()
-        }
-    }
+    val credentialManager = remember { CredentialManager.create(activity) }
     return remember(activity) {
         SignInClient {
-            val client = Identity.getSignInClient(activity)
-            val request = BeginSignInRequest.builder()
-                .setGoogleIdTokenRequestOptions(
-                    BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                        .setSupported(true)
-                        .setServerClientId(ClientId)
-                        .setFilterByAuthorizedAccounts(false)
-                        .build(),
-                )
-                .setAutoSelectEnabled(true)
+            val signInOption = GetSignInWithGoogleOption
+                .Builder(ClientId)
                 .build()
 
-            client.beginSignIn(request)
-                .addOnSuccessListener { result ->
-                    try {
-                        val intentSenderRequest = IntentSenderRequest
-                            .Builder(result.pendingIntent.intentSender).build()
-                        launcher.launch(intentSenderRequest)
-                    } catch (e: Exception) {
-                        Log.d("Google OAuth", "Couldn't launch Google Sign In", e)
-                        onDialogDismissed()
-                    }
+            val request = GetCredentialRequest.Builder()
+                .addCredentialOption(signInOption)
+                .build()
+
+            try {
+                val result = credentialManager.getCredential(
+                    request = request,
+                    context = activity,
+                )
+                val credential = result.credential
+                if (credential !is CustomCredential || credential.type != TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                    Log.e("Google OAuth", "Unexpected credential type")
+                    return@SignInClient
                 }
-                .addOnFailureListener { e ->
-                    Log.d("Google OAuth", "Couldn't launch Google Sign In", e)
-                    onDialogDismissed()
+                try {
+                    val googleCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                    onTokenReceived(googleCredential.idToken)
+                } catch (e: GoogleIdTokenParsingException) {
+                    Log.e("Google OAuth", "Received an invalid google id token response", e)
+                    onFailure(e)
                 }
+
+            } catch (e: GetCredentialException) {
+                Log.e("Google OAuth", "Request unsuccessful", e)
+                onFailure(e)
+            }
         }
     }
 }

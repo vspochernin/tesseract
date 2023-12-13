@@ -60,6 +60,7 @@
     <string name="error_bad_credentials">Неправильный логин или пароль</string>
     <string name="error_bad_request_body">Некорректный запрос</string>
     <string name="error_network_error">Ошибка сети</string>
+    <string name="error_google_oauth">Произошла ошибка при входе через Google</string>
     <string name="ok">ОК</string>
     <string name="validation_incorrect_confirm_password">Подтверждение пароля не совпадает</string>
     <string name="validation_invalid_email">Некорректный email</string>
