@@ -1,5 +1,6 @@
 package ru.spbstu.tesseract.entity;
 
+import java.time.Duration;
 import java.time.ZonedDateTime;
 
 import jakarta.persistence.Entity;
@@ -26,4 +27,10 @@ public class Company {
     private long revenue;
     private long profit;
     private int staff;
+
+    public double getCompanyAge() {
+        ZonedDateTime currentDateTime = ZonedDateTime.now();
+        Duration duration = Duration.between(foundationDatetime, currentDateTime);
+        return duration.toDays() / 365.0;
+    }
 }
