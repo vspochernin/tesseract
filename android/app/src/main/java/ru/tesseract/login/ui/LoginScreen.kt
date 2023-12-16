@@ -1,5 +1,6 @@
 package ru.tesseract.login.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -78,6 +80,7 @@ fun LoginScreen(
                 isSignInEnabled = viewModel.isSignInEnabled,
                 isLoggingIn = viewModel.isLoggingIn,
                 onLogin = viewModel::onLogin,
+                onGoogleLogin = viewModel::onGoogleLogin,
                 onRegister = { navigator.navigate(RegistrationScreenDestination) },
                 modifier = Modifier
                     .widthIn(max = 360.dp)
@@ -100,6 +103,7 @@ private fun LoginForm(
     isSignInEnabled: Boolean,
     isLoggingIn: Boolean,
     onLogin: () -> Unit,
+    onGoogleLogin: (String) -> Unit,
     onRegister: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -119,9 +123,12 @@ private fun LoginForm(
             textAlign = TextAlign.Center,
         )
         Spacer(Modifier.size(24.dp))
+        val context = LocalContext.current
         GoogleSignInButton(
-            onTokenReceived = { onLogin() },
-            onDialogDismissed = { TODO() },
+            onTokenReceived = { onGoogleLogin(it) },
+            onFailure = {
+                Toast.makeText(context, R.string.error_google_oauth, Toast.LENGTH_SHORT).show()
+            },
             enabled = true,
             modifier = Modifier.fillMaxWidth(),
         )

@@ -1,13 +1,17 @@
 package ru.tesseract.settings.ui
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
+import ru.tesseract.LoginState
 import ru.tesseract.api.ApiErrorType
 import ru.tesseract.api.onApiError
 import ru.tesseract.api.onSuccess

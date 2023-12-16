@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
 import ru.tesseract.LoginState
@@ -16,6 +17,9 @@ class SettingsViewModel(
     private val loginState: LoginState,
     private val settings: Settings,
 ) : ViewModel() {
+    private val allowChangingPasswordFlow = loginState.loginMethod
+        .map { it?.allowChangingPassword ?: false }
+
     fun onLogOut() = viewModelScope.launch {
         loginState.resetToken()
     }
@@ -27,12 +31,15 @@ class SettingsViewModel(
     val state: State
         @Composable get() {
             val themeSetting by settings.themeSetting.collectAsState()
+            val allowChangingPassword by allowChangingPasswordFlow.collectAsState(initial = false)
             return State(
                 themeSetting = themeSetting,
+                allowChangingPassword = allowChangingPassword,
             )
         }
 
     class State(
         val themeSetting: ThemeSetting,
+        val allowChangingPassword: Boolean,
     )
 }
