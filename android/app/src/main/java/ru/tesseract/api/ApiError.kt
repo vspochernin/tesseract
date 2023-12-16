@@ -42,4 +42,7 @@ enum class ApiErrorType(@StringRes val message: Int) {
 
     @SerialName("TOO_LITTLE_AMOUNT")
     TooLittleAmount(R.string.error_too_little_amount),
+
+    @SerialName("GOOGLE_TOKEN_CANNOT_BE_VERIFIED")
+    GoogleTokenCannotBeVerified(R.string.error_google_oauth),
 }
