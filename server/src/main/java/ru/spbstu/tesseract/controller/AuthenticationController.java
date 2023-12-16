@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.spbstu.tesseract.dto.AuthenticationRequestDto;
 import ru.spbstu.tesseract.dto.AuthenticationResponseDto;
+import ru.spbstu.tesseract.dto.GoogleAuthenticationRequestDto;
 import ru.spbstu.tesseract.dto.PasswordRequestDto;
 import ru.spbstu.tesseract.dto.RegisterRequestDto;
 import ru.spbstu.tesseract.service.AuthenticationService;
@@ -36,6 +37,15 @@ public class AuthenticationController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(service.authenticate(request));
+    }
+
+    @PostMapping("/login/google")
+    public ResponseEntity<AuthenticationResponseDto> authenticateByGoogle(
+            @Valid @RequestBody GoogleAuthenticationRequestDto request)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(service.authenticateByGoogle(request));
     }
 
     @PutMapping("/password")
