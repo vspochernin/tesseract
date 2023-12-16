@@ -1,10 +1,7 @@
 package ru.spbstu.tesseract.service;
 
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -82,13 +79,87 @@ public class DiversificationService {
             throw new TooLittleAmountException();
         }
 
-
-        // TODO: mock, will be implemented in 48.
-        List<DiversificationAsset> diversificationAssets = assets.stream()
-                .filter(asset -> new Random().nextBoolean())
-                .map(asset -> new DiversificationAsset(asset, new Random().nextInt(1, 11)))
+        // оставляем только активы, которые меньше суммы диверсификации
+        assets = assets.stream()
+                .filter(asset -> asset.getAssetPrice() < amount)
                 .toList();
-        int actualAmount = diversificationAssets.stream()
+
+        // стоимость активов в диверсификации - накопленная уже
+        long currentSumPrice = 0;
+
+        // порог вероятности добавления актива
+        double addProbability = 0.3;
+
+        //порог вероятности увеличения числа актива
+        double plusProbability = 0.4;
+
+        // формируемый список итоговых активов в диверсификации
+        List<Asset> resultAssetsList = new ArrayList<>(Collections.emptyList());
+
+        while (!assets.isEmpty()) {
+            // получаем актив с наименьшей стоимостью
+            Asset assetWithMinPrice = assets.stream()
+                    .min(Comparator.comparingInt(Asset::getAssetPrice))
+                    .orElseThrow();
+            int minPrice = assets.stream()
+                    .map(Asset::getAssetPrice)
+                    .mapToInt(Integer::intValue)
+                    .min()
+                    .orElseThrow();
+            // проверяем, что можем его добавить
+            long newAmount = currentSumPrice + assetWithMinPrice.getAssetPrice();
+            if (newAmount <= amount) {
+                double addRandomValue = Math.random();
+                // добавляем или нет актив в диверсификацию
+                if (addRandomValue > addProbability) {
+                    currentSumPrice += assetWithMinPrice.getAssetPrice();
+                    //добавляем актив в список активов диверсификации
+                    resultAssetsList.add(assetWithMinPrice);
+                }
+                //удаляем актив с наименьшей ценой - в любом случае, иначе всегда он будет
+                assets = assets.stream()
+                        .filter(asset -> asset.getAssetPrice() != minPrice)
+                        .toList();
+            } else {
+                break;
+            }
+        }
+
+        // формируем словарь ключ - актив, значение - количество
+        Map<Asset, Integer> assetsInDiversifications = new HashMap<Asset, Integer>();
+        for (Asset a: resultAssetsList) {
+            assetsInDiversifications.put(a, 1);
+        }
+
+        int index = resultAssetsList.size();
+        // добавляем дополнительных активов, чтобы сумма была максимально к указанной пользователем
+        while (index != 0) {
+            ListIterator<Asset> itr = resultAssetsList.listIterator(index);
+            while (itr.hasPrevious()) { //один проход
+                //актив с наибольшей стоимостью и далее
+                Asset currentAsset = itr.previous();
+
+                // проверяем, что можем его добавить
+                long newAmount = currentSumPrice + currentAsset.getAssetPrice();
+                if (newAmount <= amount) {
+                    double addRandomValue = Math.random();
+                    // увеличиваем количество или нет
+                    if (addRandomValue > plusProbability) {
+                        currentSumPrice += currentAsset.getAssetPrice();
+                        //увеличиваем количество актива в списке активов диверсификации
+                        assetsInDiversifications.put(currentAsset, assetsInDiversifications.get(currentAsset) + 1);
+                    }
+                } else {
+                    index = itr.nextIndex();
+                }
+            }
+        }
+
+        List<DiversificationAsset> diversificationAssetsList = resultAssetsList.stream()
+                .map(asset -> new DiversificationAsset(asset, assetsInDiversifications.get(asset)))
+                .toList();
+
+        int realAmount = diversificationAssetsList.stream()
                 .mapToInt(diversificationAsset -> diversificationAsset.getCount() *
                         diversificationAsset.getAsset().getAssetPrice())
                 .sum();
@@ -99,8 +170,8 @@ public class DiversificationService {
                 currentUser,
                 ZonedDateTime.now(),
                 riskType,
-                actualAmount,
-                diversificationAssets
+                realAmount,
+                diversificationAssetsList
         );
 
         diversificationRepository.save(createdDiversification);
