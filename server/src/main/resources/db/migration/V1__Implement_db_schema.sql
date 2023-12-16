@@ -40,7 +40,7 @@ CREATE TABLE prices
 CREATE TABLE users
 (
     id       SERIAL PRIMARY KEY,   -- автоувеличение
-    login    VARCHAR(16) NOT NULL, -- максимальная длина логина
+    login    VARCHAR(32) NOT NULL, -- максимальная длина логина, учитывая Google аутентификацию
     email    VARCHAR,              -- у нас в ФС не сказано
     password VARCHAR(60) NOT NULL  -- длина bcrypt
 );

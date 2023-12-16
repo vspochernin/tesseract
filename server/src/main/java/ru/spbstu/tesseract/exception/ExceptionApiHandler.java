@@ -17,7 +17,7 @@ public class ExceptionApiHandler {
         TesseractErrorType errorType = exception.getErrorType();
         return ResponseEntity
                 .status(errorType.getHttpStatus())
-                .body(ErrorMessage.fromErrorType(errorType));
+                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, exception.getAdditionalInfo()));
     }
 
     @ExceptionHandler(BadCredentialsException.class)

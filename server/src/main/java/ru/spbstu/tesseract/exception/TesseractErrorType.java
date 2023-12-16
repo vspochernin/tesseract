@@ -19,6 +19,7 @@ public enum TesseractErrorType {
     TOO_LITTLE_AMOUNT(11,
             "Запрашиваемая сумма диверсификации меньше минимальной стоимости актива выбранной рискованности",
             HttpStatus.BAD_REQUEST),
+    GOOGLE_TOKEN_CANNOT_BE_VERIFIED(12, "Ошибка верификации Google токена", HttpStatus.BAD_REQUEST),
     ;
 
     private final int id;
