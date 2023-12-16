@@ -2,10 +2,7 @@ package ru.spbstu.tesseract.service;
 
 import java.time.ZonedDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -90,6 +87,12 @@ public class DiversificationService {
         // стоимость активов в диверсификации - накопленная уже
         long currentSumPrice = 0;
 
+        // порог вероятности добавления актива
+        double addProbability = 0.3;
+
+        //порог вероятности увеличения числа актива
+        double plusProbability = 0.4;
+
         // формируемый список итоговых активов в диверсификации
         List<Asset> resultAssetsList = new ArrayList<>(Collections.emptyList());
 
@@ -106,10 +109,14 @@ public class DiversificationService {
             // проверяем, что можем его добавить
             long newAmount = currentSumPrice + assetWithMinPrice.getAssetPrice();
             if (newAmount <= amount) {
-                currentSumPrice += assetWithMinPrice.getAssetPrice();
-                //добавляем актив в список активов диверсификации
-                resultAssetsList.add(assetWithMinPrice);
-                //удаляем актив с наименьшей ценой
+                double addRandomValue = Math.random();
+                // добавляем или нет актив в диверсификацию
+                if (addRandomValue > addProbability) {
+                    currentSumPrice += assetWithMinPrice.getAssetPrice();
+                    //добавляем актив в список активов диверсификации
+                    resultAssetsList.add(assetWithMinPrice);
+                }
+                //удаляем актив с наименьшей ценой - в любом случае, иначе всегда он будет
                 assets = assets.stream()
                         .filter(asset -> asset.getAssetPrice() != minPrice)
                         .toList();
@@ -135,9 +142,13 @@ public class DiversificationService {
                 // проверяем, что можем его добавить
                 long newAmount = currentSumPrice + currentAsset.getAssetPrice();
                 if (newAmount <= amount) {
-                    currentSumPrice += currentAsset.getAssetPrice();
-                    //увеличиваем количество актива в списке активов диверсификации
-                    assetsInDiversifications.put(currentAsset, assetsInDiversifications.get(currentAsset) + 1);
+                    double addRandomValue = Math.random();
+                    // увеличиваем количество или нет
+                    if (addRandomValue > plusProbability) {
+                        currentSumPrice += currentAsset.getAssetPrice();
+                        //увеличиваем количество актива в списке активов диверсификации
+                        assetsInDiversifications.put(currentAsset, assetsInDiversifications.get(currentAsset) + 1);
+                    }
                 } else {
                     index = itr.nextIndex();
                 }

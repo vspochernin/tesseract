@@ -164,7 +164,7 @@ public class Asset {
 
     public RiskType getRiskType() {
         int resultScore = getResultScore();
-        if (resultScore < 16) {
+        if (resultScore < 18) {
             return RiskType.HIGH;
         } else if (resultScore < 21) {
             return RiskType.MIDDLE;
