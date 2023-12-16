@@ -159,7 +159,7 @@ public class DiversificationService {
                 .map(asset -> new DiversificationAsset(asset, assetsInDiversifications.get(asset)))
                 .toList();
 
-        int actualAmount = diversificationAssetsList.stream()
+        int realAmount = diversificationAssetsList.stream()
                 .mapToInt(diversificationAsset -> diversificationAsset.getCount() *
                         diversificationAsset.getAsset().getAssetPrice())
                 .sum();
@@ -170,7 +170,7 @@ public class DiversificationService {
                 currentUser,
                 ZonedDateTime.now(),
                 riskType,
-                actualAmount,
+                realAmount,
                 diversificationAssetsList
         );
 
