@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.auth.config;
+package ru.spbstu.tesseract.service;
 
 import java.security.Key;
 import java.util.Date;

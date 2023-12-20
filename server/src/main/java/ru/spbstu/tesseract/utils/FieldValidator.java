@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.auth;
+package ru.spbstu.tesseract.utils;
 
 public class FieldValidator {
 
