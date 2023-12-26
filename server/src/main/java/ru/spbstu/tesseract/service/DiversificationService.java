@@ -1,7 +1,15 @@
 package ru.spbstu.tesseract.service;
 
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -15,9 +23,8 @@ import ru.spbstu.tesseract.entity.Diversification;
 import ru.spbstu.tesseract.entity.DiversificationAsset;
 import ru.spbstu.tesseract.entity.RiskType;
 import ru.spbstu.tesseract.entity.User;
-import ru.spbstu.tesseract.exception.NoAssetsWithSuchRiskTypeException;
-import ru.spbstu.tesseract.exception.TooBigAmountException;
-import ru.spbstu.tesseract.exception.TooLittleAmountException;
+import ru.spbstu.tesseract.exception.TesseractErrorType;
+import ru.spbstu.tesseract.exception.TesseractException;
 import ru.spbstu.tesseract.repository.AssetRepository;
 import ru.spbstu.tesseract.repository.DiversificationRepository;
 
@@ -52,7 +59,7 @@ public class DiversificationService {
         int amount = request.getAmount();
 
         if (amount > 100_000_000) {
-            throw new TooBigAmountException();
+            throw new TesseractException(TesseractErrorType.TOO_BIG_AMOUNT);
         }
 
         int riskTypeId = request.getRiskTypeId();
@@ -66,7 +73,7 @@ public class DiversificationService {
         }
 
         if (assets.isEmpty()) {
-            throw new NoAssetsWithSuchRiskTypeException();
+            throw new TesseractException(TesseractErrorType.NO_ASSETS_WITH_SUCH_RISK_TYPE);
         }
 
         int minPriceOfAssetWithSuchRiskType = assets.stream()
@@ -76,7 +83,7 @@ public class DiversificationService {
                 .orElseThrow();
 
         if (amount < minPriceOfAssetWithSuchRiskType) {
-            throw new TooLittleAmountException();
+            throw new TesseractException(TesseractErrorType.TOO_LITTLE_AMOUNT);
         }
 
         // оставляем только активы, которые меньше суммы диверсификации
@@ -126,8 +133,8 @@ public class DiversificationService {
         }
 
         // формируем словарь ключ - актив, значение - количество
-        Map<Asset, Integer> assetsInDiversifications = new HashMap<Asset, Integer>();
-        for (Asset a: resultAssetsList) {
+        Map<Asset, Integer> assetsInDiversifications = new HashMap<>();
+        for (Asset a : resultAssetsList) {
             assetsInDiversifications.put(a, 1);
         }
 

@@ -12,17 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.spbstu.tesseract.dto.AuthenticationRequestDto;
 import ru.spbstu.tesseract.dto.AuthenticationResponseDto;
-import ru.spbstu.tesseract.utils.FieldValidator;
 import ru.spbstu.tesseract.dto.GoogleAuthenticationRequestDto;
 import ru.spbstu.tesseract.dto.PasswordRequestDto;
 import ru.spbstu.tesseract.dto.RegisterRequestDto;
 import ru.spbstu.tesseract.entity.User;
-import ru.spbstu.tesseract.exception.GoogleTokenCannotBeVerified;
-import ru.spbstu.tesseract.exception.PasswordDoesNotMatchException;
+import ru.spbstu.tesseract.exception.TesseractErrorType;
+import ru.spbstu.tesseract.exception.TesseractException;
 import ru.spbstu.tesseract.repository.UserRepository;
-import ru.spbstu.tesseract.exception.IncorrectLoginException;
-import ru.spbstu.tesseract.exception.IncorrectPasswordException;
-import ru.spbstu.tesseract.exception.LoginAlreadyExistsException;
+import ru.spbstu.tesseract.utils.FieldValidator;
 
 @Service
 @RequiredArgsConstructor
@@ -79,11 +76,11 @@ public class AuthenticationService {
         try {
             idToken = googleIdTokenVerifier.verify(token);
         } catch (GeneralSecurityException | IOException e) {
-            throw new GoogleTokenCannotBeVerified(e.toString());
+            throw new TesseractException(TesseractErrorType.GOOGLE_TOKEN_CANNOT_BE_VERIFIED, e.toString());
         }
 
         if (idToken == null) {
-            throw new GoogleTokenCannotBeVerified();
+            throw new TesseractException(TesseractErrorType.GOOGLE_TOKEN_CANNOT_BE_VERIFIED);
         }
 
         String subject = idToken.getPayload().getSubject();
@@ -112,14 +109,14 @@ public class AuthenticationService {
         String newPassword = request.getNewPassword();
 
         if (!FieldValidator.isValidPassword(newPassword)) {
-            throw new IncorrectPasswordException();
+            throw new TesseractException(TesseractErrorType.INVALID_PASSWORD);
         }
 
         User currentUser = User.getCurrentUser();
         String currentUserEncodedPassword = currentUser.getPassword();
 
         if (!passwordEncoder.matches(oldPassword, currentUserEncodedPassword)) {
-            throw new PasswordDoesNotMatchException();
+            throw new TesseractException(TesseractErrorType.PASSWORD_DOES_NOT_MATCH);
         }
 
         currentUser.setPassword(passwordEncoder.encode(newPassword));
@@ -129,21 +126,22 @@ public class AuthenticationService {
 
     private void validateFields(String login, String email, String password) {
         if (!FieldValidator.isValidLogin(login)) {
-            throw new IncorrectLoginException();
+            throw new TesseractException(TesseractErrorType.INVALID_LOGIN);
         }
 
         if (!FieldValidator.isValidPassword(password)) {
-            throw new IncorrectPasswordException();
+            throw new TesseractException(TesseractErrorType.INVALID_PASSWORD);
         }
 
         if (userRepository.existsByLogin(login)) {
-            throw new LoginAlreadyExistsException();
+            throw new TesseractException(TesseractErrorType.LOGIN_EXISTS);
         }
 
+        // TODO: enable it in production and throw corresponding exception.
+/*
         if (userRepository.existsByEmail(email)) {
-            // TODO: enable in prod.
-            // throw new EmailAlreadyExistsException();
         }
+*/
     }
 }
 

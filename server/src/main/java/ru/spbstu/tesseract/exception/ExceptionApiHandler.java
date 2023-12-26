@@ -14,10 +14,9 @@ public class ExceptionApiHandler {
 
     @ExceptionHandler(TesseractException.class)
     public ResponseEntity<ErrorMessage> tesseractException(TesseractException exception) {
-        TesseractErrorType errorType = exception.getErrorType();
         return ResponseEntity
-                .status(errorType.getHttpStatus())
-                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, exception.getAdditionalInfo()));
+                .status(exception.getErrorType().getHttpStatus())
+                .body(ErrorMessage.fromTesseractException(exception));
     }
 
     @ExceptionHandler(BadCredentialsException.class)
@@ -29,34 +28,34 @@ public class ExceptionApiHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorMessage> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorMessage> methodArgumentNotValidException(MethodArgumentNotValidException exception) {
         TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
         return ResponseEntity
                 .status(errorType.getHttpStatus())
-                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, ex.toString()));
+                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, exception.toString()));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorMessage> httpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    public ResponseEntity<ErrorMessage> httpMessageNotReadableException(HttpMessageNotReadableException exception) {
         TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
         return ResponseEntity
                 .status(errorType.getHttpStatus())
-                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, ex.toString()));
+                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, exception.toString()));
     }
 
     @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<ErrorMessage> numberFormatException(NumberFormatException ex) {
+    public ResponseEntity<ErrorMessage> numberFormatException(NumberFormatException exception) {
         TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
         return ResponseEntity
                 .status(errorType.getHttpStatus())
-                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, ex.toString()));
+                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, exception.toString()));
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<ErrorMessage> noSuchElementException(NoSuchElementException ex) {
+    public ResponseEntity<ErrorMessage> noSuchElementException(NoSuchElementException exception) {
         TesseractErrorType errorType = TesseractErrorType.NOT_FOUND;
         return ResponseEntity
                 .status(errorType.getHttpStatus())
-                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, ex.toString()));
+                .body(ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, exception.toString()));
     }
 }
