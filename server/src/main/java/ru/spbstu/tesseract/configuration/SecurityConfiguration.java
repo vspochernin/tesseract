@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.auth.config;
+package ru.spbstu.tesseract.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.spbstu.tesseract.filter.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity

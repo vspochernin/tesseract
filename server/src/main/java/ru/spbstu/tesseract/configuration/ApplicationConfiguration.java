@@ -1,4 +1,4 @@
-package ru.spbstu.tesseract.auth.config;
+package ru.spbstu.tesseract.configuration;
 
 import java.util.Arrays;
 
@@ -20,13 +20,13 @@ import ru.spbstu.tesseract.repository.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfig {
+public class ApplicationConfiguration {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> repository.findByLogin(username)
+        return username -> userRepository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
