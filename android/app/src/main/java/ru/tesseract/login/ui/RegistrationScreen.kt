@@ -1,5 +1,6 @@
 package ru.tesseract.login.ui
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -154,8 +156,16 @@ private fun RegisterForm(
                 color = MaterialTheme.colorScheme.error,
             )
         }
+        val context = LocalContext.current
         Button(
-            onClick = { viewModel.onRegister(dismiss = { navigator.popBackStack() }) },
+            onClick = {
+                viewModel.onRegister(
+                    dismiss = {
+                        Toast.makeText(context, R.string.registration_successful, Toast.LENGTH_LONG).show()
+                        navigator.popBackStack()
+                    },
+                )
+            },
             enabled = viewModel.isRegisterButtonEnabled,
             modifier = Modifier.fillMaxWidth(),
         ) {

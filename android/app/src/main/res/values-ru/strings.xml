@@ -10,6 +10,7 @@
     <string name="login_screen_title">Войти в Тессеракт</string>
     <string name="login_username_field">Логин</string>
     <string name="login_password_field">Пароль</string>
+    <string name="registration_successful">Вы были успешно зарегистрированы</string>
     <string name="login_screen_dont_have_account">Нет аккаунта?</string>
     <string name="login_screen_register_button">Зарегистрироваться</string>
     <string name="login_screen_login_button">Войти</string>
@@ -40,7 +41,7 @@
     <string name="diversification_date">Дата и время</string>
     <string name="diversification_sum">Сумма</string>
     <string name="diversification_assets">Активы</string>
-    <string name="risk_tolerance">Рискованность</string>
+    <string name="risk_tolerance">Степень рискованности</string>
     <string name="risk_tolerance_high">Высокая</string>
     <string name="risk_tolerance_medium">Средняя</string>
     <string name="risk_tolerance_low">Низкая</string>
@@ -50,7 +51,7 @@
     <string name="risk_tolerance_low_risk">Низкорискованная</string>
     <string name="risk_tolerance_combined_risk">Комбинированная</string>
     <string name="new_diversification_screen_title">Новая диверсификация</string>
-    <string name="new_diversification_screen_create">Создать</string>
+    <string name="new_diversification_screen_create">Создать диверсификацию</string>
     <string name="asset_quantity">%d шт.</string>
     <string name="error_unexpected_error">Непредвиденная ошибка</string>
     <string name="error_login_exists">Такой логин уже используется</string>

@@ -18,7 +18,7 @@ object Validation {
     }
 
     fun isEmailValid(value: String): Boolean {
-        return '@' in value
+        return true
     }
 
     fun isDiversificationAmountValid(value: String): Boolean {
