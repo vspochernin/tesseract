@@ -109,7 +109,7 @@ fun NewDiversificationScreen(
                     ) {
                         RadioButton(selected = viewModel.riskLevel == riskLevel, onClick = null)
                         Text(
-                            text = stringResource(id = riskLevel.resId),
+                            text = stringResource(id = riskLevel.explicitResId),
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(start = 16.dp),
                         )
