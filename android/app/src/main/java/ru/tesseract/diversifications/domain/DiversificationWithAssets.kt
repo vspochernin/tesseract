@@ -30,6 +30,8 @@ class DiversificationAsset(
     val count: Int,
     @SerialName("favouriteStatus")
     val isFavorite: Boolean = false,
-)
+) {
+    val sum: Int = oldPrice * count
+}
 
 val DiversificationWithAssets.riskLevel get() = RiskLevel.entries[riskLevelOrdinal]
