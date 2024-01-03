@@ -18,7 +18,7 @@
     <string name="login_screen_signing_in">Вход…</string>
     <string name="login_screen_or_with_login">или войти с логином</string>
     <string name="login_screen_information">Информация</string>
-    <string name="info_screen_text">Это приложение очень хорошее!!!</string>
+    <string name="info_screen_text">Данное приложение является агрегатором цифровых финансовых активов. В нем вы можете отслеживать возможные для покупки активы, добавлять их в избранное, а также создавать диверсификации по вашим критериям.</string>
     <string name="settings_screen_log_out">Выйти из аккаунта</string>
     <string name="settings_screen_account">Аккаунт</string>
     <string name="settings_screen_theme">Тема</string>
