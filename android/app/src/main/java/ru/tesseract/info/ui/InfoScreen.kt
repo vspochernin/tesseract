@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -75,7 +76,7 @@ fun InfoScreen(navigator: DestinationsNavigator) {
             Spacer(modifier = Modifier.size(32.dp))
             Text(
                 stringResource(id = R.string.info_screen_text),
-                textAlign = TextAlign.Center,
+                modifier = Modifier.widthIn(max = 320.dp)
             )
         }
     }

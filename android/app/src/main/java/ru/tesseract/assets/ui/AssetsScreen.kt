@@ -3,7 +3,6 @@ package ru.tesseract.assets.ui
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,7 +42,8 @@ fun AssetsScreen(navigator: DestinationsNavigator, viewModel: AssetsViewModel = 
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
         ) {
-            items(assets.itemSnapshotList, key = { it?.id ?: -1 }) { asset ->
+            items(assets.itemCount, key = { it }) { i ->
+                val asset = assets[i]
                 if (asset != null) {
                     AssetSummaryWithChange(
                         asset = asset,

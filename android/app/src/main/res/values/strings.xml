@@ -11,6 +11,7 @@
     <string name="registration_screen_email_field">Email</string>
     <string name="registration_screen_confirm_password_field">Confirm password</string>
     <string name="registration_screen_register_button">Sign up</string>
+    <string name="registration_successful">You were registered successfully</string>
     <string name="login_screen_dont_have_account">Don\'t have an account?</string>
     <string name="login_screen_register_button">Sign up</string>
     <string name="login_screen_login_button">Sign in</string>
@@ -19,7 +20,7 @@
     <string name="login_screen_or_with_login">or sign in with username</string>
     <string name="login_screen_information">Information</string>
     <string name="info_screen_title">Application info</string>
-    <string name="info_screen_text">This app is very great!!!</string>
+    <string name="info_screen_text">This application is an aggregator of digital financial assets. In it, you can track assets that are available for purchase, add them to favorites, and create diversifications according to your criteria.</string>
     <string name="settings_screen_account">Account</string>
     <string name="settings_screen_log_out">Log out</string>
     <string name="settings_screen_theme">Theme</string>
@@ -37,7 +38,7 @@
     <string name="asset_screen_price">Price</string>
     <string name="diversifications_screen_create">Create a diversification</string>
     <string name="new_diversification_screen_title">New diversification</string>
-    <string name="new_diversification_screen_create">Create</string>
+    <string name="new_diversification_screen_create">Create a diversification</string>
     <string name="diversification_screen_title">Diversification</string>
     <string name="diversification_date">Date and time</string>
     <string name="diversification_sum">Sum</string>

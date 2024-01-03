@@ -34,7 +34,7 @@ fun DiversificationAssetSummary(
         id = asset.id,
         title = asset.title,
         companyTitle = asset.companyTitle,
-        price = asset.oldPrice,
+        price = asset.sum,
         isFavorite = asset.isFavorite,
         additionalInfo = {
             Text(

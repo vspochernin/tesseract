@@ -76,9 +76,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) {
                 setValue = viewModel::onSetTheme,
             )
             HeadingItem(stringResource(id = R.string.settings_screen_account))
-            if (state.allowChangingPassword) {
-                ChangePasswordItem()
-            }
+            ChangePasswordItem(state.allowChangingPassword)
             LogOutItem(onClick = viewModel::onLogOut)
         }
     }
@@ -96,7 +94,10 @@ private fun HeadingItem(text: String) {
 }
 
 @Composable
-private fun ChangePasswordItem(viewModel: ChangePasswordViewModel = koinViewModel()) {
+private fun ChangePasswordItem(
+    allowChangingPassword: Boolean,
+    viewModel: ChangePasswordViewModel = koinViewModel()
+) {
     if (viewModel.showSuccessDialog) {
         AlertDialog(
             onDismissRequest = { viewModel.showSuccessDialog = false },
@@ -131,7 +132,7 @@ private fun ChangePasswordItem(viewModel: ChangePasswordViewModel = koinViewMode
         OutlinedTextField(
             value = viewModel.password,
             onValueChange = { viewModel.password = it },
-            label = { Text(stringResource(id = R.string.login_password_field)) },
+            label = { Text(stringResource(id = R.string.settings_screen_new_password)) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
@@ -157,7 +158,7 @@ private fun ChangePasswordItem(viewModel: ChangePasswordViewModel = koinViewMode
         }
         Button(
             onClick = { viewModel.onChange() },
-            enabled = viewModel.isButtonEnabled,
+            enabled = allowChangingPassword && viewModel.isButtonEnabled,
             modifier = Modifier.align(Alignment.End),
         ) {
             Text(stringResource(id = R.string.settings_screen_change_password_button))

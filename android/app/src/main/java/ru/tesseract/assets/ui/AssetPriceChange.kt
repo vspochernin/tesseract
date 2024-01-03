@@ -15,14 +15,14 @@ import ru.tesseract.assets.domain.GeneralAssetInfo
 fun GeneralAssetInfo.annotatedPriceDiff() =
     buildAnnotatedString {
         val diff = "%.2f ₽".format(priceDiff.toDouble() / 100)
-        val diffString = (if (priceDiff > 0) "+" else "") + diff
+        val diffString = (if (priceDiff >= 0) "+" else "") + diff
         withStyle(
             SpanStyle(
                 color =
-                    when (diffString.first()) {
-                        '+' -> lerp(Color.Green, MaterialTheme.colorScheme.primary, 0.3f)
-                        '-' -> lerp(Color.Red, MaterialTheme.colorScheme.primary, 0.3f)
-                        else -> MaterialTheme.colorScheme.onBackground
+                    when {
+                        priceDiff > 0 -> lerp(Color.Green, MaterialTheme.colorScheme.primary, 0.3f)
+                        priceDiff < 0 -> lerp(Color.Red, MaterialTheme.colorScheme.primary, 0.3f)
+                        else -> MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
                     },
             ),
         ) {

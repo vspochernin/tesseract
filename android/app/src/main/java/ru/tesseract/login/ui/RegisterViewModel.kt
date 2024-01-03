@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
+import ru.tesseract.api.onFailure
 import ru.tesseract.api.onSuccess
 import ru.tesseract.login.api.RegisterApi
 import ru.tesseract.ui.Validation
@@ -55,8 +56,9 @@ class RegisterViewModel(
             isRegistering = true
             registerApi.register(login, email, password).onSuccess {
                 dismiss()
+            }.onFailure {
+                isRegistering = false
             }
-            isRegistering = false
         }
     }
 }

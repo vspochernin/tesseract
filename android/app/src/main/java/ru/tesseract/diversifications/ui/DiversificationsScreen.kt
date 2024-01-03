@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -71,11 +70,15 @@ fun DiversificationsScreen(
                     }
                 }
             }
-            items(diversifications.itemSnapshotList, key = { it?.id ?: -1 }) {
-                if (it != null) {
+            items(diversifications.itemCount, key = { it }) { i ->
+                val diversification = diversifications[i]
+                if (diversification != null) {
                     DiversificationSummary(
-                        diversification = it,
-                        onClick = { navigator.navigate(DiversificationScreenDestination(it.id)) },
+                        diversification = diversification,
+                        onClick = {
+                            val destination = DiversificationScreenDestination(diversification.id)
+                            navigator.navigate(destination)
+                        },
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }

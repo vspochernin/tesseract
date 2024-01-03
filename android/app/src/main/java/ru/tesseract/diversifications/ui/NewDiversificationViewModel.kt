@@ -18,18 +18,18 @@ class NewDiversificationViewModel(
     private val diversificationsApi: DiversificationsApi,
 ) : ViewModel() {
     var amountField by mutableStateOf("")
-    var riskLevel by mutableStateOf<RiskLevel?>(null)
+    var riskLevel by mutableStateOf(RiskLevel.Combined)
     private val isAmountValid by derivedStateOf { Validation.isDiversificationAmountValid(amountField) }
     var allowError by mutableStateOf(false)
     var isLoading by mutableStateOf(false)
     val showAmountError by derivedStateOf { allowError && !isAmountValid }
-    private val isValid by derivedStateOf { isAmountValid && riskLevel != null }
-    val isButtonEnabled by derivedStateOf { isValid && !isLoading }
+    private val isValid by derivedStateOf { isAmountValid }
+    val isButtonEnabled by derivedStateOf { amountField.isNotEmpty() && !isLoading }
 
     fun onCreate(dismiss: suspend () -> Unit) = viewModelScope.launch {
         if (isLoading || !isValid) return@launch
         val amount = amountField.toIntOrNull() ?: return@launch
-        val riskLevel = riskLevel ?: return@launch
+        val riskLevel = riskLevel
         isLoading = true
         diversificationsApi.create(amount * 100, riskLevel).onSuccess {
             dismiss()
