@@ -86,9 +86,9 @@ public class DiversificationService {
             throw new TesseractException(TesseractErrorType.TOO_LITTLE_AMOUNT);
         }
 
-        // оставляем только активы, которые меньше суммы диверсификации
+        // оставляем только активы, которые меньше или равны суммы диверсификации
         assets = assets.stream()
-                .filter(asset -> asset.getAssetPrice() < amount)
+                .filter(asset -> asset.getAssetPrice() <= amount)
                 .toList();
 
         // стоимость активов в диверсификации - накопленная уже
@@ -118,7 +118,7 @@ public class DiversificationService {
             if (newAmount <= amount) {
                 double addRandomValue = Math.random();
                 // добавляем или нет актив в диверсификацию
-                if (addRandomValue > addProbability) {
+                if (addRandomValue > addProbability || resultAssetsList.isEmpty()) {
                     currentSumPrice += assetWithMinPrice.getAssetPrice();
                     //добавляем актив в список активов диверсификации
                     resultAssetsList.add(assetWithMinPrice);
