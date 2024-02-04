@@ -32,14 +32,19 @@ public class Diversification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "diversifications_id_seq")
     private int id;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     private ZonedDateTime createDatetime;
+
     @Column(name = "risk_type_id")
     @Enumerated(EnumType.ORDINAL)
     private RiskType riskType;
+
     private int amount;
+
     @OneToMany(mappedBy = "diversification", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Set<DiversificationAsset> diversificationAssetSet;

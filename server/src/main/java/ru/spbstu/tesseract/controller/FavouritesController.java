@@ -25,8 +25,7 @@ public class FavouritesController {
     @GetMapping("/favourites")
     public ResponseEntity<List<AssetShortDto>> favourites(
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
-    )
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize)
     {
         List<AssetShortDto> assetShortDtos = favouritesService.getFavouriteAssets(pageNumber, pageSize);
 

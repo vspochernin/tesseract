@@ -8,6 +8,9 @@ public class FieldValidator {
     private static final int MAX_LOGIN_SIZE = 16;
     private static final String SPECIAL_SYMBOLS = "!@#$%&*()-_+=;:,./?\\|[]{}";
 
+    private FieldValidator() {
+    }
+
     public static boolean isValidPassword(String password) {
         if (password.length() < MIN_PASSWORD_SIZE || password.length() > MAX_PASSWORD_SIZE) {
             return false;
@@ -37,7 +40,7 @@ public class FieldValidator {
             return false;
         }
 
-        for (char  ch : login.toCharArray()) {
+        for (char ch : login.toCharArray()) {
             if (!Character.isLetterOrDigit(ch)) {
                 return false;
             }

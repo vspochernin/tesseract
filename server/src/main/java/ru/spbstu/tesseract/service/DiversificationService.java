@@ -55,6 +55,7 @@ public class DiversificationService {
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    // TODO: rewrite with smarter logic.
     public void createDiversification(CreateDiversificationRequestDto request) {
         int amount = request.getAmount();
 
@@ -86,25 +87,25 @@ public class DiversificationService {
             throw new TesseractException(TesseractErrorType.TOO_LITTLE_AMOUNT);
         }
 
-        // оставляем только активы, которые меньше или равны суммы диверсификации
+        // Оставляем только активы, которые меньше или равны суммы диверсификации.
         assets = assets.stream()
                 .filter(asset -> asset.getAssetPrice() <= amount)
                 .toList();
 
-        // стоимость активов в диверсификации - накопленная уже
+        // Cтоимость активов в диверсификации - накопленная уже.
         long currentSumPrice = 0;
 
-        // порог вероятности добавления актива
+        // Порог вероятности добавления актива.
         double addProbability = 0.3;
 
-        //порог вероятности увеличения числа актива
+        // Порог вероятности увеличения числа актива.
         double plusProbability = 0.4;
 
-        // формируемый список итоговых активов в диверсификации
+        // Формируемый список итоговых активов в диверсификации.
         List<Asset> resultAssetsList = new ArrayList<>(Collections.emptyList());
 
         while (!assets.isEmpty()) {
-            // получаем актив с наименьшей стоимостью
+            // Получаем актив с наименьшей стоимостью.
             Asset assetWithMinPrice = assets.stream()
                     .min(Comparator.comparingInt(Asset::getAssetPrice))
                     .orElseThrow();
@@ -113,17 +114,17 @@ public class DiversificationService {
                     .mapToInt(Integer::intValue)
                     .min()
                     .orElseThrow();
-            // проверяем, что можем его добавить
+            // Проверяем, что можем его добавить.
             long newAmount = currentSumPrice + assetWithMinPrice.getAssetPrice();
             if (newAmount <= amount) {
                 double addRandomValue = Math.random();
-                // добавляем или нет актив в диверсификацию
+                // Добавляем или нет актив в диверсификацию.
                 if (addRandomValue > addProbability || resultAssetsList.isEmpty()) {
                     currentSumPrice += assetWithMinPrice.getAssetPrice();
-                    //добавляем актив в список активов диверсификации
+                    // Добавляем актив в список активов диверсификации.
                     resultAssetsList.add(assetWithMinPrice);
                 }
-                //удаляем актив с наименьшей ценой - в любом случае, иначе всегда он будет
+                // Удаляем актив с наименьшей ценой - в любом случае, иначе всегда он будет.
                 assets = assets.stream()
                         .filter(asset -> asset.getAssetPrice() != minPrice)
                         .toList();
@@ -132,28 +133,28 @@ public class DiversificationService {
             }
         }
 
-        // формируем словарь ключ - актив, значение - количество
+        // Формируем словарь ключ - актив, значение - количество.
         Map<Asset, Integer> assetsInDiversifications = new HashMap<>();
         for (Asset a : resultAssetsList) {
             assetsInDiversifications.put(a, 1);
         }
 
         int index = resultAssetsList.size();
-        // добавляем дополнительных активов, чтобы сумма была максимально к указанной пользователем
+        // Добавляем дополнительных активов, чтобы сумма была максимально к указанной пользователем.
         while (index != 0) {
             ListIterator<Asset> itr = resultAssetsList.listIterator(index);
             while (itr.hasPrevious()) { //один проход
-                //актив с наибольшей стоимостью и далее
+                // Актив с наибольшей стоимостью и далее.
                 Asset currentAsset = itr.previous();
 
-                // проверяем, что можем его добавить
+                // Проверяем, что можем его добавить.
                 long newAmount = currentSumPrice + currentAsset.getAssetPrice();
                 if (newAmount <= amount) {
                     double addRandomValue = Math.random();
-                    // увеличиваем количество или нет
+                    // Увеличиваем количество или нет.
                     if (addRandomValue > plusProbability) {
                         currentSumPrice += currentAsset.getAssetPrice();
-                        //увеличиваем количество актива в списке активов диверсификации
+                        // Увеличиваем количество актива в списке активов диверсификации.
                         assetsInDiversifications.put(currentAsset, assetsInDiversifications.get(currentAsset) + 1);
                     }
                 } else {
