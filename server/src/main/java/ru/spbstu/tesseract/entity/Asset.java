@@ -93,13 +93,13 @@ public class Asset {
     public int getScoreCompanyRevenue() {
         long companyRevenue = getCompany().getRevenue();
 
-        if (companyRevenue < 10000000000L) {
+        if (companyRevenue < 10_000_000_000L) {
             return 1;
-        } else if (companyRevenue < 50000000000L) {
+        } else if (companyRevenue < 50_000_000_000L) {
             return 2;
-        } else if (companyRevenue < 100000000000L) {
+        } else if (companyRevenue < 100_000_000_000L) {
             return 3;
-        } else if (companyRevenue < 500000000000L) {
+        } else if (companyRevenue < 500_000_000_000L) {
             return 4;
         }
 
@@ -109,13 +109,13 @@ public class Asset {
     public int getScoreCompanyProfit() {
         long companyProfit = getCompany().getProfit();
 
-        if (companyProfit < -1000000000L) {
+        if (companyProfit < -1_000_000_000L) {
             return 1;
         } else if (companyProfit < 0L) {
             return 2;
-        } else if (companyProfit < 1000000000L) {
+        } else if (companyProfit < 1_000_000_000L) {
             return 3;
-        } else if (companyProfit < 10000000000L) {
+        } else if (companyProfit < 10_000_000_000L) {
             return 4;
         }
 
