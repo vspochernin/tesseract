@@ -10,6 +10,11 @@ import ru.spbstu.tesseract.entity.Diversification;
 @Builder
 public class DiversificationLongDto {
 
+    private String createDateTime;
+    private int amount;
+    private int riskTypeId;
+    private List<AssetDiversificationDto> assetList;
+
     public static DiversificationLongDto fromDiversification(Diversification diversification) {
         List<AssetDiversificationDto> assets = diversification.getDiversificationAssetSet().stream()
                 .map(AssetDiversificationDto::fromDiversificationAsset)
@@ -22,9 +27,4 @@ public class DiversificationLongDto {
                 .assetList(assets)
                 .build();
     }
-
-    private String createDateTime;
-    private int amount;
-    private int riskTypeId;
-    private List<AssetDiversificationDto> assetList;
 }

@@ -1,6 +1,5 @@
 package ru.spbstu.tesseract.exception;
 
-
 public record ErrorMessage(
         int id,
         String description,

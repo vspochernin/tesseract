@@ -1,11 +1,19 @@
 package ru.spbstu.tesseract.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 import ru.spbstu.tesseract.entity.Asset;
 
 @Data
 @Builder
 public class AssetShortDto {
+
+    private int assetId;
+    private String assetTitle;
+    private String companyTitle;
+    private int assetPrice;
+    private int assetPriceDiff;
+    private boolean favouriteStatus;
 
     public static AssetShortDto fromAsset(Asset asset) {
         int assetPrice = asset.getAssetPrice();
@@ -19,11 +27,4 @@ public class AssetShortDto {
                 .favouriteStatus(asset.isAssetFavourite())
                 .build();
     }
-
-    private int assetId;
-    private String assetTitle;
-    private String companyTitle;
-    private int assetPrice;
-    private int assetPriceDiff;
-    private boolean favouriteStatus;
 }

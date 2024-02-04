@@ -24,8 +24,8 @@ public class AssetController {
     @GetMapping("/assets")
     public ResponseEntity<List<AssetShortDto>> assets(
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
-    ) {
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize)
+    {
         List<AssetShortDto> assetShortDtos = assetService.getAssets(pageNumber, pageSize);
 
         return ResponseEntity

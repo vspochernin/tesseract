@@ -57,9 +57,7 @@ public class AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getLogin(),
-                        request.getPassword()
-                )
-        );
+                        request.getPassword()));
 
         User user = userRepository.findByLogin(request.getLogin())
                 .orElseThrow();
@@ -137,11 +135,9 @@ public class AuthenticationService {
             throw new TesseractException(TesseractErrorType.LOGIN_EXISTS);
         }
 
-        // TODO: enable it in production and throw corresponding exception.
-/*
         if (userRepository.existsByEmail(email)) {
+            throw new TesseractException(TesseractErrorType.EMAIL_EXISTS);
         }
-*/
     }
 }
 

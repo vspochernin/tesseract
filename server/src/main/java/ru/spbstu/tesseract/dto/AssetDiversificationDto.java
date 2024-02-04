@@ -12,6 +12,13 @@ import ru.spbstu.tesseract.entity.DiversificationAsset;
 @Builder
 public class AssetDiversificationDto {
 
+    private int assetId;
+    private String assetTitle;
+    private String companyTitle;
+    private int oldPrice;
+    private int count;
+    private boolean favouriteStatus;
+
     public static AssetDiversificationDto fromDiversificationAsset(DiversificationAsset diversificationAsset) {
         Diversification diversification = diversificationAsset.getDiversification();
         Asset asset = diversificationAsset.getAsset();
@@ -26,11 +33,4 @@ public class AssetDiversificationDto {
                 .favouriteStatus(asset.isAssetFavourite())
                 .build();
     }
-
-    private int assetId;
-    private String assetTitle;
-    private String companyTitle;
-    private int oldPrice;
-    private int count;
-    private boolean favouriteStatus;
 }

@@ -1,7 +1,9 @@
 package ru.spbstu.tesseract.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum TesseractErrorType {
 
     UNEXPECTED_ERROR(0, "Непредвиденная ошибка", HttpStatus.INTERNAL_SERVER_ERROR),
@@ -14,9 +16,12 @@ public enum TesseractErrorType {
     NOT_FOUND(7, "Запрашиваемый элемент не найден", HttpStatus.NOT_FOUND),
     PASSWORD_DOES_NOT_MATCH(8, "Новый пароль не совпадает со старым", HttpStatus.UNAUTHORIZED),
     TOO_BIG_AMOUNT(9, "Запрашиваемая сумма диверсификации превысила 1_000_000", HttpStatus.BAD_REQUEST),
-    NO_ASSETS_WITH_SUCH_RISK_TYPE(10, "На данный момент отсутствуют активы с выбранным типом рискованности",
+    NO_ASSETS_WITH_SUCH_RISK_TYPE(
+            10,
+            "На данный момент отсутствуют активы с выбранным типом рискованности",
             HttpStatus.NOT_FOUND),
-    TOO_LITTLE_AMOUNT(11,
+    TOO_LITTLE_AMOUNT(
+            11,
             "Запрашиваемая сумма диверсификации меньше минимальной стоимости актива выбранной рискованности",
             HttpStatus.BAD_REQUEST),
     GOOGLE_TOKEN_CANNOT_BE_VERIFIED(12, "Ошибка верификации Google токена", HttpStatus.BAD_REQUEST),
@@ -32,15 +37,4 @@ public enum TesseractErrorType {
         this.httpStatus = httpStatus;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
 }

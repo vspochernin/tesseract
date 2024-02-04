@@ -28,8 +28,7 @@ public class DiversificationController {
     @GetMapping("/diversifications")
     public ResponseEntity<List<DiversificationShortDto>> diversifications(
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
-    )
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize)
     {
         List<DiversificationShortDto> diversifications =
                 diversificationService.getDiversifications(pageNumber, pageSize);

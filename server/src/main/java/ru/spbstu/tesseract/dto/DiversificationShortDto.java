@@ -8,6 +8,11 @@ import ru.spbstu.tesseract.entity.Diversification;
 @Builder
 public class DiversificationShortDto {
 
+    private Integer diversificationId;
+    private String createDatetime;
+    private Integer riskTypeId;
+    private Integer amount;
+
     public static DiversificationShortDto fromDiversification(Diversification diversification) {
         return DiversificationShortDto.builder()
                 .diversificationId(diversification.getId())
@@ -16,9 +21,4 @@ public class DiversificationShortDto {
                 .amount(diversification.getAmount())
                 .build();
     }
-
-    private Integer diversificationId;
-    private String createDatetime;
-    private Integer riskTypeId;
-    private Integer amount;
 }
