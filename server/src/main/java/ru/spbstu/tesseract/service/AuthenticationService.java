@@ -131,6 +131,10 @@ public class AuthenticationService {
             throw new TesseractException(TesseractErrorType.INVALID_PASSWORD);
         }
 
+        if (!FieldValidator.isValidEmail(email)) {
+            throw new TesseractException(TesseractErrorType.EMAIL_EXISTS);
+        }
+
         if (userRepository.existsByLogin(login)) {
             throw new TesseractException(TesseractErrorType.LOGIN_EXISTS);
         }

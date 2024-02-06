@@ -1,5 +1,8 @@
 package ru.spbstu.tesseract.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class FieldValidator {
 
     private static final int MIN_PASSWORD_SIZE = 6;
@@ -7,6 +10,8 @@ public class FieldValidator {
     private static final int MIN_LOGIN_SIZE = 3;
     private static final int MAX_LOGIN_SIZE = 16;
     private static final String SPECIAL_SYMBOLS = "!@#$%&*()-_+=;:,./?\\|[]{}";
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     private FieldValidator() {
     }
@@ -47,6 +52,11 @@ public class FieldValidator {
         }
 
         return true;
+    }
+
+    public static boolean isValidEmail(String email) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return matcher.matches();
     }
 
     private static boolean isSpecialSymbol(char ch) {

@@ -13,23 +13,19 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "companies")
-public class Company {
+@Table(name = "operators")
+public class Operator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "companies_id_seq")
+    @SequenceGenerator(name = "operators_id_seq")
     private int id;
 
     private String title;
-    private String description;
-    private ZonedDateTime foundationDatetime;
-    private long revenue;
-    private long profit;
-    private int staff;
+    private ZonedDateTime inclusionDatetime;
 
-    public long getYearsSinceFoundation() {
+    public long getDaysSinceInsertion() {
         ZonedDateTime currentDateTime = ZonedDateTime.now();
-        return Duration.between(foundationDatetime, currentDateTime).toDays() / 365;
+        return Duration.between(inclusionDatetime, currentDateTime).toDays();
     }
 }

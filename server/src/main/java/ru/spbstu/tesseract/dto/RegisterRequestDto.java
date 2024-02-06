@@ -1,6 +1,5 @@
 package ru.spbstu.tesseract.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +15,6 @@ public class RegisterRequestDto {
     @NotNull
     private String login;
     @NotNull
-    @Email
     private String email;
     @NotNull
     private String password;

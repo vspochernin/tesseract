@@ -42,6 +42,10 @@ public class Asset {
 
     private Double interest;
 
+    @ManyToOne
+    @JoinColumn(name = "operator_id")
+    private Operator operator;
+
     @OneToMany
     @JoinColumn(name = "asset_id")
     private List<Price> prices;
@@ -68,109 +72,14 @@ public class Asset {
                 .anyMatch(user -> user.getLogin().equals(userLogin));
     }
 
-    public long getAssetAge() {
+    public long getDaysSinceRelease() {
         ZonedDateTime currentDateTime = ZonedDateTime.now();
-        Duration duration = Duration.between(releaseDatetime, currentDateTime);
-        return duration.toDays();
-    }
-
-    public int getScoreCompanyFoundation() {
-        double yearsUntilFoundation = getCompany().getCompanyAge();
-
-        if (yearsUntilFoundation < 1) {
-            return 1;
-        } else if (yearsUntilFoundation < 3) {
-            return 2;
-        } else if (yearsUntilFoundation < 6) {
-            return 3;
-        } else if (yearsUntilFoundation < 10) {
-            return 4;
-        }
-
-        return 5;
-    }
-
-    public int getScoreCompanyRevenue() {
-        long companyRevenue = getCompany().getRevenue();
-
-        if (companyRevenue < 10_000_000_000L) {
-            return 1;
-        } else if (companyRevenue < 50_000_000_000L) {
-            return 2;
-        } else if (companyRevenue < 100_000_000_000L) {
-            return 3;
-        } else if (companyRevenue < 500_000_000_000L) {
-            return 4;
-        }
-
-        return 5;
-    }
-
-    public int getScoreCompanyProfit() {
-        long companyProfit = getCompany().getProfit();
-
-        if (companyProfit < -1_000_000_000L) {
-            return 1;
-        } else if (companyProfit < 0L) {
-            return 2;
-        } else if (companyProfit < 1_000_000_000L) {
-            return 3;
-        } else if (companyProfit < 10_000_000_000L) {
-            return 4;
-        }
-
-        return 5;
-    }
-
-    public int getScoreCompanyStaffCount() {
-        int companyStaffCount = getCompany().getStaff();
-
-        if (companyStaffCount < 10) {
-            return 1;
-        } else if (companyStaffCount < 50) {
-            return 2;
-        } else if (companyStaffCount < 100) {
-            return 3;
-        } else if (companyStaffCount < 500) {
-            return 4;
-        }
-
-        return 5;
-    }
-
-    public int getScoreAssetRelease() {
-        long daysUntilRelease = getAssetAge();
-
-        if (daysUntilRelease < 10) {
-            return 1;
-        } else if (daysUntilRelease < 30) {
-            return 2;
-        } else if (daysUntilRelease < 90) {
-            return 3;
-        } else if (daysUntilRelease < 180) {
-            return 4;
-        }
-
-        return 5;
-    }
-
-    public int getScoreAssetInterest() {
-        if (interest > 17) {
-            return 1;
-        } else if (interest > 15) {
-            return 2;
-        } else if (interest > 13) {
-            return 3;
-        } else if (interest > 10) {
-            return 4;
-        }
-
-        return 5;
+        return Duration.between(releaseDatetime, currentDateTime).toDays();
     }
 
     public int getResultScore() {
-
-        return getScoreCompanyFoundation() +
+        return getScoreOperatorInsertion() +
+                getScoreCompanyFoundation() +
                 getScoreCompanyRevenue() +
                 getScoreCompanyProfit() +
                 getScoreCompanyStaffCount() +
@@ -181,13 +90,13 @@ public class Asset {
     public RiskType getRiskType() {
         int resultScore = getResultScore();
 
-        if (resultScore < 18) {
-            return RiskType.HIGH;
-        } else if (resultScore < 21) {
+        if (resultScore >= 23) {
+            return RiskType.LOW;
+        } else if (resultScore >= 20) {
             return RiskType.MIDDLE;
         }
 
-        return RiskType.LOW;
+        return RiskType.HIGH;
     }
 
     public Optional<Integer> getOldPrice(ZonedDateTime atTheMoment) {
@@ -197,5 +106,115 @@ public class Asset {
                         .isBefore(atTheMoment.toInstant()))
                 .max(Comparator.comparing(Price::getSetDatetime))
                 .map(Price::getPrice);
+    }
+
+    private int getScoreOperatorInsertion() {
+        long daysSinceInsertion = getOperator().getDaysSinceInsertion();
+
+        if (daysSinceInsertion >= 700) {
+            return 5;
+        } else if (daysSinceInsertion >= 500) {
+            return 4;
+        } else if (daysSinceInsertion >= 300) {
+            return 3;
+        } else if (daysSinceInsertion >= 100) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    private int getScoreCompanyFoundation() {
+        double yearsSinceFoundation = getCompany().getYearsSinceFoundation();
+
+        if (yearsSinceFoundation >= 10) {
+            return 5;
+        } else if (yearsSinceFoundation >= 6) {
+            return 4;
+        } else if (yearsSinceFoundation >= 3) {
+            return 3;
+        } else if (yearsSinceFoundation >= 1) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    private int getScoreCompanyRevenue() {
+        long companyRevenue = getCompany().getRevenue();
+
+        if (companyRevenue >= 500_000_000_000L) {
+            return 5;
+        } else if (companyRevenue >= 100_000_000_000L) {
+            return 4;
+        } else if (companyRevenue >= 50_000_000_000L) {
+            return 3;
+        } else if (companyRevenue >= 10_000_000_000L) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    private int getScoreCompanyProfit() {
+        long companyProfit = getCompany().getProfit();
+
+        if (companyProfit >= 10_000_000_000L) {
+            return 5;
+        } else if (companyProfit >= 1_000_000_000L) {
+            return 4;
+        } else if (companyProfit >= 0L) {
+            return 3;
+        } else if (companyProfit >= -1_000_000_000L) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    private int getScoreCompanyStaffCount() {
+        int companyStaffCount = getCompany().getStaff();
+
+        if (companyStaffCount >= 500) {
+            return 5;
+        } else if (companyStaffCount >= 100) {
+            return 4;
+        } else if (companyStaffCount >= 50) {
+            return 3;
+        } else if (companyStaffCount >= 10) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    private int getScoreAssetRelease() {
+        long daysSinceRelease = getDaysSinceRelease();
+
+        if (daysSinceRelease >= 180) {
+            return 5;
+        } else if (daysSinceRelease >= 90) {
+            return 4;
+        } else if (daysSinceRelease >= 30) {
+            return 3;
+        } else if (daysSinceRelease >= 10) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    private int getScoreAssetInterest() {
+        if (interest <= 10) {
+            return 5;
+        } else if (interest <= 13) {
+            return 4;
+        } else if (interest <= 15) {
+            return 3;
+        } else if (interest <= 17) {
+            return 2;
+        }
+
+        return 1;
     }
 }
