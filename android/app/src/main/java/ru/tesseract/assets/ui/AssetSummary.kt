@@ -22,6 +22,7 @@ import ru.tesseract.R
 import ru.tesseract.assets.domain.GeneralAssetInfo
 import ru.tesseract.diversifications.domain.DiversificationAsset
 import ru.tesseract.ui.FavoriteIcon
+import ru.tesseract.ui.asAnnotatedPriceDiff
 
 @Composable
 fun DiversificationAssetSummary(
@@ -34,11 +35,15 @@ fun DiversificationAssetSummary(
         id = asset.id,
         title = asset.title,
         companyTitle = asset.companyTitle,
-        price = asset.sum,
+        price = asset.currentPriceSum,
         isFavorite = asset.isFavorite,
         additionalInfo = {
             Text(
-                text = stringResource(id = R.string.asset_quantity, asset.count),
+                text = asset.priceSumDiff.asAnnotatedPriceDiff(),
+                style = MaterialTheme.typography.titleSmall,
+            )
+            Text(
+                text = stringResource(id = R.string.asset_quantity, formatPrice(asset.currentPrice), asset.count),
                 style = MaterialTheme.typography.titleSmall,
             )
         },

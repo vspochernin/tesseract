@@ -40,6 +40,7 @@ import ru.tesseract.diversifications.domain.DiversificationAsset
 import ru.tesseract.diversifications.domain.RiskLevel
 import ru.tesseract.diversifications.domain.riskLevel
 import ru.tesseract.ui.DefaultDateTimeFormatter
+import ru.tesseract.ui.asAnnotatedPriceDiff
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
@@ -78,7 +79,10 @@ fun DiversificationScreen(
                 HorizontalDivider(modifier = Modifier.padding(16.dp))
                 RiskLevel(diversification.riskLevel)
                 HorizontalDivider(modifier = Modifier.padding(16.dp))
-                DiversificationAmount(formatPrice(diversification.amount))
+                DiversificationAmount(
+                    formatPrice(diversification.currentAmount),
+                    diversification.amountDiff,
+                )
                 HorizontalDivider(modifier = Modifier.padding(16.dp))
                 DiversificationAssets(diversification.assets, navigator)
             }
@@ -104,7 +108,7 @@ private fun Date(date: Instant) {
         )
         Text(
             text = DefaultDateTimeFormatter.format(date.toJavaInstant()),
-            style = MaterialTheme.typography.headlineSmall
+            style = MaterialTheme.typography.headlineSmall,
         )
     }
 }
@@ -112,7 +116,7 @@ private fun Date(date: Instant) {
 @Composable
 private fun DiversificationAssets(
     assets: List<DiversificationAsset>,
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
 ) {
     Text(
         text = stringResource(id = R.string.diversification_assets),
@@ -129,13 +133,14 @@ private fun DiversificationAssets(
 }
 
 @Composable
-private fun DiversificationAmount(value: String) {
+private fun DiversificationAmount(value: String, diff: Int) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = stringResource(id = R.string.diversification_sum),
             style = MaterialTheme.typography.labelLarge,
         )
         Text(text = value, style = MaterialTheme.typography.displayMedium)
+        Text(text = diff.asAnnotatedPriceDiff())
     }
 }
 

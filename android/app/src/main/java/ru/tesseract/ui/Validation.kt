@@ -18,12 +18,12 @@ object Validation {
     }
 
     fun isEmailValid(value: String): Boolean {
-        return true
+        return Regex("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}\$").matches(value)
     }
 
     fun isDiversificationAmountValid(value: String): Boolean {
         val amount = value.toIntOrNull() ?: return false
-        return amount in 1..1_000_000
+        return amount in 1..5_000_000
     }
 
     fun isConfirmPasswordValid(a: String, b: String) = a == b

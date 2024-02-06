@@ -52,7 +52,7 @@
     <string name="risk_tolerance_combined_risk">Комбинированная</string>
     <string name="new_diversification_screen_title">Новая диверсификация</string>
     <string name="new_diversification_screen_create">Создать диверсификацию</string>
-    <string name="asset_quantity">%d шт.</string>
+    <string name="asset_quantity">%s × %d шт.</string>
     <string name="error_unexpected_error">Непредвиденная ошибка</string>
     <string name="error_login_exists">Такой логин уже используется</string>
     <string name="error_email_exists">Такой email уже используется</string>
@@ -68,8 +68,9 @@
     <string name="settings_screen_password_changed">Пароль успешно изменён</string>
     <string name="error_not_found">Ресурс не найден</string>
     <string name="error_password_does_not_match">Неправильный пароль</string>
-    <string name="error_too_big_amount">Сумма не может быть больше 1000000</string>
-    <string name="validation_invalid_amount">Сумма должна быть целым числом не более 1000000</string>
+    <string name="error_too_big_amount">Сумма не может быть больше 5000000</string>
+    <string name="validation_invalid_amount">Сумма должна быть целым числом не более 5000000</string>
     <string name="error_no_assets_with_such_risk">На данный момент отсутствуют активы с выбранным типом рискованности</string>
     <string name="error_too_little_amount">Запрашиваемая сумма диверсификации меньше минимальной стоимости актива выбранной рискованности</string>
+    <string name="asset_screen_operator">Оператор ЦФА</string>
 </resources>

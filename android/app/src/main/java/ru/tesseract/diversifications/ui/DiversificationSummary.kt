@@ -19,6 +19,7 @@ import ru.tesseract.assets.ui.formatPrice
 import ru.tesseract.diversifications.domain.Diversification
 import ru.tesseract.diversifications.domain.riskLevel
 import ru.tesseract.ui.DefaultDateTimeFormatter
+import ru.tesseract.ui.asAnnotatedPriceDiff
 
 @Composable
 fun DiversificationSummary(
@@ -45,7 +46,16 @@ fun DiversificationSummary(
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-            Text(formatPrice(diversification.amount), style = MaterialTheme.typography.titleMedium)
+            Column(horizontalAlignment = Alignment.End) {
+                Text(
+                    formatPrice(diversification.currentAmount),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Text(
+                    diversification.amountDiff.asAnnotatedPriceDiff(),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
         }
         HorizontalDivider(
             color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),

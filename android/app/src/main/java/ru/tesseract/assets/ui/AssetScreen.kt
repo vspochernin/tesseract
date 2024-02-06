@@ -83,6 +83,8 @@ fun AssetScreen(
                     title = asset.generalInfo.companyTitle,
                     description = asset.companyDescription,
                 )
+                HorizontalDivider(modifier = Modifier.padding(16.dp))
+                Operator(title = asset.operatorTitle)
             }
         } else {
             Box(
@@ -140,5 +142,17 @@ private fun AssetDescription(title: String, description: String) {
         Text(title, style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.size(8.dp))
         Text(description)
+    }
+}
+
+@Composable
+private fun Operator(title: String) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Text(
+            text = stringResource(id = R.string.asset_screen_operator),
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(bottom = 8.dp),
+        )
+        Text(title, style = MaterialTheme.typography.titleLarge)
     }
 }

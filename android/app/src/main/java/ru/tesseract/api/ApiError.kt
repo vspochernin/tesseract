@@ -16,6 +16,9 @@ enum class ApiErrorType(@StringRes val message: Int) {
     @SerialName("EMAIL_EXISTS")
     EmailExists(R.string.error_email_exists),
 
+    @SerialName("INVALID_EMAIL")
+    InvalidEmail(R.string.validation_invalid_email),
+
     @SerialName("INCORRECT_LOGIN")
     IncorrectLogin(R.string.error_incorrect_login),
 
