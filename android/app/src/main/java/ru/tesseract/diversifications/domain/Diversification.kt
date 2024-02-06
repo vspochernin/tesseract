@@ -24,8 +24,10 @@ class Diversification(
     val at: Instant,
     @SerialName("riskTypeId")
     val riskLevelOrdinal: Int,
-    @SerialName("amount")
-    val amount: Int,
+    @SerialName("currentAmount")
+    val currentAmount: Int,
+    @SerialName("amountDiff")
+    val amountDiff: Int,
 )
 
 val Diversification.riskLevel get() = RiskLevel.entries[riskLevelOrdinal]

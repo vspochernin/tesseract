@@ -12,6 +12,7 @@ class DetailedAssetInfo(
     val generalInfo: GeneralAssetInfo,
     val description: String,
     val companyDescription: String,
+    val operatorTitle: String,
     val riskLevel: RiskLevel,
 )
 
@@ -33,6 +34,8 @@ private class DetailedAssetInfoSurrogate(
     val description: String,
     @SerialName("companyDescription")
     val companyDescription: String,
+    @SerialName("operatorTitle")
+    val operatorTitle: String,
     @SerialName("riskTypeId")
     val riskLevelOrdinal: Int,
 )
@@ -50,6 +53,7 @@ object DetailedAssetInfoSerializer : KSerializer<DetailedAssetInfo> {
             isFavorite = value.generalInfo.isFavorite,
             description = value.description,
             companyDescription = value.companyDescription,
+            operatorTitle = value.operatorTitle,
             riskLevelOrdinal = value.riskLevel.ordinal,
         )
         encoder.encodeSerializableValue(DetailedAssetInfoSurrogate.serializer(), surrogate)
@@ -68,6 +72,7 @@ object DetailedAssetInfoSerializer : KSerializer<DetailedAssetInfo> {
             ),
             description = surrogate.description,
             companyDescription = surrogate.companyDescription,
+            operatorTitle = surrogate.operatorTitle,
             riskLevel = RiskLevel.entries[surrogate.riskLevelOrdinal],
         )
     }
