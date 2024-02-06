@@ -55,15 +55,21 @@ public class Asset {
     @JsonIgnore
     Set<User> users;
 
-    public int getAssetPrice() {
+    public int getCurrentAssetPrice() {
         return prices.stream()
                 .max(Comparator.comparing(Price::getSetDatetime))
                 .map(Price::getPrice)
                 .orElseThrow();
     }
 
-    public int getAssetMonthPriceDiff(int currentPrice) {
-        return currentPrice - getOldPrice(ZonedDateTime.now().minusMonths(1)).orElse(currentPrice);
+    public int getAssetPriceDiff(ZonedDateTime since) {
+        int currentPrice = getCurrentAssetPrice();
+        return currentPrice - getOldPrice(since).orElse(currentPrice);
+    }
+
+    public int getAssetDayPriceDiff() {
+        ZonedDateTime dayAgo = ZonedDateTime.now().minusDays(1);
+        return getAssetPriceDiff(dayAgo);
     }
 
     public boolean isAssetFavourite() {

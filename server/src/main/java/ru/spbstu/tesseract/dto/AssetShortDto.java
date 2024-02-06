@@ -16,14 +16,12 @@ public class AssetShortDto {
     private boolean favouriteStatus;
 
     public static AssetShortDto fromAsset(Asset asset) {
-        int assetPrice = asset.getAssetPrice();
-
         return AssetShortDto.builder()
                 .assetId(asset.getId())
                 .assetTitle(asset.getTitle())
                 .companyTitle(asset.getCompany().getTitle())
-                .assetPrice(assetPrice)
-                .assetPriceDiff(asset.getAssetMonthPriceDiff(assetPrice))
+                .assetPrice(asset.getCurrentAssetPrice())
+                .assetPriceDiff(asset.getAssetDayPriceDiff())
                 .favouriteStatus(asset.isAssetFavourite())
                 .build();
     }

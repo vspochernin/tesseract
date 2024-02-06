@@ -59,7 +59,7 @@ public class DiversificationService {
     public void createDiversification(CreateDiversificationRequestDto request) {
         int amount = request.getAmount();
 
-        if (amount > 100_000_000) {
+        if (amount > 500_000_000) {
             throw new TesseractException(TesseractErrorType.TOO_BIG_AMOUNT);
         }
 
@@ -78,7 +78,7 @@ public class DiversificationService {
         }
 
         int minPriceOfAssetWithSuchRiskType = assets.stream()
-                .map(Asset::getAssetPrice)
+                .map(Asset::getCurrentAssetPrice)
                 .mapToInt(Integer::intValue)
                 .min()
                 .orElseThrow();
@@ -89,7 +89,7 @@ public class DiversificationService {
 
         // Оставляем только активы, которые меньше или равны суммы диверсификации.
         assets = assets.stream()
-                .filter(asset -> asset.getAssetPrice() <= amount)
+                .filter(asset -> asset.getCurrentAssetPrice() <= amount)
                 .toList();
 
         // Cтоимость активов в диверсификации - накопленная уже.
@@ -107,26 +107,26 @@ public class DiversificationService {
         while (!assets.isEmpty()) {
             // Получаем актив с наименьшей стоимостью.
             Asset assetWithMinPrice = assets.stream()
-                    .min(Comparator.comparingInt(Asset::getAssetPrice))
+                    .min(Comparator.comparingInt(Asset::getCurrentAssetPrice))
                     .orElseThrow();
             int minPrice = assets.stream()
-                    .map(Asset::getAssetPrice)
+                    .map(Asset::getCurrentAssetPrice)
                     .mapToInt(Integer::intValue)
                     .min()
                     .orElseThrow();
             // Проверяем, что можем его добавить.
-            long newAmount = currentSumPrice + assetWithMinPrice.getAssetPrice();
+            long newAmount = currentSumPrice + assetWithMinPrice.getCurrentAssetPrice();
             if (newAmount <= amount) {
                 double addRandomValue = Math.random();
                 // Добавляем или нет актив в диверсификацию.
                 if (addRandomValue > addProbability || resultAssetsList.isEmpty()) {
-                    currentSumPrice += assetWithMinPrice.getAssetPrice();
+                    currentSumPrice += assetWithMinPrice.getCurrentAssetPrice();
                     // Добавляем актив в список активов диверсификации.
                     resultAssetsList.add(assetWithMinPrice);
                 }
                 // Удаляем актив с наименьшей ценой - в любом случае, иначе всегда он будет.
                 assets = assets.stream()
-                        .filter(asset -> asset.getAssetPrice() != minPrice)
+                        .filter(asset -> asset.getCurrentAssetPrice() != minPrice)
                         .toList();
             } else {
                 break;
@@ -148,12 +148,12 @@ public class DiversificationService {
                 Asset currentAsset = itr.previous();
 
                 // Проверяем, что можем его добавить.
-                long newAmount = currentSumPrice + currentAsset.getAssetPrice();
+                long newAmount = currentSumPrice + currentAsset.getCurrentAssetPrice();
                 if (newAmount <= amount) {
                     double addRandomValue = Math.random();
                     // Увеличиваем количество или нет.
                     if (addRandomValue > plusProbability) {
-                        currentSumPrice += currentAsset.getAssetPrice();
+                        currentSumPrice += currentAsset.getCurrentAssetPrice();
                         // Увеличиваем количество актива в списке активов диверсификации.
                         assetsInDiversifications.put(currentAsset, assetsInDiversifications.get(currentAsset) + 1);
                     }
@@ -169,7 +169,7 @@ public class DiversificationService {
 
         int realAmount = diversificationAssetsList.stream()
                 .mapToInt(diversificationAsset -> diversificationAsset.getCount() *
-                        diversificationAsset.getAsset().getAssetPrice())
+                        diversificationAsset.getAsset().getCurrentAssetPrice())
                 .sum();
 
         User currentUser = User.getCurrentUser();

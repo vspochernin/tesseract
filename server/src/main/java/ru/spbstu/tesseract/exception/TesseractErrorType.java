@@ -15,7 +15,7 @@ public enum TesseractErrorType {
     BAD_REQUEST_BODY(6, "Некорректное тело запроса", HttpStatus.BAD_REQUEST),
     NOT_FOUND(7, "Запрашиваемый элемент не найден", HttpStatus.NOT_FOUND),
     PASSWORD_DOES_NOT_MATCH(8, "Новый пароль не совпадает со старым", HttpStatus.UNAUTHORIZED),
-    TOO_BIG_AMOUNT(9, "Запрашиваемая сумма диверсификации превысила 1_000_000", HttpStatus.BAD_REQUEST),
+    TOO_BIG_AMOUNT(9, "Запрашиваемая сумма диверсификации превысила 5_000_000", HttpStatus.BAD_REQUEST),
     NO_ASSETS_WITH_SUCH_RISK_TYPE(
             10,
             "На данный момент отсутствуют активы с выбранным типом рискованности",

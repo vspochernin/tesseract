@@ -20,14 +20,12 @@ public class AssetLongDto {
     private String operatorTitle;
 
     public static AssetLongDto fromAsset(Asset asset) {
-        int assetPrice = asset.getAssetPrice();
-
         return AssetLongDto.builder()
                 .assetId(asset.getId())
                 .assetTitle(asset.getTitle())
                 .assetDescription(asset.getDescription())
-                .assetPrice(assetPrice)
-                .assetPriceDiff(asset.getAssetMonthPriceDiff(assetPrice))
+                .assetPrice(asset.getCurrentAssetPrice())
+                .assetPriceDiff(asset.getAssetDayPriceDiff())
                 .companyTitle(asset.getCompany().getTitle())
                 .companyDescription(asset.getCompany().getDescription())
                 .riskTypeId(asset.getRiskType().ordinal())

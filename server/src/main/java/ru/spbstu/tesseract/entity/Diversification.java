@@ -65,4 +65,16 @@ public class Diversification {
         }
         this.diversificationAssetSet = new HashSet<>(diversificationsAssets);
     }
+
+    public int getCurrentAmount() {
+        return diversificationAssetSet.stream()
+                .map(diversificationAsset -> {
+                    int count = diversificationAsset.getCount();
+                    int currentAssetPrice = diversificationAsset.getAsset().getCurrentAssetPrice();
+
+                    return currentAssetPrice * count;
+                })
+                .mapToInt(Integer::valueOf)
+                .sum();
+    }
 }
