@@ -42,6 +42,10 @@ public class Asset {
 
     private Double interest;
 
+    @ManyToOne
+    @JoinColumn(name = "operator_id")
+    private Operator operator;
+
     @OneToMany
     @JoinColumn(name = "asset_id")
     private List<Price> prices;

@@ -17,6 +17,7 @@ public class AssetLongDto {
     private String companyDescription;
     private int riskTypeId;
     private boolean favouriteStatus;
+    private String operatorTitle;
 
     public static AssetLongDto fromAsset(Asset asset) {
         int assetPrice = asset.getAssetPrice();
@@ -31,6 +32,7 @@ public class AssetLongDto {
                 .companyDescription(asset.getCompany().getDescription())
                 .riskTypeId(asset.getRiskType().ordinal())
                 .favouriteStatus(asset.isAssetFavourite())
+                .operatorTitle(asset.getOperator().getTitle())
                 .build();
     }
 }
