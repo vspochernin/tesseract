@@ -11,9 +11,10 @@ import ru.spbstu.tesseract.entity.Diversification;
 public class DiversificationLongDto {
 
     private String createDateTime;
-    private int amount;
+    private int currentAmount;
     private int riskTypeId;
     private List<AssetDiversificationDto> assetList;
+    private int amountDiff;
 
     public static DiversificationLongDto fromDiversification(Diversification diversification) {
         List<AssetDiversificationDto> assets = diversification.getDiversificationAssetSet().stream()
@@ -22,9 +23,10 @@ public class DiversificationLongDto {
 
         return DiversificationLongDto.builder()
                 .createDateTime(diversification.getCreateDatetime().toString())
-                .amount(diversification.getAmount())
+                .currentAmount(diversification.getCurrentAmount())
                 .riskTypeId(diversification.getRiskType().ordinal())
                 .assetList(assets)
+                .amountDiff(diversification.getCurrentAmount() - diversification.getAmount())
                 .build();
     }
 }

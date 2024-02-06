@@ -59,7 +59,7 @@ public class DiversificationService {
     public void createDiversification(CreateDiversificationRequestDto request) {
         int amount = request.getAmount();
 
-        if (amount > 1_000_000_000) {
+        if (amount > 500_000_000) {
             throw new TesseractException(TesseractErrorType.TOO_BIG_AMOUNT);
         }
 
