@@ -1,5 +1,6 @@
 package ru.spbstu.tesseract.entity;
 
+import java.time.Duration;
 import java.time.ZonedDateTime;
 
 import jakarta.persistence.Entity;
@@ -22,4 +23,9 @@ public class Operator {
 
     private String title;
     private ZonedDateTime inclusionDatetime;
+
+    public long getDaysSinceInsertion() {
+        ZonedDateTime currentDateTime = ZonedDateTime.now();
+        return Duration.between(inclusionDatetime, currentDateTime).toDays();
+    }
 }

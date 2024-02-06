@@ -28,9 +28,8 @@ public class Company {
     private long profit;
     private int staff;
 
-    public double getCompanyAge() {
+    public long getYearsSinceFoundation() {
         ZonedDateTime currentDateTime = ZonedDateTime.now();
-        Duration duration = Duration.between(foundationDatetime, currentDateTime);
-        return duration.toDays() / 365.0;
+        return Duration.between(foundationDatetime, currentDateTime).toDays() / 365;
     }
 }
