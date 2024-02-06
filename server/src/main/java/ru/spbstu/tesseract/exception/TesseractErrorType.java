@@ -11,6 +11,7 @@ public enum TesseractErrorType {
     EMAIL_EXISTS(2, "Пользователь с таким email уже существует", HttpStatus.BAD_REQUEST),
     INVALID_LOGIN(3, "Некорректный логин", HttpStatus.BAD_REQUEST),
     INVALID_PASSWORD(4, "Некорректный пароль", HttpStatus.BAD_REQUEST),
+    INVALID_EMAIL(4, "Некорректный email", HttpStatus.BAD_REQUEST),
     BAD_CREDENTIALS(5, "Пользователь с таким логином или паролем не найден", HttpStatus.UNAUTHORIZED),
     BAD_REQUEST_BODY(6, "Некорректное тело запроса", HttpStatus.BAD_REQUEST),
     NOT_FOUND(7, "Запрашиваемый элемент не найден", HttpStatus.NOT_FOUND),
