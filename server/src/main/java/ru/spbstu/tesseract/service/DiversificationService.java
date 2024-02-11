@@ -57,9 +57,9 @@ public class DiversificationService {
 
     // TODO: rewrite with smarter logic.
     public void createDiversification(CreateDiversificationRequestDto request) {
-        int amount = request.getAmount();
+        long amount = request.getAmount();
 
-        if (amount > 500_000_000) {
+        if (amount > 1_000_000_000L) {
             throw new TesseractException(TesseractErrorType.TOO_BIG_AMOUNT);
         }
 
@@ -77,9 +77,9 @@ public class DiversificationService {
             throw new TesseractException(TesseractErrorType.NO_ASSETS_WITH_SUCH_RISK_TYPE);
         }
 
-        int minPriceOfAssetWithSuchRiskType = assets.stream()
+        long minPriceOfAssetWithSuchRiskType = assets.stream()
                 .map(Asset::getCurrentAssetPrice)
-                .mapToInt(Integer::intValue)
+                .mapToLong(Long::longValue)
                 .min()
                 .orElseThrow();
 
@@ -107,11 +107,11 @@ public class DiversificationService {
         while (!assets.isEmpty()) {
             // Получаем актив с наименьшей стоимостью.
             Asset assetWithMinPrice = assets.stream()
-                    .min(Comparator.comparingInt(Asset::getCurrentAssetPrice))
+                    .min(Comparator.comparingLong(Asset::getCurrentAssetPrice))
                     .orElseThrow();
-            int minPrice = assets.stream()
+            long minPrice = assets.stream()
                     .map(Asset::getCurrentAssetPrice)
-                    .mapToInt(Integer::intValue)
+                    .mapToLong(Long::longValue)
                     .min()
                     .orElseThrow();
             // Проверяем, что можем его добавить.
@@ -134,9 +134,9 @@ public class DiversificationService {
         }
 
         // Формируем словарь ключ - актив, значение - количество.
-        Map<Asset, Integer> assetsInDiversifications = new HashMap<>();
+        Map<Asset, Long> assetsInDiversifications = new HashMap<>();
         for (Asset a : resultAssetsList) {
-            assetsInDiversifications.put(a, 1);
+            assetsInDiversifications.put(a, 1L);
         }
 
         int index = resultAssetsList.size();
@@ -167,8 +167,8 @@ public class DiversificationService {
                 .map(asset -> new DiversificationAsset(asset, assetsInDiversifications.get(asset)))
                 .toList();
 
-        int realAmount = diversificationAssetsList.stream()
-                .mapToInt(diversificationAsset -> diversificationAsset.getCount() *
+        long realAmount = diversificationAssetsList.stream()
+                .mapToLong(diversificationAsset -> diversificationAsset.getCount() *
                         diversificationAsset.getAsset().getCurrentAssetPrice())
                 .sum();
 

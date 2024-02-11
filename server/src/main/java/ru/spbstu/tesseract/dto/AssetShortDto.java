@@ -11,8 +11,8 @@ public class AssetShortDto {
     private int assetId;
     private String assetTitle;
     private String companyTitle;
-    private int assetPrice;
-    private int assetPriceDiff;
+    private long assetPrice;
+    private long assetPriceDiff;
     private boolean favouriteStatus;
 
     public static AssetShortDto fromAsset(Asset asset) {

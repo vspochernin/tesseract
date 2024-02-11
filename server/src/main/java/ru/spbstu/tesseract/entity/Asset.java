@@ -27,6 +27,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Table(name = "assets")
 public class Asset {
 
+    private static final int MAX_ASSET_SCORE = 35;
+    private static final int MIN_ASSET_SCORE = 0;
+    private static final int LOW_RISK_THRESHOLD = 80;
+    private static final int MIDDLE_RISK_THRESHOLD = 50;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "assets_id_seq")
@@ -55,19 +60,19 @@ public class Asset {
     @JsonIgnore
     Set<User> users;
 
-    public int getCurrentAssetPrice() {
+    public long getCurrentAssetPrice() {
         return prices.stream()
                 .max(Comparator.comparing(Price::getSetDatetime))
                 .map(Price::getPrice)
                 .orElseThrow();
     }
 
-    public int getAssetPriceDiff(ZonedDateTime since) {
-        int currentPrice = getCurrentAssetPrice();
+    public long getAssetPriceDiff(ZonedDateTime since) {
+        long currentPrice = getCurrentAssetPrice();
         return currentPrice - getOldPrice(since).orElse(currentPrice);
     }
 
-    public int getAssetDayPriceDiff() {
+    public long getAssetDayPriceDiff() {
         ZonedDateTime dayAgo = ZonedDateTime.now().minusDays(1);
         return getAssetPriceDiff(dayAgo);
     }
@@ -83,29 +88,32 @@ public class Asset {
         return Duration.between(releaseDatetime, currentDateTime).toDays();
     }
 
-    public int getResultScore() {
-        return getScoreOperatorInsertion() +
+    public int getAssetScore() {
+        int initialScore = getScoreOperatorInsertion() +
                 getScoreCompanyFoundation() +
                 getScoreCompanyRevenue() +
                 getScoreCompanyProfit() +
                 getScoreCompanyStaffCount() +
                 getScoreAssetRelease() +
                 getScoreAssetInterest();
+
+        int scoreCoefficient = initialScore / MAX_ASSET_SCORE - MIN_ASSET_SCORE;
+        return (int) (scoreCoefficient * 100L);
     }
 
     public RiskType getRiskType() {
-        int resultScore = getResultScore();
+        int resultScore = getAssetScore();
 
-        if (resultScore >= 23) {
+        if (resultScore >= LOW_RISK_THRESHOLD) {
             return RiskType.LOW;
-        } else if (resultScore >= 20) {
+        } else if (resultScore >= MIDDLE_RISK_THRESHOLD) {
             return RiskType.MIDDLE;
         }
 
         return RiskType.HIGH;
     }
 
-    public Optional<Integer> getOldPrice(ZonedDateTime atTheMoment) {
+    public Optional<Long> getOldPrice(ZonedDateTime atTheMoment) {
         return prices.stream()
                 .filter(price -> price.getSetDatetime()
                         .toInstant()
@@ -125,25 +133,29 @@ public class Asset {
             return 3;
         } else if (daysSinceInsertion >= 100) {
             return 2;
+        } else if (daysSinceInsertion >= 50) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 
     private int getScoreCompanyFoundation() {
-        double yearsSinceFoundation = getCompany().getYearsSinceFoundation();
+        long yearsSinceFoundation = getCompany().getYearsSinceFoundation();
 
         if (yearsSinceFoundation >= 10) {
             return 5;
-        } else if (yearsSinceFoundation >= 6) {
+        } else if (yearsSinceFoundation >= 7) {
             return 4;
-        } else if (yearsSinceFoundation >= 3) {
+        } else if (yearsSinceFoundation >= 4) {
             return 3;
-        } else if (yearsSinceFoundation >= 1) {
+        } else if (yearsSinceFoundation >= 2) {
             return 2;
+        } else if (yearsSinceFoundation >= 1) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 
     private int getScoreCompanyRevenue() {
@@ -157,9 +169,11 @@ public class Asset {
             return 3;
         } else if (companyRevenue >= 10_000_000_000L) {
             return 2;
+        } else if (companyRevenue >= 5_000_000_000L) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 
     private int getScoreCompanyProfit() {
@@ -173,9 +187,11 @@ public class Asset {
             return 3;
         } else if (companyProfit >= -1_000_000_000L) {
             return 2;
+        } else if (companyProfit >= -3_000_000_000L) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 
     private int getScoreCompanyStaffCount() {
@@ -189,9 +205,11 @@ public class Asset {
             return 3;
         } else if (companyStaffCount >= 10) {
             return 2;
+        } else if (companyStaffCount >= 5) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 
     private int getScoreAssetRelease() {
@@ -205,22 +223,28 @@ public class Asset {
             return 3;
         } else if (daysSinceRelease >= 10) {
             return 2;
+        } else if (daysSinceRelease >= 5) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 
     private int getScoreAssetInterest() {
-        if (interest <= 10) {
+        double assetInterest = interest;
+
+        if (assetInterest <= 10) {
             return 5;
-        } else if (interest <= 13) {
+        } else if (assetInterest <= 13) {
             return 4;
-        } else if (interest <= 15) {
+        } else if (assetInterest <= 15) {
             return 3;
-        } else if (interest <= 17) {
+        } else if (assetInterest <= 17) {
             return 2;
+        } else if (assetInterest <= 20) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 }

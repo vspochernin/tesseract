@@ -34,7 +34,7 @@ public class DiversificationAsset {
 
     private long count;
 
-    public DiversificationAsset(Asset asset, int count) {
+    public DiversificationAsset(Asset asset, long count) {
         this.asset = asset;
         this.count = count;
     }
