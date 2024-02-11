@@ -18,8 +18,8 @@ public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "assets_id_seq")
-    private int id;
+    private long id;
 
-    private int price;
+    private long price;
     private ZonedDateTime setDatetime;
 }

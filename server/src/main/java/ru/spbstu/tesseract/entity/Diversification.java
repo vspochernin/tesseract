@@ -43,7 +43,7 @@ public class Diversification {
     @Enumerated(EnumType.ORDINAL)
     private RiskType riskType;
 
-    private int amount;
+    private long amount;
 
     @OneToMany(mappedBy = "diversification", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
