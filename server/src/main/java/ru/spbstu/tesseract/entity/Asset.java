@@ -30,7 +30,7 @@ public class Asset {
     private static final int MAX_ASSET_SCORE = 35;
     private static final int MIN_ASSET_SCORE = 0;
     private static final int LOW_RISK_THRESHOLD = 80;
-    private static final int MIDDLE_RISK_THRESHOLD = 50;
+    private static final int MIDDLE_RISK_THRESHOLD = 65;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -97,7 +97,7 @@ public class Asset {
                 getScoreAssetRelease() +
                 getScoreAssetInterest();
 
-        int scoreCoefficient = initialScore / MAX_ASSET_SCORE - MIN_ASSET_SCORE;
+        double scoreCoefficient = (double) initialScore / (MAX_ASSET_SCORE - MIN_ASSET_SCORE);
         return (int) (scoreCoefficient * 100L);
     }
 
