@@ -89,6 +89,7 @@ public class AuthenticationService {
                     User newUser = User.builder()
                             .login(login)
                             .password("")
+                            .email("")
                             .build();
 
                     userRepository.save(newUser);
