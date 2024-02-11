@@ -43,7 +43,7 @@ public class Diversification {
     @Enumerated(EnumType.ORDINAL)
     private RiskType riskType;
 
-    private int amount;
+    private long amount;
 
     @OneToMany(mappedBy = "diversification", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
@@ -53,7 +53,7 @@ public class Diversification {
             User user,
             ZonedDateTime createDatetime,
             RiskType riskType,
-            int amount,
+            long amount,
             List<DiversificationAsset> diversificationsAssets)
     {
         this.user = user;
@@ -66,15 +66,15 @@ public class Diversification {
         this.diversificationAssetSet = new HashSet<>(diversificationsAssets);
     }
 
-    public int getCurrentAmount() {
+    public long getCurrentAmount() {
         return diversificationAssetSet.stream()
                 .map(diversificationAsset -> {
-                    int count = diversificationAsset.getCount();
-                    int currentAssetPrice = diversificationAsset.getAsset().getCurrentAssetPrice();
+                    long count = diversificationAsset.getCount();
+                    long currentAssetPrice = diversificationAsset.getAsset().getCurrentAssetPrice();
 
                     return currentAssetPrice * count;
                 })
-                .mapToInt(Integer::valueOf)
+                .mapToLong(Long::valueOf)
                 .sum();
     }
 }

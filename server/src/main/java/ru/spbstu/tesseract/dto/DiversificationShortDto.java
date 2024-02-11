@@ -11,8 +11,8 @@ public class DiversificationShortDto {
     private int diversificationId;
     private String createDatetime;
     private int riskTypeId;
-    private int currentAmount;
-    private int amountDiff;
+    private long currentAmount;
+    private long amountDiff;
 
     public static DiversificationShortDto fromDiversification(Diversification diversification) {
         return DiversificationShortDto.builder()

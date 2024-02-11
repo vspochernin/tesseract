@@ -32,9 +32,9 @@ public class DiversificationAsset {
     @JoinColumn(name = "asset_id")
     private Asset asset;
 
-    private int count;
+    private long count;
 
-    public DiversificationAsset(Asset asset, int count) {
+    public DiversificationAsset(Asset asset, long count) {
         this.asset = asset;
         this.count = count;
     }

@@ -11,8 +11,8 @@ public class AssetLongDto {
     private int assetId;
     private String assetTitle;
     private String assetDescription;
-    private int assetPrice;
-    private int assetPriceDiff;
+    private long assetPrice;
+    private long assetPriceDiff;
     private String companyTitle;
     private String companyDescription;
     private int riskTypeId;

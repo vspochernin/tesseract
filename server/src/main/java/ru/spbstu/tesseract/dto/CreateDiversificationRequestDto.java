@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class CreateDiversificationRequestDto {
 
     @NotNull
-    private int amount;
+    private long amount;
     @NotNull
     @Min(0)
     @Max(3)

@@ -14,6 +14,6 @@ public enum RiskType {
             }
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Can't find RiskType by id");
     }
 }

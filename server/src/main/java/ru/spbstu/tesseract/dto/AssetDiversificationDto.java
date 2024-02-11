@@ -15,29 +15,34 @@ public class AssetDiversificationDto {
     private int assetId;
     private String assetTitle;
     private String companyTitle;
-    private int currentPriceSum;
-    private int count;
+    private long currentPriceSum;
+    private long count;
     private boolean favouriteStatus;
-    private int priceSumDiff;
-    private int currentPrice;
+    private long priceSumDiff;
+    private long currentPrice;
 
     public static AssetDiversificationDto fromDiversificationAsset(DiversificationAsset diversificationAsset) {
         Diversification diversification = diversificationAsset.getDiversification();
         Asset asset = diversificationAsset.getAsset();
 
-        int oldAssetPrice = asset.getOldPrice(diversification.getCreateDatetime())
-                .orElseThrow(() -> new NoSuchElementException("Cannot find price"));
-        int currentAssetPrice = asset.getCurrentAssetPrice();
-        int assetCount = diversificationAsset.getCount();
+        long oldAssetPrice = asset.getOldPrice(diversification.getCreateDatetime())
+                .orElseThrow(() -> new NoSuchElementException("Can't find price"));
+        long currentAssetPrice = asset.getCurrentAssetPrice();
+
+        long assetCount = diversificationAsset.getCount();
+
+        long currentPriceSum = currentAssetPrice * assetCount;
+        long oldPriceSum = oldAssetPrice * assetCount;
+
         return AssetDiversificationDto.builder()
 
                 .assetId(asset.getId())
                 .assetTitle(asset.getTitle())
                 .companyTitle(asset.getCompany().getTitle())
-                .currentPriceSum(currentAssetPrice * assetCount)
+                .currentPriceSum(currentPriceSum)
                 .count(assetCount)
                 .favouriteStatus(asset.isAssetFavourite())
-                .priceSumDiff(currentAssetPrice * assetCount - oldAssetPrice * assetCount)
+                .priceSumDiff(currentPriceSum - oldPriceSum)
                 .currentPrice(currentAssetPrice)
                 .build();
     }
