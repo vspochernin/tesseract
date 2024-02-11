@@ -133,7 +133,7 @@ private fun DiversificationAssets(
 }
 
 @Composable
-private fun DiversificationAmount(value: String, diff: Int) {
+private fun DiversificationAmount(value: String, diff: Long) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = stringResource(id = R.string.diversification_sum),

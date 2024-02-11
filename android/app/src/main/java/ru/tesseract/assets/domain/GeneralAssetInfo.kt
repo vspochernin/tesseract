@@ -12,9 +12,9 @@ class GeneralAssetInfo(
     @SerialName("companyTitle")
     val companyTitle: String,
     @SerialName("assetPrice")
-    val price: Int,
+    val price: Long,
     @SerialName("assetPriceDiff")
-    val priceDiff: Int,
+    val priceDiff: Long,
     @SerialName("favouriteStatus")
     val isFavorite: Boolean,
 )

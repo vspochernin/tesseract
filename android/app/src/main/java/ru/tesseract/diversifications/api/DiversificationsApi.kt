@@ -12,7 +12,7 @@ import ru.tesseract.diversifications.domain.RiskLevel
 
 @Serializable
 private class CreateRequest(
-    val amount: Int,
+    val amount: Long,
     val riskTypeId: Int,
 )
 
@@ -26,6 +26,6 @@ class DiversificationsApi(
     suspend fun get(id: Int): ApiResponse<DiversificationWithAssets> =
         client.get("diversifications/$id")
 
-    suspend fun create(amount: Int, riskLevel: RiskLevel): ApiResponse<Unit> =
+    suspend fun create(amount: Long, riskLevel: RiskLevel): ApiResponse<Unit> =
         client.post("diversifications") { setBody(CreateRequest(amount, riskLevel.ordinal)) }
 }
