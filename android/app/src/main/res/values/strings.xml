@@ -63,12 +63,12 @@
     <string name="error_not_found">Not found</string>
     <string name="error_password_does_not_match">Incorrect password</string>
     <string name="error_network_error">Network error</string>
-    <string name="error_too_big_amount">Amount must be an integer no more than 5000000</string>
+    <string name="error_too_big_amount">Amount is too big</string>
     <string name="error_no_assets_with_such_risk">No assets with such risk</string>
     <string name="error_too_little_amount">Amount is too little</string>
     <string name="error_google_oauth">Error while signing in with Google</string>
     <string name="ok">OK</string>
-    <string name="validation_invalid_amount">Amount must be an integer no more than 5000000</string>
+    <string name="validation_invalid_amount">Amount must be an integer no more than %d</string>
     <string name="validation_incorrect_confirm_password">Password confirmation doesn\'t match</string>
     <string name="validation_invalid_email">Invalid email</string>
     <string name="asset_screen_operator">Operator</string>

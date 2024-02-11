@@ -79,7 +79,7 @@ private fun AssetSummary(
     id: Int,
     title: String,
     companyTitle: String,
-    price: Int,
+    price: Long,
     isFavorite: Boolean,
     additionalInfo: @Composable () -> Unit,
     onClick: () -> Unit,

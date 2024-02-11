@@ -9,9 +9,9 @@ class DiversificationWithAssets(
     @SerialName("createDateTime")
     val at: Instant,
     @SerialName("currentAmount")
-    val currentAmount: Int,
+    val currentAmount: Long,
     @SerialName("amountDiff")
-    val amountDiff: Int,
+    val amountDiff: Long,
     @SerialName("riskTypeId")
     val riskLevelOrdinal: Int,
     @SerialName("assetList")
@@ -27,11 +27,11 @@ class DiversificationAsset(
     @SerialName("companyTitle")
     val companyTitle: String,
     @SerialName("currentPriceSum")
-    val currentPriceSum: Int,
+    val currentPriceSum: Long,
     @SerialName("priceSumDiff")
-    val priceSumDiff: Int,
+    val priceSumDiff: Long,
     @SerialName("currentPrice")
-    val currentPrice: Int,
+    val currentPrice: Long,
     @SerialName("count")
     val count: Int,
     @SerialName("favouriteStatus")

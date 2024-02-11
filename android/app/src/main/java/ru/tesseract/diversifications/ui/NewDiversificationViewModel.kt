@@ -28,7 +28,7 @@ class NewDiversificationViewModel(
 
     fun onCreate(dismiss: suspend () -> Unit) = viewModelScope.launch {
         if (isLoading || !isValid) return@launch
-        val amount = amountField.toIntOrNull() ?: return@launch
+        val amount = amountField.toLongOrNull() ?: return@launch
         val riskLevel = riskLevel
         isLoading = true
         diversificationsApi.create(amount * 100, riskLevel).onSuccess {

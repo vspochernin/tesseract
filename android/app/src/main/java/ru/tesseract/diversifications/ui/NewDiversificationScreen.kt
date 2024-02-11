@@ -40,6 +40,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
 import ru.tesseract.R
 import ru.tesseract.diversifications.domain.RiskLevel
+import ru.tesseract.ui.Validation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
@@ -85,7 +86,7 @@ fun NewDiversificationScreen(
             )
             AnimatedVisibility(visible = viewModel.showAmountError) {
                 Text(
-                    text = stringResource(id = R.string.validation_invalid_amount),
+                    text = stringResource(id = R.string.validation_invalid_amount, Validation.MaxDiversificationAmountRubles),
                     color = MaterialTheme.colorScheme.error,
                 )
             }

@@ -11,7 +11,7 @@ import androidx.compose.ui.text.withStyle
 
 @ReadOnlyComposable
 @Composable
-fun Int.asAnnotatedPriceDiff() =
+fun Long.asAnnotatedPriceDiff() =
     buildAnnotatedString {
         val diff = "%.2f ₽".format(this@asAnnotatedPriceDiff.toDouble() / 100)
         val diffString = (if (this@asAnnotatedPriceDiff >= 0) "+" else "") + diff

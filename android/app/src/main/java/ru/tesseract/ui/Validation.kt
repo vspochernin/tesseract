@@ -1,6 +1,8 @@
 package ru.tesseract.ui
 
 object Validation {
+    const val MaxDiversificationAmountRubles = 10_000_000L
+
     private val SpecialSymbols = setOf(
         '!', '@', '#', '$', '%', '&', '*', '(', ')', '-', '_', '+', '=',
         ';', ':', ',', '.', '/', '?', '\\', '|', '[', ']', '{', '}',
@@ -18,12 +20,12 @@ object Validation {
     }
 
     fun isEmailValid(value: String): Boolean {
-        return Regex("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}\$").matches(value)
+        return Regex("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}\$", RegexOption.IGNORE_CASE).matches(value)
     }
 
     fun isDiversificationAmountValid(value: String): Boolean {
-        val amount = value.toIntOrNull() ?: return false
-        return amount in 1..5_000_000
+        val amount = value.toLongOrNull() ?: return false
+        return amount in 1..MaxDiversificationAmountRubles
     }
 
     fun isConfirmPasswordValid(a: String, b: String) = a == b
