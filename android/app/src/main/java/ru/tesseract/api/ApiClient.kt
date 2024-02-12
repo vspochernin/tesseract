@@ -9,9 +9,11 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.koin.core.annotation.Single
+import ru.tesseract.KoverIgnore
 import ru.tesseract.LoginState
 
 @Single
+@KoverIgnore
 class ApiClient(val httpClient: HttpClient, val loginState: LoginState) {
     val apiErrors = MutableSharedFlow<ApiErrorType>()
     val networkErrors = MutableSharedFlow<ApiResponse.NetworkError>()

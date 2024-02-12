@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class DiversificationWithAssets(
+data class DiversificationWithAssets(
     @SerialName("createDateTime")
     val at: Instant,
     @SerialName("currentAmount")
@@ -19,7 +19,7 @@ class DiversificationWithAssets(
 )
 
 @Serializable
-class DiversificationAsset(
+data class DiversificationAsset(
     @SerialName("assetId")
     val id: Int,
     @SerialName("assetTitle")

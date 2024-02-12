@@ -2,7 +2,9 @@ package ru.tesseract.api
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import ru.tesseract.KoverIgnore
 
+@KoverIgnore
 class ApiPagingSource<Data: Any>(
     private val fetch: suspend (page: Int) -> ApiResponse<List<Data>>
 ) : PagingSource<Int, Data>() {

@@ -30,6 +30,7 @@ import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.navigation.popBackStack
 import com.ramcosta.composedestinations.navigation.popUpTo
 import com.ramcosta.composedestinations.utils.isRouteOnBackStackAsState
+import ru.tesseract.KoverIgnore
 import ru.tesseract.NavGraphs
 import ru.tesseract.R
 import ru.tesseract.destinations.AssetsScreenDestination
@@ -38,6 +39,7 @@ import ru.tesseract.destinations.DiversificationsScreenDestination
 import ru.tesseract.destinations.FavoritesScreenDestination
 import ru.tesseract.destinations.SettingsScreenDestination
 
+@KoverIgnore
 enum class MainNavigationBarItem(
     val direction: DirectionDestination,
     val icon: ImageVector,
@@ -67,7 +69,7 @@ fun MainNavigation() {
     ) { padding ->
         val engine =
             rememberAnimatedNavHostEngine(
-                rootDefaultAnimations = rootDefaultAnimations,
+                rootDefaultAnimations = MaterialTransitions.rootDefaultAnimations,
             )
         DestinationsNavHost(
             navGraph = NavGraphs.root,

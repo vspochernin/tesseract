@@ -20,7 +20,7 @@ object Validation {
     }
 
     fun isEmailValid(value: String): Boolean {
-        return Regex("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}\$", RegexOption.IGNORE_CASE).matches(value)
+        return Regex("^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,6}\$", RegexOption.IGNORE_CASE).matches(value)
     }
 
     fun isDiversificationAmountValid(value: String): Boolean {
