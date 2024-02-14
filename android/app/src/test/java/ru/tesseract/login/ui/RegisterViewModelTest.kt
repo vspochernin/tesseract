@@ -6,21 +6,24 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.Assert.*
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
 import ru.tesseract.api.ApiErrorType
 import ru.tesseract.api.ApiResponse
 import ru.tesseract.login.api.RegisterApi
 import ru.tesseract.login.api.RegisterResponse
+import ru.tesseract.util.MainDispatcherRule
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class RegisterViewModelTest {
+    @get:Rule
+    val dispatcherRule = MainDispatcherRule()
+
     @Test
-    fun `RegisterViewModel should register user`() {
+    fun `RegisterViewModel should register user`() = runTest {
         val registerApi = mockk<RegisterApi>()
         val dismiss = mockk<() -> Unit>()
         every { dismiss.invoke() } returns Unit
@@ -31,10 +34,7 @@ class RegisterViewModelTest {
         viewModel.password = "password123"
         viewModel.confirmPassword = "password123"
         viewModel.email = "email@gmail.com"
-        Dispatchers.setMain(Dispatchers.Default)
-        runTest {
-            viewModel.onRegister(dismiss).join()
-        }
+        viewModel.onRegister(dismiss).join()
         coVerify(exactly = 1) { registerApi.register("login", "email@gmail.com", "password123") }
         verify(exactly = 1) { dismiss() }
         confirmVerified(dismiss)
@@ -42,7 +42,7 @@ class RegisterViewModelTest {
     }
 
     @Test
-    fun `RegisterViewModel should not dismiss on error`() {
+    fun `RegisterViewModel should not dismiss on error`() = runTest {
         val registerApi = mockk<RegisterApi>()
         val dismiss = mockk<() -> Unit>()
         every { dismiss.invoke() } returns Unit
@@ -53,10 +53,7 @@ class RegisterViewModelTest {
         viewModel.password = "password123"
         viewModel.confirmPassword = "password123"
         viewModel.email = "email@gmail.com"
-        Dispatchers.setMain(Dispatchers.Default)
-        runTest {
-            viewModel.onRegister(dismiss).join()
-        }
+        viewModel.onRegister(dismiss).join()
         coVerify(exactly = 1) { registerApi.register("login", "email@gmail.com", "password123") }
         verify(exactly = 0) { dismiss() }
         confirmVerified(dismiss)
@@ -64,7 +61,7 @@ class RegisterViewModelTest {
     }
 
     @Test
-    fun `RegisterViewModel should not register invalid user`() {
+    fun `RegisterViewModel should not register invalid user`() = runTest {
         val registerApi = mockk<RegisterApi>()
         val dismiss = mockk<() -> Unit>()
         every { dismiss.invoke() } returns Unit
@@ -75,10 +72,7 @@ class RegisterViewModelTest {
         viewModel.password = "password123"
         viewModel.confirmPassword = "password123"
         viewModel.email = "invalid"
-        Dispatchers.setMain(Dispatchers.Default)
-        runTest {
-            viewModel.onRegister(dismiss).join()
-        }
+        viewModel.onRegister(dismiss).join()
         coVerify(exactly = 0) { registerApi.register(any(), any(), any()) }
         verify(exactly = 0) { dismiss() }
         confirmVerified(dismiss)
