@@ -7,6 +7,7 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import org.koin.ksp.generated.defaultModule
 
+@KoverIgnore
 class TesseractApplication : Application() {
     override fun onCreate() {
         super.onCreate()

@@ -10,34 +10,34 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Single
 
-private val TokenKey = stringPreferencesKey("token")
-private val LoginMethodKey = intPreferencesKey("login_method")
-
 enum class LoginMethod(val allowChangingPassword: Boolean) {
     Tesseract(allowChangingPassword = true),
     Google(allowChangingPassword = false),
 }
 
 @OptIn(DelicateCoroutinesApi::class)
+@KoverIgnore
 @Single
 class LoginState(
     private val dataStore: DataStore<Preferences>,
 ) {
-    val token = dataStore.data.map { it[TokenKey] }
+    private val tokenKey = stringPreferencesKey("token")
+    private val loginMethodKey = intPreferencesKey("login_method")
+    val token = dataStore.data.map { it[tokenKey] }
         .stateInBlocking(GlobalScope)
     val loginMethod = dataStore.data.map { data ->
-        val ordinal = data[LoginMethodKey]
+        val ordinal = data[loginMethodKey]
         ordinal?.let { LoginMethod.entries[it] }
     }
 
     suspend fun resetToken() {
-        dataStore.edit { it.remove(TokenKey) }
+        dataStore.edit { it.remove(tokenKey) }
     }
 
     suspend fun setToken(token: String, method: LoginMethod) {
         dataStore.edit {
-            it[TokenKey] = token
-            it[LoginMethodKey] = method.ordinal
+            it[tokenKey] = token
+            it[loginMethodKey] = method.ordinal
         }
     }
 }

@@ -3,6 +3,7 @@ package ru.tesseract.login.api
 import io.ktor.client.request.setBody
 import kotlinx.serialization.Serializable
 import org.koin.core.annotation.Single
+import ru.tesseract.KoverIgnore
 import ru.tesseract.api.ApiClient
 import ru.tesseract.api.ApiResponse
 
@@ -12,6 +13,7 @@ class RegisterResponse(
 )
 
 @Serializable
+@KoverIgnore
 private class RegisterRequest(
     val login: String,
     val email: String,
@@ -19,6 +21,7 @@ private class RegisterRequest(
 )
 
 @Single
+@KoverIgnore
 class RegisterApi(private val client: ApiClient) {
     suspend fun register(login: String, email: String, password: String): ApiResponse<RegisterResponse> =
         client.post("register") { setBody(RegisterRequest(login, email, password)) }

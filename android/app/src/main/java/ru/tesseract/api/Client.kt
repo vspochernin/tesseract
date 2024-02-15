@@ -13,13 +13,16 @@ import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.annotation.Single
+import ru.tesseract.KoverIgnore
 
+@KoverIgnore
 @Single
 fun json(): Json = Json {
     isLenient = true
     ignoreUnknownKeys = true
 }
 
+@KoverIgnore
 @Single
 fun client(json: Json): HttpClient = HttpClient(Android) {
     install(ContentNegotiation) {

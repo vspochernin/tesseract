@@ -12,7 +12,7 @@ import ru.tesseract.NavGraphs
 fun LoginNavigation() {
     val engine =
         rememberAnimatedNavHostEngine(
-            rootDefaultAnimations = rootDefaultAnimations,
+            rootDefaultAnimations = MaterialTransitions.rootDefaultAnimations,
         )
     DestinationsNavHost(navGraph = NavGraphs.login, engine = engine)
 }

@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import ru.tesseract.KoverIgnore
 
+@KoverIgnore("UI")
 fun LazyListScope.loadingStates(items: LazyPagingItems<*>) {
     when (items.loadState.refresh) {
         is LoadState.Loading -> {

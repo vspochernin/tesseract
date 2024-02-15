@@ -7,20 +7,22 @@ import androidx.compose.animation.scaleIn
 import com.ramcosta.composedestinations.animations.defaults.DestinationEnterTransition
 import com.ramcosta.composedestinations.animations.defaults.DestinationExitTransition
 import com.ramcosta.composedestinations.animations.defaults.RootNavGraphDefaultAnimations
+import ru.tesseract.KoverIgnore
 
-private object MaterialTransitions {
-    val enter =
+@KoverIgnore
+object MaterialTransitions {
+    private val enter =
         DestinationEnterTransition {
             fadeIn(animationSpec = tween(220, delayMillis = 90)) +
                 scaleIn(initialScale = 0.92f, animationSpec = tween(220, delayMillis = 90))
         }
 
-    val exit =
+    private val exit =
         DestinationExitTransition {
             fadeOut(animationSpec = tween(90))
         }
 
-    val popEnter =
+    private val popEnter =
         DestinationEnterTransition {
             fadeIn(animationSpec = tween(220, delayMillis = 90)) +
                 scaleIn(
@@ -29,16 +31,16 @@ private object MaterialTransitions {
                 )
         }
 
-    val popExit =
+    private val popExit =
         DestinationExitTransition {
             fadeOut(animationSpec = tween(90))
         }
-}
 
-val rootDefaultAnimations =
-    RootNavGraphDefaultAnimations(
-        enterTransition = MaterialTransitions.enter,
-        exitTransition = MaterialTransitions.exit,
-        popEnterTransition = MaterialTransitions.popEnter,
-        popExitTransition = MaterialTransitions.popExit,
-    )
+    val rootDefaultAnimations =
+        RootNavGraphDefaultAnimations(
+            enterTransition = enter,
+            exitTransition = exit,
+            popEnterTransition = popEnter,
+            popExitTransition = popExit,
+        )
+}

@@ -3,6 +3,7 @@ package ru.tesseract.diversifications.api
 import io.ktor.client.request.setBody
 import kotlinx.serialization.Serializable
 import org.koin.core.annotation.Single
+import ru.tesseract.KoverIgnore
 import ru.tesseract.api.ApiClient
 import ru.tesseract.api.ApiResponse
 import ru.tesseract.api.page
@@ -11,12 +12,14 @@ import ru.tesseract.diversifications.domain.DiversificationWithAssets
 import ru.tesseract.diversifications.domain.RiskLevel
 
 @Serializable
+@KoverIgnore
 private class CreateRequest(
     val amount: Long,
     val riskTypeId: Int,
 )
 
 @Single
+@KoverIgnore
 class DiversificationsApi(
     private val client: ApiClient,
 ) {

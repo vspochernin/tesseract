@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class GeneralAssetInfo(
+data class GeneralAssetInfo(
     @SerialName("assetId")
     val id: Int,
     @SerialName("assetTitle")

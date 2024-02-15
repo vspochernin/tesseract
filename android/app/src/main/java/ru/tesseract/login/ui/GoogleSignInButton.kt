@@ -30,6 +30,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import kotlinx.coroutines.launch
+import ru.tesseract.KoverIgnore
 import ru.tesseract.R
 
 private const val ClientId =
@@ -118,6 +119,7 @@ private fun rememberSignInClient(
     }
 }
 
+@KoverIgnore
 private fun Context.findActivity(): Activity {
     var context = this
     while (context is ContextWrapper) {
