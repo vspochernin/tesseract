@@ -168,4 +168,13 @@ class FieldValidatorTest {
 
         assertThat(actualIsValidLogin).isFalse();
     }
+
+    @Test
+    public void givenValidDigitsAndMarksLogin_whenIsValidLogin_thenReturnTrue() {
+        String validDigitAndMarkLogin = "vlad888888";
+
+        boolean actualIsValidLogin = FieldValidator.isValidLogin(validDigitAndMarkLogin);
+
+        assertThat(actualIsValidLogin).isTrue();
+    }
 }
