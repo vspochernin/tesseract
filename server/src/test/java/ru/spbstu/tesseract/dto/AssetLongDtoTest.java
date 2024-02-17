@@ -13,9 +13,6 @@ import ru.spbstu.tesseract.entity.RiskType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author pochernin-vla
- */
 class AssetLongDtoTest {
 
     @Test

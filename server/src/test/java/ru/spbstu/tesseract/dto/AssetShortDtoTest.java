@@ -11,9 +11,6 @@ import ru.spbstu.tesseract.entity.Price;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author pochernin-vla
- */
 class AssetShortDtoTest {
 
     @Test
