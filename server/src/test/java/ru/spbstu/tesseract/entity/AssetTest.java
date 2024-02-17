@@ -49,7 +49,7 @@ class AssetTest {
     }
 
     @Test
-    public void givenAsset_whenAssetDayPriceDiff_thenReturnCorrectPriceDiff() {
+    public void givenAsset_whenAssetPriceDiff_thenReturnCorrectPriceDiff() {
         Asset asset = Asset.builder()
                 .prices(List.of(
                         Price.builder()

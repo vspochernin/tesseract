@@ -121,6 +121,7 @@ class AssetServiceTest {
         AssetLongDto result = assetService.getAsset(1);
 
         assertThat(result).isNotNull();
+        assertThat(result).extracting(AssetLongDto::getAssetId).isEqualTo(1);
     }
 
     @Test

@@ -69,4 +69,49 @@ class FieldValidatorTest {
 
         assertThat(actualIsValidPassword).isFalse();
     }
+
+    @Test
+    void givenValidEmail_whenIsValidEmail_thenReturnTrue() {
+        String validEmail = "vspochernin@gmail.com";
+
+        boolean actualIsValidEmail = FieldValidator.isValidEmail(validEmail);
+
+        assertThat(actualIsValidEmail).isTrue();
+    }
+
+    @Test
+    void givenEmailWithoutUsername_whenIsValidEmail_thenReturnFalse() {
+        String emailWithoutUsername = "@gmail.com";
+
+        boolean actualIsValidEmail = FieldValidator.isValidEmail(emailWithoutUsername);
+
+        assertThat(actualIsValidEmail).isFalse();
+    }
+
+    @Test
+    void givenEmailWithoutAt_whenIsValidEmail_thenReturnFalse() {
+        String emailWithoutAt = "vspocherningmail.com";
+
+        boolean actualIsValidEmail = FieldValidator.isValidEmail(emailWithoutAt);
+
+        assertThat(actualIsValidEmail).isFalse();
+    }
+
+    @Test
+    void givenEmailWithoutServername_whenIsValidEmail_thenReturnFalse() {
+        String emailWithoutServername = "vspochernin@";
+
+        boolean actualIsValidEmail = FieldValidator.isValidEmail(emailWithoutServername);
+
+        assertThat(actualIsValidEmail).isFalse();
+    }
+
+    @Test
+    void givenEmptyEmail_whenIsValidEmail_thenReturnFalse() {
+        String emptyEmail = "";
+
+        boolean actualIsValidEmail = FieldValidator.isValidEmail(emptyEmail);
+
+        assertThat(actualIsValidEmail).isFalse();
+    }
 }
