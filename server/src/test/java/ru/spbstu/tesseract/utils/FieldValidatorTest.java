@@ -114,4 +114,58 @@ class FieldValidatorTest {
 
         assertThat(actualIsValidEmail).isFalse();
     }
+
+    @Test
+    public void givenValidLogin_whenIsValidLogin_thenReturnTrue() {
+        String validLogin = "razukrantov";
+
+        boolean actualIsValidLogin = FieldValidator.isValidLogin(validLogin);
+
+        assertThat(actualIsValidLogin).isTrue();
+    }
+
+    @Test
+    public void givenTooShortLogin_whenIsValidLogin_thenReturnFalse() {
+        String tooShortLogin = "ra";
+
+        boolean actualIsValidLogin = FieldValidator.isValidLogin(tooShortLogin);
+
+        assertThat(actualIsValidLogin).isFalse();
+    }
+
+    @Test
+    public void givenTooLongLogin_whenIsValidLogin_thenReturnFalse() {
+        String tooLongLogin = "razukrantovrazukrantovrazukrantovrazukrantovrazukrantov";
+
+        boolean actualIsValidLogin = FieldValidator.isValidLogin(tooLongLogin);
+
+        assertThat(actualIsValidLogin).isFalse();
+    }
+
+    @Test
+    void givenEmptyLogin_whenIsValidLogin_thenReturnFalse() {
+        String emptyLogin = "";
+
+        boolean actualIsValidLogin = FieldValidator.isValidLogin(emptyLogin);
+
+        assertThat(actualIsValidLogin).isFalse();
+    }
+
+    @Test
+    public void givenValidDigitsLogin_whenIsValidLogin_thenReturnTrue() {
+        String validDigitLogin = "88888888";
+
+        boolean actualIsValidLogin = FieldValidator.isValidLogin(validDigitLogin);
+
+        assertThat(actualIsValidLogin).isTrue();
+    }
+
+    @Test
+    void givenLoginWithSpecialSymbol_whenIsValidLogin_thenReturnFalse() {
+        String loginWithSpecialSymbol = "razukrantov**";
+
+        boolean actualIsValidLogin = FieldValidator.isValidLogin(loginWithSpecialSymbol);
+
+        assertThat(actualIsValidLogin).isFalse();
+    }
 }
