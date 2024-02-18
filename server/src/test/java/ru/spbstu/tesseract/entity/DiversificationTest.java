@@ -31,4 +31,24 @@ class DiversificationTest {
 
         assertThat(actualCurrentAmount).isEqualTo(1000);
     }
+
+    @Test
+    public void givenDiversificationAssetWithConstructor_whenGetCurrentAmount_returnDiversificationCurrentAmount() {
+        Asset asset = Asset.builder()
+                .prices(List.of(
+                        Price.builder()
+                                .price(100)
+                                .setDatetime(ZonedDateTime.now())
+                                .build()))
+                .build();
+        User user = new User();
+        DiversificationAsset diversificationAsset = new DiversificationAsset(asset, 10);
+        List<DiversificationAsset> diversificationAssets = List.of(diversificationAsset);
+        Diversification diversification = new Diversification(user, ZonedDateTime.now(), RiskType.LOW, 10L,
+                diversificationAssets);
+
+        long actualCurrentAmount = diversification.getCurrentAmount();
+
+        assertThat(actualCurrentAmount).isEqualTo(1000);
+    }
 }
