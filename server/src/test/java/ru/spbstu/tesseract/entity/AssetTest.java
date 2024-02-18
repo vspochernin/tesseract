@@ -170,4 +170,89 @@ class AssetTest {
 
         assertThat(actualRiskType).isEqualTo(RiskType.LOW);
     }
+
+    @Test
+    public void givenHighRiskAssetWithMorePoints_whenGetRiskType_returnHighRiskType() {
+        Asset asset = Asset.builder()
+                .releaseDatetime(ZonedDateTime.now().minusDays(5))
+                .company(Company.builder()
+                        .foundationDatetime(ZonedDateTime.now().minusYears(1))
+                        .revenue(10_000_000_000L)
+                        .profit(-3_000_000_000L)
+                        .staff(5)
+                        .build())
+                .interest(20.0)
+                .operator(Operator.builder()
+                        .inclusionDatetime(ZonedDateTime.now().minusDays(500))
+                        .build())
+                .build();
+
+        RiskType actualRiskType = asset.getRiskType();
+
+        assertThat(actualRiskType).isEqualTo(RiskType.HIGH);
+    }
+
+    @Test
+    public void givenHighRiskAssetWithMiddlePoints_whenGetRiskType_returnHighRiskType() {
+        Asset asset = Asset.builder()
+                .releaseDatetime(ZonedDateTime.now().minusDays(30))
+                .company(Company.builder()
+                        .foundationDatetime(ZonedDateTime.now().minusYears(4))
+                        .revenue(50_000_000_000L)
+                        .profit(1_000_000_000L)
+                        .staff(50)
+                        .build())
+                .interest(15.0)
+                .operator(Operator.builder()
+                        .inclusionDatetime(ZonedDateTime.now().minusDays(300))
+                        .build())
+                .build();
+
+        RiskType actualRiskType = asset.getRiskType();
+
+        assertThat(actualRiskType).isEqualTo(RiskType.HIGH);
+    }
+
+    @Test
+    public void givenHighRiskAssetWithSmallPoints_whenGetRiskType_returnHighRiskType() {
+        Asset asset = Asset.builder()
+                .releaseDatetime(ZonedDateTime.now().minusDays(10))
+                .company(Company.builder()
+                        .foundationDatetime(ZonedDateTime.now().minusYears(2))
+                        .revenue(5_000_000_000L)
+                        .profit(-1_000_000_000L)
+                        .staff(10)
+                        .build())
+                .interest(17.0)
+                .operator(Operator.builder()
+                        .inclusionDatetime(ZonedDateTime.now().minusDays(100))
+                        .build())
+                .build();
+
+        RiskType actualRiskType = asset.getRiskType();
+
+        assertThat(actualRiskType).isEqualTo(RiskType.HIGH);
+    }
+
+    @Test
+    public void givenMiddleRiskAsset_whenGetRiskType_returnMiddleRiskType() {
+        Asset asset = Asset.builder()
+                .releaseDatetime(ZonedDateTime.now().minusDays(90))
+                .company(Company.builder()
+                        .foundationDatetime(ZonedDateTime.now().minusYears(7))
+                        .revenue(100_000_000_000L)
+                        .profit(0L)
+                        .staff(200)
+                        .build())
+                .interest(11.0)
+                .operator(Operator.builder()
+                        .inclusionDatetime(ZonedDateTime.now().minusDays(60))
+                        .build())
+                .build();
+
+        RiskType actualRiskType = asset.getRiskType();
+
+        assertThat(actualRiskType).isEqualTo(RiskType.MIDDLE);
+    }
+
 }
