@@ -9,7 +9,7 @@ import org.junit.Test
 class DiversificationTest {
     @Test
     fun `DiversificationWithAssets should serialize correctly`() {
-        val sampleDiversificationWithAssets = DiversificationWithAssets(
+        val expected = DiversificationWithAssets(
             at = Clock.System.now(),
             currentAmount = 12300,
             amountDiff = 100,
@@ -27,8 +27,20 @@ class DiversificationTest {
                 )
             )
         )
-        val serialized = Json.encodeToString(sampleDiversificationWithAssets)
-        assertEquals(sampleDiversificationWithAssets, Json.decodeFromString<DiversificationWithAssets>(serialized))
+        val serialized = Json.encodeToString(expected)
+        val deserialized = Json.decodeFromString<DiversificationWithAssets>(serialized)
+        assertEquals(expected.at, deserialized.at)
+        assertEquals(expected.currentAmount, deserialized.currentAmount)
+        assertEquals(expected.amountDiff, deserialized.amountDiff)
+        assertEquals(expected.riskLevelOrdinal, deserialized.riskLevelOrdinal)
+        assertEquals(expected.assets[0].id, deserialized.assets[0].id)
+        assertEquals(expected.assets[0].title, deserialized.assets[0].title)
+        assertEquals(expected.assets[0].companyTitle, deserialized.assets[0].companyTitle)
+        assertEquals(expected.assets[0].currentPriceSum, deserialized.assets[0].currentPriceSum)
+        assertEquals(expected.assets[0].priceSumDiff, deserialized.assets[0].priceSumDiff)
+        assertEquals(expected.assets[0].currentPrice, deserialized.assets[0].currentPrice)
+        assertEquals(expected.assets[0].count, deserialized.assets[0].count)
+        assertEquals(expected.assets[0].isFavorite, deserialized.assets[0].isFavorite)
     }
 
     @Test
