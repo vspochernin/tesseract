@@ -112,5 +112,7 @@ class AuthenticationServiceTest {
             verify(userRepository).save(any(User.class));
         }
     }
+
+
 }
 

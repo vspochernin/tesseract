@@ -3,6 +3,9 @@ package ru.spbstu.tesseract.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ru.spbstu.tesseract.exception.TesseractErrorType;
+import ru.spbstu.tesseract.exception.TesseractException;
+
 public class FieldValidator {
 
     private static final int MIN_PASSWORD_SIZE = 6;
@@ -61,5 +64,19 @@ public class FieldValidator {
 
     private static boolean isSpecialSymbol(char ch) {
         return SPECIAL_SYMBOLS.contains(String.valueOf(ch));
+    }
+
+    public static void validateFields(String login, String email, String password) {
+        if (!isValidLogin(login)) {
+            throw new TesseractException(TesseractErrorType.INVALID_LOGIN);
+        }
+
+        if (!isValidEmail(email)) {
+            throw new TesseractException(TesseractErrorType.INVALID_EMAIL);
+        }
+
+        if (!isValidPassword(password)) {
+            throw new TesseractException(TesseractErrorType.INVALID_PASSWORD);
+        }
     }
 }
