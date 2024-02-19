@@ -1,12 +1,13 @@
 package ru.spbstu.tesseract.dto;
 
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import ru.spbstu.tesseract.entity.Asset;
 import ru.spbstu.tesseract.entity.Diversification;
+import ru.spbstu.tesseract.entity.DiversificationAsset;
+import ru.spbstu.tesseract.entity.Price;
 import ru.spbstu.tesseract.entity.RiskType;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,21 +17,27 @@ class DiversificationShortDtoTest {
     /// НЕ РАБОТАЕТ ЗАПОЛНЕНИЕ diversificationAssetSet
     @Test
     public void givenDiversification_whenFromDiversification_thenReturnCorrectDiversificationShortDto() {
-        Diversification diversification = Diversification.builder()
-                .id(1)
-                .createDatetime(ZonedDateTime.now())
-                .riskType(RiskType.HIGH)
-                .amount(500)
-                .diversificationAssetSet(new HashSet<>())
-                .build();
-        Diversification mockedDiversification = Mockito.spy(diversification);
-
-        DiversificationShortDto actualDiversificationShortDto = DiversificationShortDto.fromDiversification(mockedDiversification);
+        ZonedDateTime now = ZonedDateTime.now();
+        Diversification diversification = new Diversification(
+                null,
+                now,
+                RiskType.HIGH,
+                500,
+                List.of(new DiversificationAsset(
+                        Asset.builder()
+                                .prices(
+                                        List.of(
+                                                Price.builder()
+                                                        .price(500)
+                                                        .build()))
+                                .build(), 2)));
+        diversification.setId(1);
+        DiversificationShortDto actualDiversificationShortDto =
+                DiversificationShortDto.fromDiversification(diversification);
 
         DiversificationShortDto expectedDiversificationShortDto = DiversificationShortDto.builder()
                 .diversificationId(1)
-                .createDatetime(diversification.getCreateDatetime()
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")))
+                .createDatetime(now.toString())
                 .riskTypeId(RiskType.HIGH.ordinal())
                 .currentAmount(1000)
                 .amountDiff(500)
