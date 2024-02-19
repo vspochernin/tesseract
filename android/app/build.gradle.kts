@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
     id("com.google.devtools.ksp") version "1.9.20-1.0.13"
     id("org.jetbrains.kotlinx.kover")
+    id("app.cash.molecule") version "1.3.0"
 }
 
 koverReport {
@@ -90,6 +91,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -120,10 +124,12 @@ dependencies {
     ksp("io.insert-koin:koin-ksp-compiler:1.3.0")
     implementation("io.github.raamcosta.compose-destinations:animations-core:1.10.0")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.10.0")
+    testImplementation("androidx.paging:paging-testing:3.2.1")
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.mockk:mockk-android:1.13.9")
     testImplementation("io.mockk:mockk-agent:1.13.9")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0-RC2")
+    testImplementation("app.cash.turbine:turbine:1.0.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.00"))
