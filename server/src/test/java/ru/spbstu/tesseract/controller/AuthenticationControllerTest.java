@@ -39,7 +39,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void register() throws Exception {
+    void givenRegisterRequest_whenRegister_thenStatusIsCreated() throws Exception {
         given(service.register(any(RegisterRequestDto.class)))
                 .willReturn(new AuthenticationResponseDto());
 
@@ -56,7 +56,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void authenticate() throws Exception {
+    void givenAuthenticationRequest_whenAuthenticate_thenStatusIsOk() throws Exception {
         given(service.authenticate(any(AuthenticationRequestDto.class)))
                 .willReturn(new AuthenticationResponseDto());
 
@@ -72,7 +72,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void authenticateByGoogle() throws Exception {
+    void givenGoogleAuthenticateRequest_whenAuthenticateByGoogle_thenStatusIsOk() throws Exception {
         given(service.authenticateByGoogle(any(GoogleAuthenticationRequestDto.class)))
                 .willReturn(new AuthenticationResponseDto());
 
@@ -87,7 +87,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void changePassword() throws Exception {
+    void givenPasswordRequest_whenChangePassword_thenStatusIsOk() throws Exception {
         PasswordRequestDto requestDto = PasswordRequestDto.builder()
                 .oldPassword("oldPassword")
                 .newPassword("newPassword")
@@ -98,4 +98,5 @@ class AuthenticationControllerTest {
                         .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
     }
+
 }

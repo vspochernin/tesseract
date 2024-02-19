@@ -29,16 +29,14 @@ class FavouritesControllerTest {
     FavouritesController favouritesController;
 
     private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(favouritesController).build();
-        objectMapper = new ObjectMapper();
     }
 
     @Test
-    void favourites() throws Exception {
+    void givenFavouriteAssets_whenGetFavourites_thenStatusIsOk() throws Exception {
         given(favouritesService.getFavouriteAssets(anyInt(), anyInt()))
                 .willReturn(Arrays.asList(
                         AssetShortDto.builder().build(),
@@ -52,7 +50,7 @@ class FavouritesControllerTest {
     }
 
     @Test
-    void addFavourite() throws Exception {
+    void givenFavouriteAdded_whenAddFavourite_thenStatusIsCreated() throws Exception {
         given(favouritesService.addFavourite(anyInt()))
                 .willReturn(true);
 
@@ -61,7 +59,7 @@ class FavouritesControllerTest {
     }
 
     @Test
-    void addFavourite_alreadyExisting() throws Exception {
+    void givenFavouriteAlreadyExists_whenAddFavourite_thenStatusIsOk() throws Exception {
         given(favouritesService.addFavourite(anyInt()))
                 .willReturn(false);
 
@@ -70,7 +68,7 @@ class FavouritesControllerTest {
     }
 
     @Test
-    void removeFavourite() throws Exception {
+    void givenFavouriteExists_whenRemoveFavourite_thenStatusIsOk() throws Exception {
         mockMvc.perform(delete("/api/v1/favourites/1"))
                 .andExpect(status().isOk());
     }
