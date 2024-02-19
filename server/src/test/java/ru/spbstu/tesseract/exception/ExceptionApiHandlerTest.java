@@ -48,7 +48,7 @@ public class ExceptionApiHandlerTest {
     }
 
     @Test
-    public void whenBadCredentialsException_thenReturnExpectedErrorMessage() {
+    public void givenBadCredentialsException_whenHandled_thenReturnExpectedErrorMessage() {
         TesseractErrorType errorType = TesseractErrorType.BAD_CREDENTIALS;
         ErrorMessage expectedMessage = ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, badCredentialsException.toString());
 
@@ -59,7 +59,7 @@ public class ExceptionApiHandlerTest {
     }
 
     @Test
-    public void whenMethodArgumentNotValidException_thenReturnExpectedErrorMessage() {
+    public void givenMethodArgumentNotValidException_whenHandled_thenReturnExpectedErrorMessage() {
         TesseractErrorType errorType = TesseractErrorType.BAD_REQUEST_BODY;
         ErrorMessage expectedMessage = ErrorMessage.fromErrorTypeWithAdditionalInfo(errorType, methodArgumentNotValidException.toString());
 
@@ -70,24 +70,26 @@ public class ExceptionApiHandlerTest {
     }
 
     @Test
-    public void whenHttpMessageNotReadableException_thenErrorMessageIsReturned() {
+    public void givenHttpMessageNotReadableException_whenHandled_thenErrorMessageIsReturned() {
         ResponseEntity<ErrorMessage> result = exceptionApiHandler.httpMessageNotReadableException(httpMessageNotReadableException);
         assertEquals(TesseractErrorType.BAD_REQUEST_BODY.getHttpStatus(), result.getStatusCode());
         assertEquals(ErrorMessage.fromErrorTypeWithAdditionalInfo(TesseractErrorType.BAD_REQUEST_BODY, httpMessageNotReadableException.toString()), result.getBody());
     }
 
     @Test
-    public void whenNumberFormatException_thenErrorMessageIsReturned() {
+    public void givenNumberFormatException_whenHandled_thenErrorMessageIsReturned() {
         ResponseEntity<ErrorMessage> result = exceptionApiHandler.numberFormatException(numberFormatException);
         assertEquals(TesseractErrorType.BAD_REQUEST_BODY.getHttpStatus(), result.getStatusCode());
         assertEquals(ErrorMessage.fromErrorTypeWithAdditionalInfo(TesseractErrorType.BAD_REQUEST_BODY, numberFormatException.toString()), result.getBody());
     }
 
     @Test
-    public void whenNoSuchElementException_thenErrorMessageIsReturned() {
+    public void givenNoSuchElementException_whenHandled_thenErrorMessageIsReturned() {
         ResponseEntity<ErrorMessage> result = exceptionApiHandler.noSuchElementException(noSuchElementException);
         assertEquals(TesseractErrorType.NOT_FOUND.getHttpStatus(), result.getStatusCode());
         assertEquals(ErrorMessage.fromErrorTypeWithAdditionalInfo(TesseractErrorType.NOT_FOUND, noSuchElementException.toString()), result.getBody());
     }
+
+
 
 }

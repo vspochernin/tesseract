@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DiversificationShortDtoTest {
 
-    /// НЕ РАБОТАЕТ ЗАПОЛНЕНИЕ diversificationAssetSet
     @Test
     public void givenDiversification_whenFromDiversification_thenReturnCorrectDiversificationShortDto() {
         ZonedDateTime now = ZonedDateTime.now();

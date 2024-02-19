@@ -46,12 +46,12 @@ public class DiversificationControllerTest {
     }
 
     @Test
-    public void diversifications() throws Exception {
+    public void givenDiversifications_whenGetDiversifications_thenStatusIsOk() throws Exception {
         given(diversificationService.getDiversifications(anyInt(), anyInt()))
                 .willReturn(Arrays.asList(
                         DiversificationShortDto.builder()
                                 .diversificationId(1)
-                                .createDatetime("2022-01-01T12:00:00") // пример datetime в формате ISO 8601
+                                .createDatetime("2022-01-01T12:00:00")
                                 .riskTypeId(1)
                                 .currentAmount(100L)
                                 .amountDiff(1000L)
@@ -76,13 +76,13 @@ public class DiversificationControllerTest {
     }
 
     @Test
-    public void diversification() throws Exception {
+    public void givenDiversification_whenGetDiversification_thenStatusIsOkAndPayloadExists() throws Exception {
         given(diversificationService.getDiversification(anyInt()))
                 .willReturn(DiversificationLongDto.builder()
                         .createDateTime("2022-01-01T12:00:00")
                         .currentAmount(100L)
                         .riskTypeId(10)
-                        .assetList(Arrays.asList(/*Сюда вставьте список экземпляров AssetDiversificationDto*/))
+                        .assetList(Arrays.asList())
                         .amountDiff(1000L)
                         .build()
                 );
@@ -93,7 +93,7 @@ public class DiversificationControllerTest {
                                 .createDateTime("2022-01-01T12:00:00")
                                 .currentAmount(100L)
                                 .riskTypeId(10)
-                                .assetList(Arrays.asList(/*Сюда вставьте список экземпляров AssetDiversificationDto*/))
+                                .assetList(Arrays.asList())
                                 .amountDiff(1000L)
                                 .build()
                         )))
@@ -102,10 +102,11 @@ public class DiversificationControllerTest {
     }
 
     @Test
-    public void createDiversification() throws Exception {
+    public void givenCreateDiversificationRequestDto_whenCreateDiversification_thenStatusIsOk() throws Exception {
         mockMvc.perform(post("/api/v1/diversifications")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new CreateDiversificationRequestDto())))
                 .andExpect(status().isOk());
     }
+
 }

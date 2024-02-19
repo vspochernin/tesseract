@@ -32,16 +32,14 @@ public class AssetControllerTest {
     AssetController assetController;
 
     private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(assetController).build();
-        objectMapper = new ObjectMapper();
     }
 
     @Test
-    public void assets() throws Exception {
+    public void givenAssets_whenGetAssets_thenStatusIsOk() throws Exception {
         given(assetService.getAssets(anyInt(), anyInt()))
                 .willReturn(Arrays.asList(
                         AssetShortDto.builder().build(),
@@ -56,7 +54,7 @@ public class AssetControllerTest {
     }
 
     @Test
-    public void asset() throws Exception {
+    public void givenAsset_whenGetAsset_thenStatusIsOk() throws Exception {
         given(assetService.getAsset(anyInt()))
                 .willReturn(AssetLongDto.builder().build());
 
