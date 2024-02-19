@@ -69,6 +69,14 @@ public class DiversificationService {
         RiskType riskType = RiskType.getById(riskTypeId);
 
         List<Asset> assets = assetRepository.findAll().stream()
+                .filter(asset -> asset.getCurrentAssetPrice() <= amount)
+                .collect(Collectors.toList());
+
+        if (assets.isEmpty()) {
+            throw new TesseractException(TesseractErrorType.TOO_LITTLE_AMOUNT);
+        }
+
+        assets = assets.stream()
                 .filter(asset -> riskType.equals(RiskType.COMBINED) || asset.getRiskType().equals(riskType))
                 .collect(Collectors.toList());
 

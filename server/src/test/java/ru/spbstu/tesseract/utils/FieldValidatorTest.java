@@ -1,8 +1,11 @@
 package ru.spbstu.tesseract.utils;
 
 import org.junit.jupiter.api.Test;
+import ru.spbstu.tesseract.exception.TesseractException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 class FieldValidatorTest {
@@ -176,5 +179,45 @@ class FieldValidatorTest {
         boolean actualIsValidLogin = FieldValidator.isValidLogin(validDigitAndMarkLogin);
 
         assertThat(actualIsValidLogin).isTrue();
+    }
+
+    @Test
+    public void givenVVV_whenValidateFields_thenSuccess() {
+        String login = "correctLogin";
+        String email = "correct@email.com";
+        String password = "qwe123";
+
+        assertThatNoException().isThrownBy(() ->
+                FieldValidator.validateFields(login, email, password));
+    }
+
+    @Test
+    public void givenVII_whenValidateFields_thenThrow() {
+        String login = "correctLogin";
+        String email = "incorrectemail.com";
+        String password = "123";
+
+        assertThatThrownBy(() -> FieldValidator.validateFields(login, email, password))
+                .isInstanceOf(TesseractException.class);
+    }
+
+    @Test
+    public void givenIIV_whenValidateFields_thenThrow() {
+        String login = "1";
+        String email = "incorrectemail.com";
+        String password = "qwe123";
+
+        assertThatThrownBy(() -> FieldValidator.validateFields(login, email, password))
+                .isInstanceOf(TesseractException.class);
+    }
+
+    @Test
+    public void givenIVI_whenValidateFields_thenThrow() {
+        String login = "1";
+        String email = "correct@email.com";
+        String password = "123";
+
+        assertThatThrownBy(() -> FieldValidator.validateFields(login, email, password))
+                .isInstanceOf(TesseractException.class);
     }
 }

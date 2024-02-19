@@ -1,29 +1,41 @@
 package ru.spbstu.tesseract.service;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ru.spbstu.tesseract.entity.*;
 import ru.spbstu.tesseract.dto.CreateDiversificationRequestDto;
+import ru.spbstu.tesseract.entity.Asset;
+import ru.spbstu.tesseract.entity.Company;
+import ru.spbstu.tesseract.entity.Diversification;
+import ru.spbstu.tesseract.entity.Operator;
+import ru.spbstu.tesseract.entity.Price;
+import ru.spbstu.tesseract.entity.RiskType;
+import ru.spbstu.tesseract.entity.User;
+import ru.spbstu.tesseract.exception.TesseractErrorType;
+import ru.spbstu.tesseract.exception.TesseractException;
 import ru.spbstu.tesseract.repository.AssetRepository;
 import ru.spbstu.tesseract.repository.DiversificationRepository;
 
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.List;
-
-import static org.mockito.Mockito.*;
-import static ru.spbstu.tesseract.entity.User.getCurrentUser;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class DiversificationServiceTest {
 
     @Mock
@@ -35,11 +47,9 @@ class DiversificationServiceTest {
     @InjectMocks
     private DiversificationService diversificationService;
 
-    private User mockUser;
-
     @BeforeEach
     void setUp() {
-        mockUser = User.builder().id(1).build();
+        User mockUser = User.builder().id(1).build();
         Authentication authentication = new UsernamePasswordAuthenticationToken(mockUser, null);
         SecurityContext securityContext = mock(SecurityContext.class);
         when(securityContext.getAuthentication()).thenReturn(authentication);
@@ -47,12 +57,63 @@ class DiversificationServiceTest {
     }
 
     @Test
-    void whenCreateDiversification_thenDiversificationIsCreated() {
-        // Given
-        CreateDiversificationRequestDto request = new CreateDiversificationRequestDto();
-        request.setAmount(500_000); // Example amount
-        request.setRiskTypeId(RiskType.COMBINED.ordinal()); // Assuming COMBINED is a valid RiskType
+    void givenTooLittleAmount_whenCreateDiversification_thenTooLittleAmountThrown() {
+        CreateDiversificationRequestDto request = reqeustWithAmount(99L);
+        List<Asset> assets = getAssetsWithMinPrice100();
+        when(assetRepository.findAll()).thenReturn(assets);
 
+        assertThatThrownBy(() -> diversificationService.createDiversification(request))
+                .isInstanceOf(TesseractException.class)
+                .extracting("errorType")
+                .isEqualTo(TesseractErrorType.TOO_LITTLE_AMOUNT);
+    }
+
+    @Test
+    void givenMinPossibleAmount_whenCreateDiversification_thenDiversificationIsCreated() {
+        CreateDiversificationRequestDto request = reqeustWithAmount(100L);
+        List<Asset> assets = getAssetsWithMinPrice100();
+        when(assetRepository.findAll()).thenReturn(assets);
+
+        diversificationService.createDiversification(request);
+
+        verify(diversificationRepository).save(any(Diversification.class));
+    }
+
+    @Test
+    void givenCorrectAmount_whenCreateDiversification_thenDiversificationIsCreated() {
+        CreateDiversificationRequestDto request = reqeustWithAmount(500_000L);
+        List<Asset> assets = getAssetsWithMinPrice100();
+        when(assetRepository.findAll()).thenReturn(assets);
+
+        diversificationService.createDiversification(request);
+
+        verify(diversificationRepository).save(any(Diversification.class));
+    }
+
+    @Test
+    void givenMaxPossibleAmount_whenCreateDiversification_thenDiversificationIsCreated() {
+        CreateDiversificationRequestDto request = reqeustWithAmount(1_000_000_000L);
+        List<Asset> assets = getAssetsWithMinPrice100();
+        when(assetRepository.findAll()).thenReturn(assets);
+
+        diversificationService.createDiversification(request);
+
+        verify(diversificationRepository).save(any(Diversification.class));
+    }
+
+    @Test
+    void givenTooBigAmount_whenCreateDiversification_thenTooBigAmountThrown() {
+        CreateDiversificationRequestDto request = reqeustWithAmount(1_000_000_001L);
+        List<Asset> assets = getAssetsWithMinPrice100();
+        when(assetRepository.findAll()).thenReturn(assets);
+
+        assertThatThrownBy(() -> diversificationService.createDiversification(request))
+                .isInstanceOf(TesseractException.class)
+                .extracting("errorType")
+                .isEqualTo(TesseractErrorType.TOO_BIG_AMOUNT);
+    }
+
+    private static List<Asset> getAssetsWithMinPrice100() {
         Asset asset1 = Asset.builder()
                 .id(1)
                 .title("Asset title 1")
@@ -108,13 +169,13 @@ class DiversificationServiceTest {
                                 .setDatetime(ZonedDateTime.now().minusDays(1))
                                 .build()))
                 .build();
+        return List.of(asset1, asset2);
+    }
 
-        when(assetRepository.findAll()).thenReturn(List.of(asset1, asset2));
-
-        // When
-        diversificationService.createDiversification(request);
-
-        // Then
-        verify(diversificationRepository).save(any(Diversification.class));
+    private static CreateDiversificationRequestDto reqeustWithAmount(long amount) {
+        CreateDiversificationRequestDto request = new CreateDiversificationRequestDto();
+        request.setAmount(amount);
+        request.setRiskTypeId(RiskType.COMBINED.ordinal());
+        return request;
     }
 }

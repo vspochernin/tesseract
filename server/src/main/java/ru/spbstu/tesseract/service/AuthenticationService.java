@@ -38,7 +38,8 @@ public class AuthenticationService {
         String email = request.getEmail();
         String password = request.getPassword();
 
-        validateFields(login, email, password);
+        FieldValidator.validateFields(login, email, password);
+        validateExisting(login, email);
 
         User user = User.builder()
                 .login(login)
@@ -123,19 +124,7 @@ public class AuthenticationService {
         userRepository.save(currentUser);
     }
 
-    private void validateFields(String login, String email, String password) {
-        if (!FieldValidator.isValidLogin(login)) {
-            throw new TesseractException(TesseractErrorType.INVALID_LOGIN);
-        }
-
-        if (!FieldValidator.isValidPassword(password)) {
-            throw new TesseractException(TesseractErrorType.INVALID_PASSWORD);
-        }
-
-        if (!FieldValidator.isValidEmail(email)) {
-            throw new TesseractException(TesseractErrorType.INVALID_EMAIL);
-        }
-
+    private void validateExisting(String login, String email) {
         if (userRepository.existsByLogin(login)) {
             throw new TesseractException(TesseractErrorType.LOGIN_EXISTS);
         }
