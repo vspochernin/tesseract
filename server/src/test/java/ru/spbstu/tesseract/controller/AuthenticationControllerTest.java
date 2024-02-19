@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 @ExtendWith(MockitoExtension.class)
 class AuthenticationControllerTest {
 
@@ -42,9 +43,15 @@ class AuthenticationControllerTest {
         given(service.register(any(RegisterRequestDto.class)))
                 .willReturn(new AuthenticationResponseDto());
 
+        RegisterRequestDto requestDto = RegisterRequestDto.builder()
+                .login("testUsername")
+                .password("testPassword")
+                .email("testEmail@example.com")
+                .build();
+
         mockMvc.perform(post("/api/v1/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new RegisterRequestDto())))
+                        .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isCreated());
     }
 
@@ -53,9 +60,14 @@ class AuthenticationControllerTest {
         given(service.authenticate(any(AuthenticationRequestDto.class)))
                 .willReturn(new AuthenticationResponseDto());
 
+        AuthenticationRequestDto requestDto = AuthenticationRequestDto.builder()
+                .login("testUsername")
+                .password("testPassword")
+                .build();
+
         mockMvc.perform(post("/api/v1/login/tesseract")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new AuthenticationRequestDto())))
+                        .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
     }
 
@@ -64,17 +76,26 @@ class AuthenticationControllerTest {
         given(service.authenticateByGoogle(any(GoogleAuthenticationRequestDto.class)))
                 .willReturn(new AuthenticationResponseDto());
 
+        GoogleAuthenticationRequestDto requestDto = GoogleAuthenticationRequestDto.builder()
+                .token("testToken")
+                .build();
+
         mockMvc.perform(post("/api/v1/login/google")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new GoogleAuthenticationRequestDto())))
+                        .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
     }
 
     @Test
     void changePassword() throws Exception {
+        PasswordRequestDto requestDto = PasswordRequestDto.builder()
+                .oldPassword("oldPassword")
+                .newPassword("newPassword")
+                .build();
+
         mockMvc.perform(put("/api/v1/password")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new PasswordRequestDto())))
+                        .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
     }
 }
