@@ -6,13 +6,9 @@ import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.compose.getKoin
-import org.koin.core.Koin
-import org.koin.core.context.GlobalContext
 
 @OptIn(ExperimentalTestApi::class)
 class RegistrationTest {
