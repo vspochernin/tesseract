@@ -45,7 +45,7 @@ fun ErrorHandling(viewModel: ErrorHandlingViewModel = koinViewModel()) {
                     Text(stringResource(id = R.string.ok))
                 }
             },
-            modifier = Modifier.testTag("error_dialog")
+            modifier = Modifier.testTag("ErrorHandling.Dialog")
         )
     }
 }

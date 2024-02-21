@@ -99,7 +99,7 @@ private fun RegisterForm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = textFieldModifier.testTag("login_field"),
+            modifier = textFieldModifier.testTag("RegistrationScreen.LoginField"),
             isError = viewModel.displayLoginError,
         )
         AnimatedVisibility(visible = viewModel.displayLoginError) {
@@ -115,7 +115,7 @@ private fun RegisterForm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = textFieldModifier.testTag("email_field"),
+            modifier = textFieldModifier.testTag("RegistrationScreen.EmailField"),
             isError = viewModel.displayEmailError,
         )
         AnimatedVisibility(visible = viewModel.displayEmailError) {
@@ -132,7 +132,7 @@ private fun RegisterForm(
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = textFieldModifier.testTag("password_field"),
+            modifier = textFieldModifier.testTag("RegistrationScreen.PasswordField"),
             isError = viewModel.displayPasswordError,
         )
         AnimatedVisibility(visible = viewModel.displayPasswordError) {
@@ -148,7 +148,7 @@ private fun RegisterForm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false),
             visualTransformation = PasswordVisualTransformation(),
-            modifier = textFieldModifier.testTag("confirm_password_field"),
+            modifier = textFieldModifier.testTag("RegistrationScreen.ConfirmPasswordField"),
             isError = viewModel.displayConfirmPasswordError,
         )
         AnimatedVisibility(visible = viewModel.displayConfirmPasswordError) {
@@ -168,7 +168,7 @@ private fun RegisterForm(
                 )
             },
             enabled = viewModel.isRegisterButtonEnabled,
-            modifier = Modifier.fillMaxWidth().testTag("confirm_register_button"),
+            modifier = Modifier.fillMaxWidth().testTag("RegistrationScreen.ConfirmButton"),
         ) {
             if (viewModel.isRegistering) {
                 CircularProgressIndicator(

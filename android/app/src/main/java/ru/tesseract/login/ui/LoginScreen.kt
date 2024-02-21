@@ -154,7 +154,7 @@ private fun LoginForm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("LoginScreen.LoginField"),
         )
         OutlinedTextField(
             value = password.value,
@@ -164,11 +164,11 @@ private fun LoginForm(
             keyboardOptions = KeyboardOptions(autoCorrect = false),
             keyboardActions = KeyboardActions { onLogin() },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("LoginScreen.PasswordField"),
         )
         Button(
             onClick = onLogin,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("LoginScreen.ConfirmButton"),
             enabled = isSignInEnabled,
         ) {
             if (isLoggingIn) {
@@ -182,7 +182,7 @@ private fun LoginForm(
         }
         TextButton(
             onClick = onRegister,
-            modifier = Modifier.fillMaxWidth().testTag("register_button"),
+            modifier = Modifier.fillMaxWidth().testTag("LoginScreen.RegisterButton"),
             colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onBackground),
         ) {
             Text(

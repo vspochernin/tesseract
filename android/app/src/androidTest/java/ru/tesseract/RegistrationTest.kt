@@ -6,13 +6,24 @@ import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.koin.compose.getKoin
+import org.koin.core.Koin
+import org.koin.core.context.GlobalContext
 
 @OptIn(ExperimentalTestApi::class)
-class RegistrationScreenTest {
+class RegistrationTest {
     @get:Rule
     val composeTestRule = createEmptyComposeRule()
+
+    @Before
+    fun initialize() = runTest {
+        val loginState = GlobalContext.get().get<LoginState>()
+        loginState.resetToken()
+    }
 
     @Test
     fun givenValidDetails_whenRegister_thenRegistrationIsSuccessful() {
@@ -22,7 +33,7 @@ class RegistrationScreenTest {
             password = "password0",
             confirmPassword = "password0",
         )
-        composeTestRule.waitUntilDoesNotExist(hasTestTag("confirm_register_button"))
+        composeTestRule.waitUntilDoesNotExist(hasTestTag("RegistrationScreen.ConfirmButton"))
     }
 
     @Test
@@ -33,7 +44,7 @@ class RegistrationScreenTest {
             password = "password0",
             confirmPassword = "password0",
         )
-        composeTestRule.waitUntilDoesNotExist(hasTestTag("error_dialog"))
+        composeTestRule.waitUntilAtLeastOneExists(hasTestTag("ErrorHandling.Dialog"))
     }
 
     private fun tryToRegister(
@@ -44,12 +55,12 @@ class RegistrationScreenTest {
     ) {
         launchActivity<MainActivity>()
         with(composeTestRule) {
-            onNodeWithTag("register_button").performClick()
-            onNodeWithTag("login_field").performTextInput(login)
-            onNodeWithTag("email_field").performTextInput(email)
-            onNodeWithTag("password_field").performTextInput(password)
-            onNodeWithTag("confirm_password_field").performTextInput(confirmPassword)
-            onNodeWithTag("confirm_register_button").performClick()
+            onNodeWithTag("LoginScreen.RegisterButton").performClick()
+            onNodeWithTag("RegistrationScreen.LoginField").performTextInput(login)
+            onNodeWithTag("RegistrationScreen.EmailField").performTextInput(email)
+            onNodeWithTag("RegistrationScreen.PasswordField").performTextInput(password)
+            onNodeWithTag("RegistrationScreen.ConfirmPasswordField").performTextInput(confirmPassword)
+            onNodeWithTag("RegistrationScreen.ConfirmButton").performClick()
         }
     }
 }
