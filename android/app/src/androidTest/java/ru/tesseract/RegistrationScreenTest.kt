@@ -9,48 +9,47 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Rule
 import org.junit.Test
 
+@OptIn(ExperimentalTestApi::class)
 class RegistrationScreenTest {
     @get:Rule
     val composeTestRule = createEmptyComposeRule()
 
     @Test
     fun givenValidDetails_whenRegister_thenRegistrationIsSuccessful() {
-        launchActivity<MainActivity>()
-        navigateToRegisterScreen()
-        inputLogin("vspoch")
-        inputEmail("mail@gmail.com")
-        inputPassword("password0")
-        inputConfirmPassword("password0")
-        finishRegistration()
-        assertSuccess()
-    }
-
-    private fun navigateToRegisterScreen() {
-        composeTestRule.onNodeWithTag("register_button").performClick()
-    }
-
-    private fun inputLogin(text: String) {
-        composeTestRule.onNodeWithTag("login_field").performTextInput(text)
-    }
-
-    private fun inputEmail(text: String) {
-        composeTestRule.onNodeWithTag("email_field").performTextInput(text)
-    }
-
-    private fun inputPassword(text: String) {
-        composeTestRule.onNodeWithTag("password_field").performTextInput(text)
-    }
-
-    private fun inputConfirmPassword(text: String) {
-        composeTestRule.onNodeWithTag("confirm_password_field").performTextInput(text)
-    }
-
-    private fun finishRegistration() {
-        composeTestRule.onNodeWithTag("confirm_register_button").performClick()
-    }
-
-    @OptIn(ExperimentalTestApi::class)
-    private fun assertSuccess() {
+        tryToRegister(
+            login = "vspoch",
+            email = "email@gmail.com",
+            password = "password0",
+            confirmPassword = "password0",
+        )
         composeTestRule.waitUntilDoesNotExist(hasTestTag("confirm_register_button"))
+    }
+
+    @Test
+    fun givenDuplicateLogin_whenRegister_thenErrorDialogIsShown() {
+        tryToRegister(
+            login = "vspochernin",
+            email = "vspochernin@gmail.com",
+            password = "password0",
+            confirmPassword = "password0",
+        )
+        composeTestRule.waitUntilDoesNotExist(hasTestTag("error_dialog"))
+    }
+
+    private fun tryToRegister(
+        login: String,
+        email: String,
+        password: String,
+        confirmPassword: String,
+    ) {
+        launchActivity<MainActivity>()
+        with(composeTestRule) {
+            onNodeWithTag("register_button").performClick()
+            onNodeWithTag("login_field").performTextInput(login)
+            onNodeWithTag("email_field").performTextInput(email)
+            onNodeWithTag("password_field").performTextInput(password)
+            onNodeWithTag("confirm_password_field").performTextInput(confirmPassword)
+            onNodeWithTag("confirm_register_button").performClick()
+        }
     }
 }
