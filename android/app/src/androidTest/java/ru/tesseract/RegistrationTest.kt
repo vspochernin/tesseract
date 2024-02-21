@@ -20,10 +20,7 @@ class RegistrationTest {
     val composeTestRule = createEmptyComposeRule()
 
     @Before
-    fun initialize() = runTest {
-        val loginState = GlobalContext.get().get<LoginState>()
-        loginState.resetToken()
-    }
+    fun start() = startNotLoggedIn()
 
     @Test
     fun givenValidDetails_whenRegister_thenRegistrationIsSuccessful() {

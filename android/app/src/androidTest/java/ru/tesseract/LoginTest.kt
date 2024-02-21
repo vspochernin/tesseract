@@ -19,10 +19,7 @@ class LoginTest {
     val composeTestRule = createEmptyComposeRule()
 
     @Before
-    fun initialize() = runTest {
-        val loginState = GlobalContext.get().get<LoginState>()
-        loginState.resetToken()
-    }
+    fun start() = startNotLoggedIn()
 
     @Test
     fun givenValidDetails_whenLogin_thenLoginIsSuccessful() {
@@ -40,7 +37,6 @@ class LoginTest {
         login: String,
         password: String,
     ) {
-        launchActivity<MainActivity>()
         with(composeTestRule) {
             onNodeWithTag("LoginScreen.LoginField").performTextInput(login)
             onNodeWithTag("LoginScreen.PasswordField").performTextInput(password)
