@@ -30,15 +30,17 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-28
+          key: avd-33
 
       - name: Create AVD
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 28
+          api-level: 33
+          arch: x86_64
+          profile: pixel_7
           force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -skin 1080x2400
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
 
@@ -58,8 +60,10 @@ jobs:
       - name: Run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 28
+          api-level: 33
+          arch: x86_64
+          profile: pixel_7
           force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -skin 1080x2400
           disable-animations: true
           script: android/gradlew -p android connectedCheck
