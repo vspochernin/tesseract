@@ -17,7 +17,7 @@ class FavoriteTest {
     val composeTestRule = createEmptyComposeRule()
 
     @Before
-    fun start() = startLoggedIn(composeTestRule)
+    fun start() = startLoggedIn()
 
     @Test
     fun whenAddFavorite_thenAssetIsAddedToFavorites() {

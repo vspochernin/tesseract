@@ -1,29 +1,38 @@
 package ru.tesseract
 
-import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.hasTestTag
-import androidx.compose.ui.test.junit4.ComposeTestRule
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextInput
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.koin.core.context.GlobalContext
+import ru.tesseract.api.onSuccess
+import ru.tesseract.login.api.LoginApi
 
-fun startNotLoggedIn() = runTest {
-    launchActivity<MainActivity>()
-    val loginState = GlobalContext.get().get<LoginState>()
+private val koin get() = GlobalContext.get()
+private val loginState get() = koin.get<LoginState>()
+private val loginApi get() = koin.get<LoginApi>()
+private var token: String? = null
+private const val TestLogin = "vspochernin"
+private const val TestPassword = "qwe123"
+
+fun startLoggedOut() = runTest {
     loginState.resetToken()
+    launchActivity<MainActivity>()
 }
 
-@OptIn(ExperimentalTestApi::class)
-fun startLoggedIn(composeTestRule: ComposeTestRule) = runTest {
-    launchActivity<MainActivity>()
-    val loginState = GlobalContext.get().get<LoginState>()
-    if (loginState.token.value != null) return@runTest
-    with(composeTestRule) {
-        onNodeWithTag("LoginScreen.LoginField").performTextInput("vspochernin")
-        onNodeWithTag("LoginScreen.PasswordField").performTextInput("qwe123")
-        onNodeWithTag("LoginScreen.ConfirmButton").performClick()
-        waitUntilDoesNotExist(hasTestTag("LoginScreen.ConfirmButton"))
+fun startLoggedIn() = runTest {
+    if (loginState.token.value == null) {
+        loginState.setToken(getToken(), LoginMethod.Tesseract)
     }
+    launchActivity<MainActivity>()
+}
+
+private fun getToken(): String {
+    token?.let { return it }
+    val response = runBlocking {
+        loginApi.login(TestLogin, TestPassword)
+    }
+    response.onSuccess {
+        token = it.token
+        return it.token
+    }
+    error("Couldn't acquire test token from API")
 }

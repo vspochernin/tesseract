@@ -16,7 +16,7 @@ class AssetTest {
     val composeTestRule = createEmptyComposeRule()
 
     @Before
-    fun start() = startLoggedIn(composeTestRule)
+    fun start() = startLoggedIn()
 
     @Test
     fun whenGoToAsset_thenAssetIsLoadedSuccessfully() {

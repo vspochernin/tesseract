@@ -16,7 +16,7 @@ class LoginTest {
     val composeTestRule = createEmptyComposeRule()
 
     @Before
-    fun start() = startNotLoggedIn()
+    fun start() = startLoggedOut()
 
     @Test
     fun givenValidDetails_whenLogin_thenLoginIsSuccessful() {

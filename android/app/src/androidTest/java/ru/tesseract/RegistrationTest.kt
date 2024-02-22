@@ -16,7 +16,7 @@ class RegistrationTest {
     val composeTestRule = createEmptyComposeRule()
 
     @Before
-    fun start() = startNotLoggedIn()
+    fun start() = startLoggedOut()
 
     @Test
     fun givenValidDetails_whenRegister_thenRegistrationIsSuccessful() {

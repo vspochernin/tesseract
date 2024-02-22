@@ -19,7 +19,7 @@ class DiversificationTest {
     val composeTestRule = createEmptyComposeRule()
 
     @Before
-    fun start() = startLoggedIn(composeTestRule)
+    fun start() = startLoggedIn()
 
     @Test
     fun whenCreateDiversification_thenDiversificationIsCreated() {
