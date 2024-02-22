@@ -16,6 +16,13 @@ class DiversificationTest {
     fun start() = startLoggedIn()
 
     @Test
+    fun whenGoToDiversification_thenDiversificationAssetsAreShown() {
+        diversificationRobot.navigateToTab()
+        diversificationRobot.goToAnyDiversification()
+        diversificationRobot.assertDiversificationAssetsAreShown()
+    }
+
+    @Test
     fun givenValidAmount_whenCreateDiversification_thenDiversificationIsCreated() {
         diversificationRobot.tryToCreateDiversification("10000")
         diversificationRobot.assertDiversificationCount(2)
