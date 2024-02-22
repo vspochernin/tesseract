@@ -1,15 +1,13 @@
 package ru.tesseract.diversifications
 
-import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertCountEquals
-import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 
-@OptIn(ExperimentalTestApi::class)
 class DiversificationRobot(private val composeTestRule: ComposeTestRule) {
     fun navigateToTab() = with(composeTestRule) {
         onNodeWithTag("Navigation.Diversifications").performClick()
@@ -28,8 +26,8 @@ class DiversificationRobot(private val composeTestRule: ComposeTestRule) {
     }
 
     fun assertDiversificationCount(count: Int) = with(composeTestRule) {
-        waitUntilAtLeastOneExists(hasTestTag("DiversificationsScreen.Diversification"))
-        onAllNodesWithTag("DiversificationsScreen.Diversification").assertCountEquals(2)
+        waitUntilAtLeastOneExistsWithTag("DiversificationsScreen.Diversification")
+        onAllNodesWithTag("DiversificationsScreen.Diversification").assertCountEquals(count)
     }
 
     fun tryToCreateDiversification(amount: String) {

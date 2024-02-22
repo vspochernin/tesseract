@@ -1,13 +1,11 @@
 package ru.tesseract.login
 
-import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import ru.tesseract.waitUntilDoesNotExistWithTag
 
-@OptIn(ExperimentalTestApi::class)
 class RegisterRobot(private val composeTestRule: ComposeTestRule) {
     fun navigate() = with(composeTestRule) {
         onNodeWithTag("LoginScreen.RegisterButton").performClick()
@@ -34,14 +32,14 @@ class RegisterRobot(private val composeTestRule: ComposeTestRule) {
     }
 
     fun assertRegistered() = with(composeTestRule) {
-        waitUntilDoesNotExist(hasTestTag("RegistrationScreen.ConfirmButton"))
+        waitUntilDoesNotExistWithTag("RegistrationScreen.ConfirmButton")
     }
 
     fun tryToRegister(
         login: String,
         email: String,
         password: String,
-        confirmPassword: String,
+        confirmPassword: String = password,
     ) {
         navigate()
         inputLogin(login)

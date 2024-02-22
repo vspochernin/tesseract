@@ -1,16 +1,14 @@
 package ru.tesseract.assets
 
-import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.performClick
+import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 
-@OptIn(ExperimentalTestApi::class)
 class AssetRobot(private val composeTestRule: ComposeTestRule) {
     fun waitUntilLoaded() = with(composeTestRule) {
-        waitUntilAtLeastOneExists(hasTestTag("AssetsScreen.Asset"))
+        waitUntilAtLeastOneExistsWithTag("AssetsScreen.Asset")
     }
 
     fun goToAnyAsset() = with(composeTestRule) {
@@ -24,6 +22,6 @@ class AssetRobot(private val composeTestRule: ComposeTestRule) {
     }
 
     fun assertDescriptionIsShown() = with(composeTestRule) {
-        waitUntilAtLeastOneExists(hasTestTag("AssetScreen.AssetDescription"))
+        waitUntilAtLeastOneExistsWithTag("AssetScreen.AssetDescription")
     }
 }

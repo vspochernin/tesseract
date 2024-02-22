@@ -1,13 +1,11 @@
 package ru.tesseract.settings
 
-import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 
-@OptIn(ExperimentalTestApi::class)
 class SettingsRobot(private val composeTestRule: ComposeTestRule) {
     fun navigateToTab() = with(composeTestRule) {
         onNodeWithTag("Navigation.Settings").performClick()
@@ -30,7 +28,7 @@ class SettingsRobot(private val composeTestRule: ComposeTestRule) {
     }
 
     fun assertSuccessDialogIsShown() = with(composeTestRule) {
-        waitUntilAtLeastOneExists(hasTestTag("SettingsScreen.SuccessDialog"))
+        waitUntilAtLeastOneExistsWithTag("SettingsScreen.SuccessDialog")
     }
 
     fun logOut() = with(composeTestRule) {
