@@ -46,7 +46,7 @@ jobs:
       - name: Build backend
         run: |
           cd server
-          ./gradlew bootBuildJar
+          ./gradlew bootJar
 
       - name: Run postgres
         uses: isbang/compose-action@v1.5.1
