@@ -4,6 +4,7 @@ import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 import ru.tesseract.waitUntilDoesNotExistWithTag
 
 class LoginRobot(private val composeTestRule: ComposeTestRule) {
@@ -23,7 +24,12 @@ class LoginRobot(private val composeTestRule: ComposeTestRule) {
         waitUntilDoesNotExistWithTag("LoginScreen.ConfirmButton")
     }
 
+    fun waitUntilLoaded() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("LoginScreen.LoginField")
+    }
+
     fun tryToLogin(login: String, password: String) {
+        waitUntilLoaded()
         inputLogin(login)
         inputPassword(password)
         confirm()

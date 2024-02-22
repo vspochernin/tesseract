@@ -31,6 +31,10 @@ class SettingsRobot(private val composeTestRule: ComposeTestRule) {
         waitUntilAtLeastOneExistsWithTag("SettingsScreen.SuccessDialog")
     }
 
+    fun dismissSuccessDialog() = with(composeTestRule) {
+        onNodeWithTag("SettingsScreen.DismissDialogButton").performClick()
+    }
+
     fun logOut() = with(composeTestRule) {
         onNodeWithTag("SettingsScreen.LogOutButton").performClick()
     }

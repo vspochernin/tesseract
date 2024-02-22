@@ -4,7 +4,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
 
-private const val TimeoutMillis = 60_000L
+private const val TimeoutMillis = 10_000L
 
 @OptIn(ExperimentalTestApi::class)
 fun ComposeTestRule.waitUntilDoesNotExistWithTag(tag: String) {

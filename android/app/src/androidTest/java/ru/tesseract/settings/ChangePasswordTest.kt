@@ -28,7 +28,8 @@ class ChangePasswordTest {
         loginRobot.assertLoggedIn()
 
         settingsRobot.tryToChangePassword(old, new)
-//        settingsRobot.assertSuccessDialogIsShown()
+        settingsRobot.assertSuccessDialogIsShown()
+        settingsRobot.dismissSuccessDialog()
         settingsRobot.logOut()
 
         loginRobot.tryToLogin(login, old)

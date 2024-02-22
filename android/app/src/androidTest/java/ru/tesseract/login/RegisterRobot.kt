@@ -4,11 +4,13 @@ import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 import ru.tesseract.waitUntilDoesNotExistWithTag
 
 class RegisterRobot(private val composeTestRule: ComposeTestRule) {
     fun navigate() = with(composeTestRule) {
         onNodeWithTag("LoginScreen.RegisterButton").performClick()
+        waitUntilAtLeastOneExistsWithTag("RegistrationScreen.LoginField")
     }
 
     fun inputLogin(text: String) = with(composeTestRule) {

@@ -103,7 +103,10 @@ private fun ChangePasswordItem(
         AlertDialog(
             onDismissRequest = { viewModel.showSuccessDialog = false },
             confirmButton = {
-                TextButton(onClick = { viewModel.showSuccessDialog = false }) {
+                TextButton(
+                    onClick = { viewModel.showSuccessDialog = false },
+                    modifier = Modifier.testTag("SettingsScreen.DismissDialogButton"),
+                ) {
                     Text(text = stringResource(id = R.string.ok))
                 }
             },
