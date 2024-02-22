@@ -168,7 +168,14 @@ private fun LoginForm(
         )
         Button(
             onClick = onLogin,
-            modifier = Modifier.fillMaxWidth().testTag("LoginScreen.ConfirmButton"),
+            modifier = Modifier.fillMaxWidth()
+                .let {
+                    if (isSignInEnabled) {
+                        it.testTag("LoginScreen.ConfirmButton")
+                    } else {
+                        it
+                    }
+                },
             enabled = isSignInEnabled,
         ) {
             if (isLoggingIn) {

@@ -15,14 +15,17 @@ class DiversificationRobot(private val composeTestRule: ComposeTestRule) {
     }
 
     fun navigateToCreate() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("DiversificationsScreen.CreateButton")
         onNodeWithTag("DiversificationsScreen.CreateButton").performClick()
     }
 
     fun inputAmount(text: String) = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("NewDiversificationScreen.AmountField")
         onNodeWithTag("NewDiversificationScreen.AmountField").performTextInput(text)
     }
 
     fun create() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("NewDiversificationScreen.CreateButton")
         onNodeWithTag("NewDiversificationScreen.CreateButton").performClick()
     }
 

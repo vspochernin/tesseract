@@ -1,6 +1,8 @@
 package ru.tesseract.assets
 
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -17,8 +19,11 @@ class FavoriteTest {
 
     @Test
     fun whenAddFavorite_thenAssetIsAddedToFavorites() {
-        assetRobot.addAnyAssetToFavorites()
-        favoritesRobot.navigateToTab()
-        favoritesRobot.assertFavoritesCount(1)
+        runBlocking {
+            assetRobot.addAnyAssetToFavorites()
+            delay(500)
+            favoritesRobot.navigateToTab()
+            favoritesRobot.assertFavoritesCount(1)
+        }
     }
 }

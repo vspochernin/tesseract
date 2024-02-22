@@ -17,6 +17,7 @@ class LoginRobot(private val composeTestRule: ComposeTestRule) {
     }
 
     fun confirm() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("LoginScreen.ConfirmButton")
         onNodeWithTag("LoginScreen.ConfirmButton").performClick()
     }
 

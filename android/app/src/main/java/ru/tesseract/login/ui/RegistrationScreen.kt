@@ -168,7 +168,14 @@ private fun RegisterForm(
                 )
             },
             enabled = viewModel.isRegisterButtonEnabled,
-            modifier = Modifier.fillMaxWidth().testTag("RegistrationScreen.ConfirmButton"),
+            modifier = Modifier.fillMaxWidth()
+                .let {
+                    if (viewModel.isRegisterButtonEnabled) {
+                        it.testTag("RegistrationScreen.ConfirmButton")
+                    } else {
+                        it
+                    }
+                },
         ) {
             if (viewModel.isRegistering) {
                 CircularProgressIndicator(

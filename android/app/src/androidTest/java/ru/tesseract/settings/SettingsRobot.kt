@@ -8,6 +8,7 @@ import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 
 class SettingsRobot(private val composeTestRule: ComposeTestRule) {
     fun navigateToTab() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("Navigation.Settings")
         onNodeWithTag("Navigation.Settings").performClick()
     }
 
@@ -24,6 +25,7 @@ class SettingsRobot(private val composeTestRule: ComposeTestRule) {
     }
 
     fun confirm() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("SettingsScreen.ConfirmPasswordChange")
         onNodeWithTag("SettingsScreen.ConfirmPasswordChange").performClick()
     }
 
@@ -39,8 +41,13 @@ class SettingsRobot(private val composeTestRule: ComposeTestRule) {
         onNodeWithTag("SettingsScreen.LogOutButton").performClick()
     }
 
+    fun waitUntilLoaded() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("SettingsScreen.OldPassword")
+    }
+
     fun tryToChangePassword(old: String, new: String, confirm: String = new) {
         navigateToTab()
+        waitUntilLoaded()
         inputOldPassword(old)
         inputNewPassword(new)
         inputConfirmPassword(confirm)

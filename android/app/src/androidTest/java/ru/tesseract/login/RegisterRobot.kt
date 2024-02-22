@@ -30,6 +30,7 @@ class RegisterRobot(private val composeTestRule: ComposeTestRule) {
     }
 
     fun confirm() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("RegistrationScreen.ConfirmButton")
         onNodeWithTag("RegistrationScreen.ConfirmButton").performClick()
     }
 

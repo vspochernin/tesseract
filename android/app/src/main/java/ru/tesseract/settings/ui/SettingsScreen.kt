@@ -161,10 +161,19 @@ private fun ChangePasswordItem(
         AnimatedVisibility(visible = viewModel.displayConfirmPasswordError) {
             Text(stringResource(id = R.string.validation_incorrect_confirm_password), color = MaterialTheme.colorScheme.error)
         }
+        val enabled = allowChangingPassword && viewModel.isButtonEnabled
         Button(
             onClick = { viewModel.onChange() },
-            enabled = allowChangingPassword && viewModel.isButtonEnabled,
-            modifier = Modifier.align(Alignment.End).testTag("SettingsScreen.ConfirmPasswordChange"),
+            enabled = enabled,
+            modifier = Modifier
+                .align(Alignment.End)
+                .let {
+                    if (enabled) {
+                        it.testTag("SettingsScreen.ConfirmPasswordChange")
+                    } else {
+                        it
+                    }
+                },
         ) {
             Text(stringResource(id = R.string.settings_screen_change_password_button))
         }

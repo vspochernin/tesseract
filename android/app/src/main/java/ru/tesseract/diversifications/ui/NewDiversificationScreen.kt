@@ -124,7 +124,14 @@ fun NewDiversificationScreen(
                         navigator.popBackStack()
                     }
                 },
-                modifier = Modifier.align(Alignment.End).testTag("NewDiversificationScreen.CreateButton"),
+                modifier = Modifier.align(Alignment.End)
+                    .let {
+                        if (viewModel.isButtonEnabled) {
+                            it.testTag("NewDiversificationScreen.CreateButton")
+                        } else {
+                            it
+                        }
+                    },
                 enabled = viewModel.isButtonEnabled,
             ) {
                 if (viewModel.isLoading) {
