@@ -5,7 +5,6 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
-import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -22,14 +21,28 @@ class DiversificationTest {
     fun start() = startLoggedIn()
 
     @Test
-    fun whenCreateDiversification_thenDiversificationIsCreated() {
+    fun givenValidAmount_whenCreateDiversification_thenDiversificationIsCreated() {
+        tryToCreateDiversification("10000")
+        with(composeTestRule) {
+            waitUntilAtLeastOneExists(hasTestTag("DiversificationsScreen.Diversification"))
+            onAllNodesWithTag("DiversificationsScreen.Diversification").assertCountEquals(2)
+        }
+    }
+
+    @Test
+    fun givenAmountSmallerThanMinPrice_whenCreateDiversification_thenErrorDialogIsShown() {
+        tryToCreateDiversification("1")
+        with(composeTestRule) {
+            waitUntilAtLeastOneExists(hasTestTag("ErrorHandling.Dialog"))
+        }
+    }
+
+    private fun tryToCreateDiversification(amount: String) {
         with(composeTestRule) {
             onNodeWithTag("Navigation.Diversifications").performClick()
             onNodeWithTag("DiversificationsScreen.CreateButton").performClick()
-            onNodeWithTag("NewDiversificationScreen.AmountField").performTextInput("10000")
+            onNodeWithTag("NewDiversificationScreen.AmountField").performTextInput(amount)
             onNodeWithTag("NewDiversificationScreen.CreateButton").performClick()
-            waitUntilAtLeastOneExists(hasTestTag("DiversificationsScreen.Diversification"), timeoutMillis = 5_000)
-            onAllNodesWithTag("DiversificationsScreen.Diversification").assertCountEquals(2)
         }
     }
 }

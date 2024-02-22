@@ -48,12 +48,18 @@ class RegistrationTest {
     ) {
         launchActivity<MainActivity>()
         with(composeTestRule) {
-            onNodeWithTag("LoginScreen.RegisterButton").performClick()
-            onNodeWithTag("RegistrationScreen.LoginField").performTextInput(login)
-            onNodeWithTag("RegistrationScreen.EmailField").performTextInput(email)
-            onNodeWithTag("RegistrationScreen.PasswordField").performTextInput(password)
-            onNodeWithTag("RegistrationScreen.ConfirmPasswordField").performTextInput(confirmPassword)
-            onNodeWithTag("RegistrationScreen.ConfirmButton").performClick()
+            onNodeWithTag("LoginScreen.RegisterButton")
+                .performClick()
+            onNodeWithTag("RegistrationScreen.LoginField")
+                .performTextInput(login)
+            onNodeWithTag("RegistrationScreen.EmailField")
+                .performTextInput(email)
+            onNodeWithTag("RegistrationScreen.PasswordField")
+                .performTextInput(password)
+            onNodeWithTag("RegistrationScreen.ConfirmPasswordField")
+                .performTextInput(confirmPassword)
+            onNodeWithTag("RegistrationScreen.ConfirmButton")
+                .performClick()
         }
     }
 }

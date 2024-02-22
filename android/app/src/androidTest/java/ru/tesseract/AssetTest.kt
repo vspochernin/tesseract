@@ -21,9 +21,9 @@ class AssetTest {
     @Test
     fun whenGoToAsset_thenAssetIsLoadedSuccessfully() {
         with(composeTestRule) {
-            waitUntilAtLeastOneExists(hasTestTag("AssetsScreen.Asset"), timeoutMillis = 5_000)
+            waitUntilAtLeastOneExists(hasTestTag("AssetsScreen.Asset"))
             onAllNodesWithTag("AssetsScreen.Asset").onFirst().performClick()
-            waitUntilAtLeastOneExists(hasTestTag("AssetScreen.AssetDescription"), timeoutMillis = 5_000)
+            waitUntilAtLeastOneExists(hasTestTag("AssetScreen.AssetDescription"))
         }
     }
 }
