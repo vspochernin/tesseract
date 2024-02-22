@@ -29,14 +29,14 @@ class ChangePasswordTest {
 
         settingsRobot.tryToChangePassword(old, new)
 //        settingsRobot.assertSuccessDialogIsShown()
-//        settingsRobot.logOut()
+        settingsRobot.logOut()
 
-//        loginRobot.tryToLogin(login, old)
-//        errorRobot.assertErrorDialogIsShown()
-//        errorRobot.dismiss()
-//
-//        loginRobot.inputPassword(new)
-//        loginRobot.confirm()
-//        loginRobot.assertLoggedIn()
+        loginRobot.tryToLogin(login, old)
+        errorRobot.assertErrorDialogIsShown()
+        errorRobot.dismiss()
+
+        loginRobot.inputPassword(new)
+        loginRobot.confirm()
+        loginRobot.assertLoggedIn()
     }
 }
