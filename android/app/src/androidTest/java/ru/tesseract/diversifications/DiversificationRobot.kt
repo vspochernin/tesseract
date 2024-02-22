@@ -11,6 +11,7 @@ import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 
 class DiversificationRobot(private val composeTestRule: ComposeTestRule) {
     fun navigateToTab() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("Navigation.Diversifications")
         onNodeWithTag("Navigation.Diversifications").performClick()
     }
 
