@@ -41,7 +41,10 @@ fun ErrorHandling(viewModel: ErrorHandlingViewModel = koinViewModel()) {
                 Text(text = stringResource(id = it.message))
             },
             confirmButton = {
-                TextButton(onClick = { error = null }) {
+                TextButton(
+                    onClick = { error = null },
+                    modifier = Modifier.testTag("ErrorHandling.DismissButton")
+                ) {
                     Text(stringResource(id = R.string.ok))
                 }
             },
