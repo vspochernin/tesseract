@@ -14,6 +14,6 @@ class FavoritesRobot(private val composeTestRule: ComposeTestRule) {
 
     fun assertFavoritesCount(count: Int) = with(composeTestRule) {
         waitUntilAtLeastOneExistsWithTag("FavoritesScreen.Asset")
-        onAllNodesWithTag("FavoritesScreen.Asset").assertCountEquals(1)
+        onAllNodesWithTag("FavoritesScreen.Asset").assertCountEquals(count)
     }
 }
