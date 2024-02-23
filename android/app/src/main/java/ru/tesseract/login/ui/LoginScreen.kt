@@ -37,6 +37,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
@@ -153,7 +154,7 @@ private fun LoginForm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("LoginScreen.LoginField"),
         )
         OutlinedTextField(
             value = password.value,
@@ -163,11 +164,18 @@ private fun LoginForm(
             keyboardOptions = KeyboardOptions(autoCorrect = false),
             keyboardActions = KeyboardActions { onLogin() },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("LoginScreen.PasswordField"),
         )
         Button(
             onClick = onLogin,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .let {
+                    if (isSignInEnabled) {
+                        it.testTag("LoginScreen.ConfirmButton")
+                    } else {
+                        it
+                    }
+                },
             enabled = isSignInEnabled,
         ) {
             if (isLoggingIn) {
@@ -181,7 +189,7 @@ private fun LoginForm(
         }
         TextButton(
             onClick = onRegister,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("LoginScreen.RegisterButton"),
             colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onBackground),
         ) {
             Text(

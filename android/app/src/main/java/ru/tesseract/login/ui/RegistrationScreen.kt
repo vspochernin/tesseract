@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -98,7 +99,7 @@ private fun RegisterForm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = textFieldModifier,
+            modifier = textFieldModifier.testTag("RegistrationScreen.LoginField"),
             isError = viewModel.displayLoginError,
         )
         AnimatedVisibility(visible = viewModel.displayLoginError) {
@@ -114,7 +115,7 @@ private fun RegisterForm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = textFieldModifier,
+            modifier = textFieldModifier.testTag("RegistrationScreen.EmailField"),
             isError = viewModel.displayEmailError,
         )
         AnimatedVisibility(visible = viewModel.displayEmailError) {
@@ -131,7 +132,7 @@ private fun RegisterForm(
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = textFieldModifier,
+            modifier = textFieldModifier.testTag("RegistrationScreen.PasswordField"),
             isError = viewModel.displayPasswordError,
         )
         AnimatedVisibility(visible = viewModel.displayPasswordError) {
@@ -147,7 +148,7 @@ private fun RegisterForm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false),
             visualTransformation = PasswordVisualTransformation(),
-            modifier = textFieldModifier,
+            modifier = textFieldModifier.testTag("RegistrationScreen.ConfirmPasswordField"),
             isError = viewModel.displayConfirmPasswordError,
         )
         AnimatedVisibility(visible = viewModel.displayConfirmPasswordError) {
@@ -167,7 +168,14 @@ private fun RegisterForm(
                 )
             },
             enabled = viewModel.isRegisterButtonEnabled,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .let {
+                    if (viewModel.isRegisterButtonEnabled) {
+                        it.testTag("RegistrationScreen.ConfirmButton")
+                    } else {
+                        it
+                    }
+                },
         ) {
             if (viewModel.isRegistering) {
                 CircularProgressIndicator(

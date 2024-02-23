@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -102,11 +103,15 @@ private fun ChangePasswordItem(
         AlertDialog(
             onDismissRequest = { viewModel.showSuccessDialog = false },
             confirmButton = {
-                TextButton(onClick = { viewModel.showSuccessDialog = false }) {
+                TextButton(
+                    onClick = { viewModel.showSuccessDialog = false },
+                    modifier = Modifier.testTag("SettingsScreen.DismissDialogButton"),
+                ) {
                     Text(text = stringResource(id = R.string.ok))
                 }
             },
             text = { Text(text = stringResource(id = R.string.settings_screen_password_changed)) },
+            modifier = Modifier.testTag("SettingsScreen.SuccessDialog"),
         )
     }
     Column(
@@ -127,7 +132,7 @@ private fun ChangePasswordItem(
             visualTransformation = PasswordVisualTransformation(),
             value = viewModel.oldPassword,
             onValueChange = { viewModel.oldPassword = it },
-            modifier = textFieldModifier,
+            modifier = textFieldModifier.testTag("SettingsScreen.OldPassword"),
         )
         OutlinedTextField(
             value = viewModel.password,
@@ -137,7 +142,7 @@ private fun ChangePasswordItem(
             keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions { focusManager.moveFocus(FocusDirection.Next) },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = textFieldModifier,
+            modifier = textFieldModifier.testTag("SettingsScreen.NewPassword"),
             isError = viewModel.displayPasswordError,
         )
         AnimatedVisibility(visible = viewModel.displayPasswordError) {
@@ -150,16 +155,25 @@ private fun ChangePasswordItem(
             singleLine = true,
             keyboardOptions = KeyboardOptions(autoCorrect = false),
             visualTransformation = PasswordVisualTransformation(),
-            modifier = textFieldModifier,
+            modifier = textFieldModifier.testTag("SettingsScreen.ConfirmPassword"),
             isError = viewModel.displayConfirmPasswordError,
         )
         AnimatedVisibility(visible = viewModel.displayConfirmPasswordError) {
             Text(stringResource(id = R.string.validation_incorrect_confirm_password), color = MaterialTheme.colorScheme.error)
         }
+        val enabled = allowChangingPassword && viewModel.isButtonEnabled
         Button(
             onClick = { viewModel.onChange() },
-            enabled = allowChangingPassword && viewModel.isButtonEnabled,
-            modifier = Modifier.align(Alignment.End),
+            enabled = enabled,
+            modifier = Modifier
+                .align(Alignment.End)
+                .let {
+                    if (enabled) {
+                        it.testTag("SettingsScreen.ConfirmPasswordChange")
+                    } else {
+                        it
+                    }
+                },
         ) {
             Text(stringResource(id = R.string.settings_screen_change_password_button))
         }
@@ -173,7 +187,8 @@ private fun LogOutItem(onClick: () -> Unit) {
         modifier = Modifier
             .clickable(onClick = onClick)
             .defaultMinSize(minHeight = 48.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag("SettingsScreen.LogOutButton"),
     ) {
         Text(
             stringResource(id = R.string.settings_screen_log_out),

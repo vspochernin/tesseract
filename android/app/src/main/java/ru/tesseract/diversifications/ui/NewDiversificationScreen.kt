@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
@@ -82,7 +83,7 @@ fun NewDiversificationScreen(
                 isError = viewModel.showAmountError,
                 suffix = { Text(text = "₽") },
                 label = { Text(text = stringResource(id = R.string.diversification_sum)) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("NewDiversificationScreen.AmountField"),
             )
             AnimatedVisibility(visible = viewModel.showAmountError) {
                 Text(
@@ -123,7 +124,14 @@ fun NewDiversificationScreen(
                         navigator.popBackStack()
                     }
                 },
-                modifier = Modifier.align(Alignment.End),
+                modifier = Modifier.align(Alignment.End)
+                    .let {
+                        if (viewModel.isButtonEnabled) {
+                            it.testTag("NewDiversificationScreen.CreateButton")
+                        } else {
+                            it
+                        }
+                    },
                 enabled = viewModel.isButtonEnabled,
             ) {
                 if (viewModel.isLoading) {

@@ -11,7 +11,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import ru.tesseract.R
@@ -39,10 +41,14 @@ fun ErrorHandling(viewModel: ErrorHandlingViewModel = koinViewModel()) {
                 Text(text = stringResource(id = it.message))
             },
             confirmButton = {
-                TextButton(onClick = { error = null }) {
+                TextButton(
+                    onClick = { error = null },
+                    modifier = Modifier.testTag("ErrorHandling.DismissButton")
+                ) {
                     Text(stringResource(id = R.string.ok))
                 }
             },
+            modifier = Modifier.testTag("ErrorHandling.Dialog")
         )
     }
 }

@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -62,7 +63,8 @@ fun DiversificationsScreen(
                         onClick = { navigator.navigate(NewDiversificationScreenDestination) },
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .padding(16.dp),
+                            .padding(16.dp)
+                            .testTag("DiversificationsScreen.CreateButton"),
                     ) {
                         Icon(Icons.Default.Add, contentDescription = null)
                         Spacer(modifier = Modifier.size(8.dp))
@@ -79,7 +81,7 @@ fun DiversificationsScreen(
                             val destination = DiversificationScreenDestination(diversification.id)
                             navigator.navigate(destination)
                         },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().testTag("DiversificationsScreen.Diversification"),
                     )
                 }
             }

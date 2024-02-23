@@ -11,6 +11,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ramcosta.composedestinations.annotation.Destination
@@ -48,7 +49,7 @@ fun AssetsScreen(navigator: DestinationsNavigator, viewModel: AssetsViewModel = 
                     AssetSummaryWithChange(
                         asset = asset,
                         onClick = { navigator.navigate(AssetScreenDestination(asset.id)) },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().testTag("AssetsScreen.Asset"),
                     )
                 }
             }
