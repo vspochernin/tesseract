@@ -53,6 +53,11 @@ jobs:
                     cd server
                     ./gradlew bootJar
 
+            -   name: Prepare migration files
+                run: |
+                    rm -rf server/src/main/resources/db/migration/*
+                    cp -r server/src/test/resources/db/migration/* server/src/main/resources/db/migration/
+
             -   name: Run postgres
                 uses: isbang/compose-action@v1.5.1
                 with:
@@ -73,6 +78,7 @@ jobs:
                     script: android/gradlew -p android connectedCheck
 
             -   name: Upload e2e test reports
+                if: always()
                 uses: actions/upload-artifact@v3
                 with:
                     name: e2e-test-reports
