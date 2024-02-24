@@ -3,7 +3,7 @@ on: [ push ]
 
 
 jobs:
-    test:
+    integration-test:
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout
@@ -27,3 +27,9 @@ jobs:
                 run: |
                     cd server
                     ./gradlew test
+
+            -   name: Upload test reports
+                uses: actions/upload-artifact@v3
+                with:
+                    name: test-reports
+                    path: server/build/reports/tests/test/

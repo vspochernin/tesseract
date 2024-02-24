@@ -6,7 +6,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  test:
+  e2e-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -71,3 +71,9 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -skin 1080x2400
           disable-animations: true
           script: android/gradlew -p android connectedCheck
+
+      - name: Upload e2e test reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e-test-reports
+          path: android/build/reports
