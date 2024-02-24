@@ -54,7 +54,7 @@ public class DiversificationController {
         diversificationService.createDiversification(request);
 
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(HttpStatus.CREATED)
                 .build();
     }
 }
