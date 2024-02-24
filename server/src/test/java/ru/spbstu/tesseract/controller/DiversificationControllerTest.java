@@ -1,6 +1,8 @@
 
 package ru.spbstu.tesseract.controller;
 
+import java.util.Arrays;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +18,7 @@ import ru.spbstu.tesseract.dto.DiversificationLongDto;
 import ru.spbstu.tesseract.dto.DiversificationShortDto;
 import ru.spbstu.tesseract.service.DiversificationService;
 
-import java.util.Arrays;
-
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -67,7 +66,6 @@ public class DiversificationControllerTest {
                 ));
 
 
-
         mockMvc.perform(get("/api/v1/diversifications")
                         .param("pageNumber", "0")
                         .param("pageSize", "10"))
@@ -102,11 +100,11 @@ public class DiversificationControllerTest {
     }
 
     @Test
-    public void givenCreateDiversificationRequestDto_whenCreateDiversification_thenStatusIsOk() throws Exception {
+    public void givenCreateDiversificationRequestDto_whenCreateDiversification_thenStatusIsCreated() throws Exception {
         mockMvc.perform(post("/api/v1/diversifications")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new CreateDiversificationRequestDto())))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
 }
