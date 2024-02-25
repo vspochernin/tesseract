@@ -90,7 +90,7 @@ public class AuthenticationControllerTest {
 
     @ParameterizedTest
     @MethodSource("invalidRegisterRequestArgumentsProvider")
-    public void givenInvalidRegisterReguest_whenRegister_thenBadRequest(String login, String email,
+    public void givenInvalidRegisterRequest_whenRegister_thenBadRequest(String login, String email,
             String password) throws Exception
     {
         HashMap<String, String> request = new HashMap<>();
