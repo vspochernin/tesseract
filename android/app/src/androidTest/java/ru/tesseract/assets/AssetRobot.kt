@@ -6,10 +6,7 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTouchInput
-import androidx.compose.ui.test.swipeUp
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import androidx.compose.ui.test.performScrollToIndex
 import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 
 class AssetRobot(private val composeTestRule: ComposeTestRule) {
@@ -31,10 +28,9 @@ class AssetRobot(private val composeTestRule: ComposeTestRule) {
         waitUntilAtLeastOneExistsWithTag("AssetScreen.AssetDescription")
     }
 
-    fun scroll() = with(composeTestRule) {
-        onNodeWithTag("AssetsScreen.List").performTouchInput {
-            swipeUp(startY = height.toFloat() / 5)
-            runBlocking { delay(200) }
+    fun scrollTo(index: Int) = with(composeTestRule) {
+        runCatching {
+            onNodeWithTag("AssetsScreen.List").performScrollToIndex(index)
         }
     }
 
