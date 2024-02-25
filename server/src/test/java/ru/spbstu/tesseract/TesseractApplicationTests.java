@@ -12,22 +12,20 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 class TesseractApplicationTests {
 
-	@Container
-	public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14.7")
-			.withDatabaseName("tesseract")
-			.withUsername("postgres")
-			.withPassword("postgres");
+    @Container
+    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14.7")
+            .withDatabaseName("tesseract")
+            .withUsername("postgres")
+            .withPassword("postgres");
 
-	@DynamicPropertySource
-	static void postgresqlProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.datasource.url", postgres::getJdbcUrl);
-		registry.add("spring.datasource.password", postgres::getPassword);
-		registry.add("spring.datasource.username", postgres::getUsername);
-	}
+    @DynamicPropertySource
+    static void postgresProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.password", postgres::getPassword);
+        registry.add("spring.datasource.username", postgres::getUsername);
+    }
 
-
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void contextLoads() {
+    }
 }

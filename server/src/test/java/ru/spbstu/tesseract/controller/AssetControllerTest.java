@@ -33,7 +33,7 @@ public class AssetControllerTest {
             .withPassword("postgres");
 
     @DynamicPropertySource
-    static void postgresqlProperties(DynamicPropertyRegistry registry) {
+    static void postgresProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.password", postgres::getPassword);
         registry.add("spring.datasource.username", postgres::getUsername);
@@ -45,6 +45,7 @@ public class AssetControllerTest {
                 .dataSource(postgres.getJdbcUrl(), postgres.getUsername(), postgres.getPassword())
                 .cleanDisabled(false)
                 .load();
+
         flyway.clean();
         flyway.migrate();
     }
