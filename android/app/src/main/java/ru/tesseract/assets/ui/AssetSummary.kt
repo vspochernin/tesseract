@@ -110,6 +110,7 @@ private fun AssetSummary(
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.testTag("AssetSummary.Title"),
                 )
                 Text(
                     companyTitle,
