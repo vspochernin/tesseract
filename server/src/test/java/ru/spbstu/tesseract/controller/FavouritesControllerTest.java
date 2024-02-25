@@ -64,21 +64,21 @@ public class FavouritesControllerTest {
     @DisplayName("Добавить существующий актив в избранное")
     public void givenExistsAssetId_whenAddFavourites_thenSuccess() throws Exception {
         checkFavouritesInitial();
-        addExistsAssetInFavouritesFirstTime(10);
-        checkFavouritesAdd(10);
-        addExistsAssetInFavouritesSecondTime(10);
-        checkFavouritesAdd(10);
+        addExistsAssetInFavouritesFirstTime();
+        checkFavouritesAdd();
+        addExistsAssetInFavouritesSecondTime();
+        checkFavouritesAdd();
     }
 
     @Test
     @DisplayName("Удалить существующий актив из избранного")
     public void givenExistsAssetId_whenRemoveFavourites_thenSuccess() throws Exception {
         checkFavouritesInitial();
-        deleteExistsAssetFromFavourites(10);
+        deleteExistsAssetFromFavourites();
         checkFavouritesInitial();
-        addExistsAssetInFavouritesFirstTime(10);
-        checkFavouritesAdd(10);
-        deleteExistsAssetFromFavourites(10);
+        addExistsAssetInFavouritesFirstTime();
+        checkFavouritesAdd();
+        deleteExistsAssetFromFavourites();
         checkFavouritesInitial();
     }
 
@@ -86,7 +86,7 @@ public class FavouritesControllerTest {
     @DisplayName("Добавить несуществующий актив в избранное")
     public void givenNonExistentAssetId_whenAddFavourites_thenSuccess() throws Exception {
         checkFavouritesInitial();
-        addNonExistentAssetInFavourites(1001);
+        addNonExistentAssetInFavourites();
         checkFavouritesInitial();
     }
 
@@ -94,48 +94,48 @@ public class FavouritesControllerTest {
     @DisplayName("Удалить несуществующий актив из избранного")
     public void givenNonExistentAssetId_whenRemoveFavourites_thenSuccess() throws Exception {
         checkFavouritesInitial();
-        deleteNonExistentAssetFromFavourites(1001);
+        deleteNonExistentAssetFromFavourites();
         checkFavouritesInitial();
     }
 
-    private void addExistsAssetInFavouritesSecondTime(int id) throws Exception {
-        mockMvc.perform(post("/api/v1/favourites/" + id)
+    private void addExistsAssetInFavouritesSecondTime() throws Exception {
+        mockMvc.perform(post("/api/v1/favourites/" + 10)
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isOk());
     }
 
-    private void addExistsAssetInFavouritesFirstTime(int id) throws Exception {
-        mockMvc.perform(post("/api/v1/favourites/" + id)
+    private void addExistsAssetInFavouritesFirstTime() throws Exception {
+        mockMvc.perform(post("/api/v1/favourites/" + 10)
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isCreated());
     }
 
-    private void deleteExistsAssetFromFavourites(int id) throws Exception {
-        mockMvc.perform(delete("/api/v1/favourites/" + id)
+    private void deleteExistsAssetFromFavourites() throws Exception {
+        mockMvc.perform(delete("/api/v1/favourites/" + 10)
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isOk());
     }
 
-    private void addNonExistentAssetInFavourites(int id) throws Exception {
-        mockMvc.perform(post("/api/v1/favourites/" + id)
+    private void addNonExistentAssetInFavourites() throws Exception {
+        mockMvc.perform(post("/api/v1/favourites/" + 1001)
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isNotFound());
     }
 
-    private void deleteNonExistentAssetFromFavourites(int id) throws Exception {
-        mockMvc.perform(delete("/api/v1/favourites/" + id)
+    private void deleteNonExistentAssetFromFavourites() throws Exception {
+        mockMvc.perform(delete("/api/v1/favourites/" + 1001)
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isNotFound());
     }
 
-    private void checkFavouritesAdd(int id) throws Exception {
+    private void checkFavouritesAdd() throws Exception {
         mockMvc.perform(get("/api/v1/favourites")
                         .param("pageNumber", "0")
                         .param("pageSize", "10")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("length()").value(5))
-                .andExpect(jsonPath("$[*].assetId", Matchers.containsInAnyOrder(1, 2, 5, 8, id)));
+                .andExpect(jsonPath("$[*].assetId", Matchers.containsInAnyOrder(1, 2, 5, 8, 10)));
     }
 
     private void checkFavouritesInitial() throws Exception {
