@@ -3,9 +3,9 @@ POST http://localhost:8080/api/v1/register
 Content-Type: application/json
 
 {
-  "login": "correctLogin",
-  "email": "correctEmail@gmail.com",
-  "password": "correctPassword123"
+    "login": "correctLogin",
+    "email": "correctEmail@gmail.com",
+    "password": "correctPassword123"
 }
 
 ###
@@ -46,17 +46,6 @@ Content-Type: application/json
 
 ###
 
-# Некорректное тело запроса регистрации.
-POST http://localhost:8080/api/v1/register
-Content-Type: application/json
-
-
-{
-    "incorrect": "body"
-}
-
-###
-
 # Аутентификация с корректными данными.
 POST http://localhost:8080/api/v1/login/tesseract
 Content-Type: application/json
@@ -86,16 +75,6 @@ Content-Type: application/json
 {
     "login": "vrazukrantov",
     "password": "qwe123-incorrect"
-}
-
-###
-
-# Некорректное тело запроса аутентификации.
-POST http://localhost:8080/api/v1/login/tesseract
-Content-Type: application/json
-
-{
-    "incorrect": "body"
 }
 
 ###

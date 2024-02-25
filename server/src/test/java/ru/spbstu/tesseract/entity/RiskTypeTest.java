@@ -1,6 +1,7 @@
 package ru.spbstu.tesseract.entity;
 
 import org.junit.jupiter.api.Test;
+import ru.spbstu.tesseract.exception.TesseractException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,13 +48,13 @@ class RiskTypeTest {
     @Test
     public void givenNegativeIdRiskType_whenGetRiskTypeById_returnException() {
         int riskTypeId = -1;
-        assertThrows(IllegalArgumentException.class, () -> RiskType.getById(riskTypeId));
+        assertThrows(TesseractException.class, () -> RiskType.getById(riskTypeId));
     }
 
     @Test
     public void givenBigIdRiskType_whenGetRiskTypeById_returnException() {
         int riskTypeId = 5;
-        assertThrows(IllegalArgumentException.class, () -> RiskType.getById(riskTypeId));
+        assertThrows(TesseractException.class, () -> RiskType.getById(riskTypeId));
     }
 
 }

@@ -1,5 +1,8 @@
 package ru.spbstu.tesseract.entity;
 
+import ru.spbstu.tesseract.exception.TesseractErrorType;
+import ru.spbstu.tesseract.exception.TesseractException;
+
 public enum RiskType {
 
     HIGH,
@@ -14,6 +17,6 @@ public enum RiskType {
             }
         }
 
-        throw new IllegalArgumentException("Can't find RiskType by id");
+        throw new TesseractException(TesseractErrorType.INVALID_RISK_TYPE);
     }
 }
