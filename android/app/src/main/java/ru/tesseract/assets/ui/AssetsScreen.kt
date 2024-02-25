@@ -41,7 +41,8 @@ fun AssetsScreen(navigator: DestinationsNavigator, viewModel: AssetsViewModel = 
             contentPadding = padding,
             modifier = Modifier
                 .fillMaxSize()
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .testTag("AssetsScreen.List"),
         ) {
             items(assets.itemCount, key = { it }) { i ->
                 val asset = assets[i]
