@@ -11,6 +11,7 @@ class AssetTest {
     @get:Rule
     val composeTestRule = createEmptyComposeRule()
     private val assetRobot = AssetRobot(composeTestRule)
+    private val paginationRobot = PaginationRobot(composeTestRule)
 
     @Before
     fun start() = startLoggedIn()
@@ -25,10 +26,11 @@ class AssetTest {
     fun whenSwipeUp_thenAllAssetsAreShown() = with(assetRobot) {
         val seenAssets = mutableSetOf<String>()
         val expectedSize = 20
-        repeat(15) {
+        waitUntilLoaded()
+        repeat(expectedSize + 3) {
             seenAssets.addAll(getVisibleAssetTitles())
-            if (seenAssets.size >= expectedSize) return@repeat
-            scroll()
+            scrollTo(it)
+            paginationRobot.waitUntilLoaded()
         }
         assertEquals(expectedSize, seenAssets.size)
     }
