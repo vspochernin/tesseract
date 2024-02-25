@@ -125,13 +125,13 @@ public class BadRequestTest {
             "/api/v1/diversifications"})
     @DisplayName("Некорректные параметры тела POST запроса")
     public void givenIncorrectBodyParams_whenHandlePostRequest_thenReturnsExpectedError(String path) throws Exception {
-        HashMap<String, String> registrationRequest = new HashMap<>();
-        registrationRequest.put("incorrect", "body");
+        HashMap<String, String> request = new HashMap<>();
+        request.put("incorrect", "body");
 
         mockMvc.perform(post(path)
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registrationRequest)))
+                        .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.id").value(7))
                 .andExpect(jsonPath("$.errorType").value("BAD_REQUEST_BODY"));
@@ -142,13 +142,13 @@ public class BadRequestTest {
             "/api/v1/password"})
     @DisplayName("Некорректные параметры тела PUT запроса")
     public void givenIncorrectBodyParams_whenHandlePutRequest_thenReturnsExpectedError(String path) throws Exception {
-        HashMap<String, String> registrationRequest = new HashMap<>();
-        registrationRequest.put("incorrect", "body");
+        HashMap<String, String> request = new HashMap<>();
+        request.put("incorrect", "body");
 
         mockMvc.perform(put(path)
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registrationRequest)))
+                        .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.id").value(7))
                 .andExpect(jsonPath("$.errorType").value("BAD_REQUEST_BODY"));
