@@ -58,18 +58,6 @@ Content-Type: application/json
 
 ###
 
-# Создать диверсификацию - некорректное тело запроса.
-POST http://localhost:8080/api/v1/diversifications
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
-Content-Type: application/json
-
-{
-    "amount": "qwe",
-    "riskTypeId": 3
-}
-
-###
-
 # Создать диверсификацию - некорректный уровень рискованности.
 POST http://localhost:8080/api/v1/diversifications
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs

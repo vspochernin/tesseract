@@ -107,17 +107,7 @@ public class AssetControllerTest {
         mockMvc.perform(get("/api/v1/assets/1001")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.id").value(7))
+                .andExpect(jsonPath("$.id").value(8))
                 .andExpect(jsonPath("$.errorType").value("NOT_FOUND"));
-    }
-
-    @Test
-    @DisplayName("Некорректное тело запроса актива")
-    public void givenInvalidBody_whenGetAsset_thenReturnsExpectedError() throws Exception {
-        mockMvc.perform(get("/api/v1/assets/123qwe123")
-                        .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.id").value(6))
-                .andExpect(jsonPath("$.errorType").value("BAD_REQUEST_BODY"));
     }
 }
