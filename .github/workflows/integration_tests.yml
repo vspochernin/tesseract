@@ -25,10 +25,6 @@ jobs:
                 run: |
                     rm -rf server/src/main/resources/db/migration/*
                     cp -r server/src/test/resources/db/migration/* server/src/main/resources/db/migration/
-            -   name: Run postgres
-                uses: isbang/compose-action@v1.5.1
-                with:
-                    compose-file: "server/src/main/resources/docker/database/docker-compose.yml"
 
             -   name: Run tests
                 run: |
