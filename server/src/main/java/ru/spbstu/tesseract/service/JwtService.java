@@ -13,13 +13,11 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.spbstu.tesseract.utils.Secrets;
 
 @Service
 public class JwtService {
 
-    // TODO: should be regenerated and deleted from the code in production.
-    private static final String SECRET_KEY =
-            "02002E11CF7D1BE7C4D64B72ABDD3B9DA0C7010AD5FA371FA1F4E40A4356D5E9";
     public static final long EXPIRATION_PERIOD_MILLIS = 365L * 24 * 60 * 60 * 1000;
 
     public String extractUsername(String token) {
@@ -72,7 +70,7 @@ public class JwtService {
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(Secrets.SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
