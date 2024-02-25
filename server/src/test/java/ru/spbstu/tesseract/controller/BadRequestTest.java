@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Testcontainers
-public class BadRequestBodyTest {
+public class BadRequestTest {
 
     @Container
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14.7")
@@ -66,8 +66,7 @@ public class BadRequestBodyTest {
     @ValueSource(strings = {
             "/api/v1/assets",
             "/api/v1/diversifications",
-            "/api/v1/favourites"
-    })
+            "/api/v1/favourites"})
     @DisplayName("Некорректные query параметры GET запроса")
     public void givenInvalidQueryParams_whenHandleGetRequest_thenReturnsExpectedError(String path) throws Exception {
         mockMvc.perform(get(path)
@@ -82,8 +81,7 @@ public class BadRequestBodyTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "/api/v1/assets/",
-            "/api/v1/diversifications/"
-    })
+            "/api/v1/diversifications/"})
     @DisplayName("Некорректные параметры пути GET запроса")
     public void givenIncorrectPathParams_whenHandleGetRequest_thenReturnsExpectedError(String path) throws Exception {
         mockMvc.perform(get(path + "123qwe123")
@@ -95,8 +93,7 @@ public class BadRequestBodyTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "/api/v1/favourites/"
-    })
+            "/api/v1/favourites/"})
     @DisplayName("Некорректные параметры пути POST запроса")
     public void givenIncorrectPathParams_whenHandlePostRequest_thenReturnsExpectedError(String path) throws Exception {
         mockMvc.perform(post(path + "123qwe123")
@@ -108,8 +105,7 @@ public class BadRequestBodyTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "/api/v1/favourites/"
-    })
+            "/api/v1/favourites/"})
     @DisplayName("Некорректные параметры пути DELETE запроса")
     public void givenIncorrectPathParams_whenHandleDeleteRequest_thenReturnsExpectedError(String path) throws
             Exception

@@ -12,4 +12,5 @@ public class Secrets {
     public static final String VRAZUKRANTOV_BEREAR_TOKEN =
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0." +
                     "ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs";
+    public static final String INVALID_BEREAR_TOKEN = "invalid berear token";
 }
