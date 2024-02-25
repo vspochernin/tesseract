@@ -185,5 +185,4 @@ public class DiversificationControllerTest {
 
         checkIfDiversificationWithId3IsNotExists();
     }
-
 }
