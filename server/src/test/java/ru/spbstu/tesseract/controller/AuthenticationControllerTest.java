@@ -89,6 +89,7 @@ public class AuthenticationControllerTest {
     }
 
     @ParameterizedTest
+    @DisplayName("Регистрация с некорректными данными")
     @MethodSource("invalidRegisterRequestArgumentsProvider")
     public void givenInvalidRegisterRequest_whenRegister_thenBadRequest(String login, String email,
             String password) throws Exception
@@ -144,7 +145,7 @@ public class AuthenticationControllerTest {
             "il",
             "incorrectLoginnnnnnnnnnnnnnnnnnnnnnnnnnnn",
             "incorrect-login"})
-    @DisplayName("Регистрация с некорректными логином")
+    @DisplayName("Регистрация с некорректным логином")
     public void givenInvalidLogin_whenRegister_thenReturnsExpectedError(String login) throws Exception {
         HashMap<String, String> request = new HashMap<>();
         request.put("login", login);
@@ -167,7 +168,7 @@ public class AuthenticationControllerTest {
             "123&*(",
             "qweqweqwe",
             "qwe123&*(±"})
-    @DisplayName("Регистрация с некорректными паролем")
+    @DisplayName("Регистрация с некорректным паролем")
     public void givenInvalidPassword_whenRegister_thenReturnsExpectedError(String password) throws Exception {
         HashMap<String, String> request = new HashMap<>();
         request.put("login", "correctLogin");
@@ -188,7 +189,7 @@ public class AuthenticationControllerTest {
             "incorrectEmailgmail.com",
             "incorrectEmail@gmailcom",
             "incorrectEmail@gmail."})
-    @DisplayName("Регистрация с некорректными паролем")
+    @DisplayName("Регистрация с некорректными email")
     public void givenInvalidEmail_whenRegister_thenReturnsExpectedError(String email) throws Exception {
         HashMap<String, String> request = new HashMap<>();
         request.put("login", "correctLogin");
