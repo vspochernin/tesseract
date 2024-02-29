@@ -1,0 +1,39 @@
+name: Unit and Integration tests
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+jobs:
+    unit-and-integration-test:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Setup Java
+                uses: actions/setup-java@v4
+                with:
+                    distribution: 'temurin'
+                    java-version: '18'
+
+            -   name: Setup Gradle
+                uses: gradle/actions/setup-gradle@v3
+
+            -   name: Prepare migration files
+                run: |
+                    rm -rf server/src/main/resources/db/migration/*
+                    cp -r server/src/test/resources/db/migration/* server/src/main/resources/db/migration/
+
+            -   name: Run tests
+                run: |
+                    cd server
+                    ./gradlew test
+
+            -   name: Upload test reports
+                if: always()
+                uses: actions/upload-artifact@v3
+                with:
+                    name: test-reports
+                    path: server/build/reports/tests/test/
