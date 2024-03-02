@@ -1,0 +1,85 @@
+name: End-to-End tests
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+jobs:
+    e2e-test:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Enable KVM
+                run: |
+                    echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+                    sudo udevadm control --reload-rules
+                    sudo udevadm trigger --name-match=kvm
+
+            -   name: Setup Java
+                uses: actions/setup-java@v4
+                with:
+                    distribution: 'temurin'
+                    java-version: '18'
+
+            -   name: Setup Gradle
+                uses: gradle/actions/setup-gradle@v3
+
+            -   name: Restore AVD cache
+                uses: actions/cache@v4
+                id: avd-cache
+                with:
+                    path: |
+                        ~/.android/avd/*
+                        ~/.android/adb*
+                    key: avd-33
+
+            -   name: Create AVD
+                if: steps.avd-cache.outputs.cache-hit != 'true'
+                uses: reactivecircus/android-emulator-runner@v2
+                with:
+                    api-level: 33
+                    arch: x86_64
+                    profile: pixel
+                    force-avd-creation: false
+                    emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -skin 1080x2400
+                    disable-animations: false
+                    script: echo "Generated AVD snapshot for caching."
+
+            -   name: Build backend
+                run: |
+                    cd server
+                    ./gradlew bootJar
+
+            -   name: Prepare migration files
+                run: |
+                    rm -rf server/src/main/resources/db/migration/*
+                    cp -r server/src/test/resources/db/migration/* server/src/main/resources/db/migration/
+
+            -   name: Run postgres
+                uses: isbang/compose-action@v1.5.1
+                with:
+                    compose-file: "server/src/main/resources/docker/database/docker-compose.yml"
+
+            -   name: Run backend
+                run: java -jar server/build/libs/tesseract-0.0.1-SNAPSHOT.jar &
+
+            -   name: Run tests
+                uses: reactivecircus/android-emulator-runner@v2
+                with:
+                    api-level: 33
+                    arch: x86_64
+                    profile: pixel
+                    force-avd-creation: false
+                    emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -skin 1080x2400
+                    disable-animations: true
+                    script: android/gradlew -p android connectedCheck
+
+            -   name: Upload e2e test reports
+                if: always()
+                uses: actions/upload-artifact@v3
+                with:
+                    name: e2e-test-reports
+                    path: android/app/build/reports
