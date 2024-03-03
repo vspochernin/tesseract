@@ -1,30 +1,30 @@
 # Получить первые 10 своих диверсификаций.
 GET http://localhost:8080/api/v1/diversifications?pageNumber=0&pageSize=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###
 
 # Получить свою существующую диверсификацию с id = 2.
 GET http://localhost:8080/api/v1/diversifications/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###
 
 # Получить не свою существующую диверсификацию.
 GET http://localhost:8080/api/v1/diversifications/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###
 
 # Получить несуществующую диверсификацию.
 GET http://localhost:8080/api/v1/diversifications/1001
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###
 
 # Создать диверсификацию - корректные данные.
 POST http://localhost:8080/api/v1/diversifications
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 Content-Type: application/json
 
 {
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 # Создать диверсификацию - слишком большая сумма.
 POST http://localhost:8080/api/v1/diversifications
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 Content-Type: application/json
 
 {
@@ -48,7 +48,7 @@ Content-Type: application/json
 
 # Создать диверсификацию - слишком малая сумма.
 POST http://localhost:8080/api/v1/diversifications
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 Content-Type: application/json
 
 {
@@ -60,7 +60,7 @@ Content-Type: application/json
 
 # Создать диверсификацию - некорректный уровень рискованности.
 POST http://localhost:8080/api/v1/diversifications
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 Content-Type: application/json
 
 {

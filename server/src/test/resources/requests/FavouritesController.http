@@ -1,29 +1,29 @@
 # Получить первые 10 своих избранных активов.
 GET http://localhost:8080/api/v1/favourites?pageNumber=0&pageSize=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###
 
 # Добавить существующий актив в избранное.
 POST http://localhost:8080/api/v1/favourites/10
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###
 
 # Удалить существующий актив из избранного.
 DELETE http://localhost:8080/api/v1/favourites/10
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###
 
 # Добавить несуществующий актив в избранное.
 POST http://localhost:8080/api/v1/favourites/1001
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###
 
 # Удалить несуществующий актив из избранного.
 DELETE http://localhost:8080/api/v1/favourites/1001
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDE3MTc3MzAsImV4cCI6MTczMzI1MzczMH0.ZKVzF7SmgOHh7sg7nZ5lNDLh_GSezrpVZi8h1B7lcBs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
 
 ###

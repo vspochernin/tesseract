@@ -1,5 +1,7 @@
 package ru.spbstu.tesseract.dto;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -28,6 +30,9 @@ class DiversificationShortDtoTest {
                                         List.of(
                                                 Price.builder()
                                                         .price(500)
+                                                        .setDatetime(ZonedDateTime.of(
+                                                                LocalDateTime.of(2023, 10, 10, 10, 10),
+                                                                ZoneId.of("Europe/Moscow")))
                                                         .build()))
                                 .build(), 2)));
         diversification.setId(1);
