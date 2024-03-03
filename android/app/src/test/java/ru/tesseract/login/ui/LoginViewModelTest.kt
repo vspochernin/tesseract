@@ -16,6 +16,7 @@ import ru.tesseract.api.ApiErrorType
 import ru.tesseract.api.ApiResponse
 import ru.tesseract.login.api.LoginApi
 import ru.tesseract.login.api.LoginResponse
+import ru.tesseract.settings.data.Settings
 import ru.tesseract.util.MainDispatcherRule
 
 class LoginViewModelTest {
@@ -26,7 +27,8 @@ class LoginViewModelTest {
     fun `LoginViewModel should not allow login with empty fields`() {
         val loginState = mockk<LoginState>(relaxed = true)
         val loginApi = mockk<LoginApi>()
-        val viewModel = LoginViewModel(loginState, loginApi)
+        val settings = mockk<Settings>(relaxed = true)
+        val viewModel = LoginViewModel(loginState, loginApi, settings)
         assertFalse(viewModel.isSignInEnabled)
         viewModel.login.value = "login"
         assertFalse(viewModel.isSignInEnabled)
@@ -39,7 +41,8 @@ class LoginViewModelTest {
         val loginState = mockk<LoginState>(relaxed = true)
         val loginApi = mockk<LoginApi>()
         coEvery { loginApi.login(any(), any()) } returns ApiResponse.Success(LoginResponse("abc"))
-        val viewModel = LoginViewModel(loginState, loginApi)
+        val settings = mockk<Settings>(relaxed = true)
+        val viewModel = LoginViewModel(loginState, loginApi, settings)
         viewModel.onLogin().join()
         coVerify { loginState.setToken("abc", LoginMethod.Tesseract) }
         confirmVerified(loginState)
@@ -50,7 +53,8 @@ class LoginViewModelTest {
         val loginState = mockk<LoginState>(relaxed = true)
         val loginApi = mockk<LoginApi>()
         coEvery { loginApi.loginWithGoogle(any()) } returns ApiResponse.Success(LoginResponse("abc"))
-        val viewModel = LoginViewModel(loginState, loginApi)
+        val settings = mockk<Settings>(relaxed = true)
+        val viewModel = LoginViewModel(loginState, loginApi, settings)
         viewModel.onGoogleLogin("google").join()
         coVerify { loginState.setToken("abc", LoginMethod.Google) }
         confirmVerified(loginState)
@@ -61,7 +65,8 @@ class LoginViewModelTest {
         val loginState = mockk<LoginState>(relaxed = true)
         val loginApi = mockk<LoginApi>()
         coEvery { loginApi.login(any(), any()) } returns ApiResponse.ApiError(ApiErrorType.BadCredentials)
-        val viewModel = LoginViewModel(loginState, loginApi)
+        val settings = mockk<Settings>(relaxed = true)
+        val viewModel = LoginViewModel(loginState, loginApi, settings)
         viewModel.onLogin().join()
         coVerify(exactly = 0) { loginState.setToken(any(), any()) }
         confirmVerified(loginState)
