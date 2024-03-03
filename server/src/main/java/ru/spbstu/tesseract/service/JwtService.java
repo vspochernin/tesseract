@@ -18,7 +18,7 @@ import ru.spbstu.tesseract.utils.Secrets;
 @Service
 public class JwtService {
 
-    public static final long EXPIRATION_PERIOD_MILLIS = 365L * 24 * 60 * 60 * 1000;
+    public static final long EXPIRATION_PERIOD_MILLIS = 30L * 24 * 60 * 60 * 1000;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

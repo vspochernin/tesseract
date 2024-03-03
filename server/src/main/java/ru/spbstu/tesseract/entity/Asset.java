@@ -67,9 +67,7 @@ public class Asset {
     Set<User> users;
 
     public long getCurrentAssetPrice() {
-        return prices.stream()
-                .max(Comparator.comparing(Price::getSetDatetime))
-                .map(Price::getPrice)
+        return getOldPrice(ZonedDateTime.now())
                 .orElseThrow();
     }
 
