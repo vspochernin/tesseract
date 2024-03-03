@@ -14,16 +14,19 @@ import ru.tesseract.api.ApiErrorType
 import ru.tesseract.api.onApiError
 import ru.tesseract.api.onSuccess
 import ru.tesseract.login.api.LoginApi
+import ru.tesseract.settings.data.Settings
 
 @Factory
 class LoginViewModel(
     private val loginState: LoginState,
     private val loginApi: LoginApi,
+    private val settings: Settings,
 ) : ViewModel() {
     val login = mutableStateOf("")
     val password = mutableStateOf("")
     var isLoggingIn by mutableStateOf(false)
     val isSignInEnabled by derivedStateOf { login.value.isNotEmpty() && password.value.isNotEmpty() && !isLoggingIn }
+    var baseUrl by mutableStateOf(settings.baseUrl.value)
 
     fun onLogin() = viewModelScope.launch {
         isLoggingIn = true
@@ -43,5 +46,9 @@ class LoginViewModel(
             loginState.setToken(response.token, LoginMethod.Google)
         }
         isLoggingIn = false
+    }
+
+    fun onChangeBaseUrl() = viewModelScope.launch {
+        settings.setBaseUrl(baseUrl)
     }
 }

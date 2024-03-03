@@ -72,4 +72,6 @@
     <string name="validation_incorrect_confirm_password">Password confirmation doesn\'t match</string>
     <string name="validation_invalid_email">Invalid email</string>
     <string name="asset_screen_operator">Operator</string>
+    <string name="login_screen_change_base_url_button">Change API URL</string>
+    <string name="login_screen_base_url">API URL</string>
 </resources>

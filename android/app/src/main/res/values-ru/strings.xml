@@ -73,4 +73,6 @@
     <string name="error_no_assets_with_such_risk">На данный момент отсутствуют активы с выбранным типом рискованности</string>
     <string name="error_too_little_amount">Запрашиваемая сумма диверсификации меньше минимальной стоимости актива выбранной рискованности</string>
     <string name="asset_screen_operator">Оператор ЦФА</string>
+    <string name="login_screen_change_base_url_button">Изменить API URL</string>
+    <string name="login_screen_base_url">API URL</string>
 </resources>
