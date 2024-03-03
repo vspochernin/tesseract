@@ -11,10 +11,15 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import org.koin.core.annotation.Single
 import ru.tesseract.KoverIgnore
 import ru.tesseract.LoginState
+import ru.tesseract.settings.data.Settings
 
 @Single
 @KoverIgnore
-class ApiClient(val httpClient: HttpClient, val loginState: LoginState) {
+class ApiClient(
+    val httpClient: HttpClient,
+    val loginState: LoginState,
+    val settings: Settings,
+) {
     val apiErrors = MutableSharedFlow<ApiErrorType>()
     val networkErrors = MutableSharedFlow<ApiResponse.NetworkError>()
 
@@ -23,7 +28,7 @@ class ApiClient(val httpClient: HttpClient, val loginState: LoginState) {
         block: HttpRequestBuilder.() -> Unit,
     ): ApiResponse<T> {
         return try {
-            val response = httpClient.request(url) {
+            val response = httpClient.request(settings.baseUrl.value + url) {
                 loginState.token.value?.let {
                     header("Authorization", "Bearer $it")
                 }

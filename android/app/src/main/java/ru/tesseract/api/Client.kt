@@ -6,6 +6,7 @@ import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -31,7 +32,6 @@ fun client(json: Json): HttpClient = HttpClient(Android) {
 
     install(DefaultRequest) {
         header("Content-Type", "application/json")
-        url("http://10.0.2.2:8080/api/v1/")
     }
 
     install(HttpTimeout) {

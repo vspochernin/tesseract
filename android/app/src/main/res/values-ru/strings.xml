@@ -44,11 +44,11 @@
     <string name="risk_tolerance">Уровень рискованности</string>
     <string name="risk_tolerance_high">Высокая</string>
     <string name="risk_tolerance_medium">Средняя</string>
-    <string name="risk_tolerance_low">Консервативная</string>
+    <string name="risk_tolerance_low">Низкая</string>
     <string name="risk_tolerance_combined">Комбинированная</string>
     <string name="risk_tolerance_high_risk">Высокорискованная</string>
     <string name="risk_tolerance_medium_risk">Среднерискованная</string>
-    <string name="risk_tolerance_low_risk">Консервативная</string>
+    <string name="risk_tolerance_low_risk">Низкорискованная</string>
     <string name="risk_tolerance_combined_risk">Комбинированная</string>
     <string name="new_diversification_screen_title">Новая диверсификация</string>
     <string name="new_diversification_screen_create">Создать диверсификацию</string>
@@ -73,4 +73,6 @@
     <string name="error_no_assets_with_such_risk">На данный момент отсутствуют активы с выбранным типом рискованности</string>
     <string name="error_too_little_amount">Запрашиваемая сумма диверсификации меньше минимальной стоимости актива выбранной рискованности</string>
     <string name="asset_screen_operator">Оператор ЦФА</string>
+    <string name="login_screen_change_base_url_button">Изменить API URL</string>
+    <string name="login_screen_base_url">API URL</string>
 </resources>
