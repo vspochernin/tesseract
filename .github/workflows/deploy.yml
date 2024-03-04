@@ -1,0 +1,35 @@
+name: Deploy
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: build-and-deploy
+                uses: D3rHase/ssh-command-action@v0.2.2
+                with:
+                    host: ${{secrets.SSH_HOST}}
+                    user: ${{secrets.SSH_USER}}
+                    private_key: ${{secrets.SSH_PRIVATE_KEY}}
+                    command: |
+                        echo '--- START WORK ON REMOTE SERVER ---';
+                        cd ${{ secrets.PROJECT_FOLDER }};
+                        echo '--- LIST OF FILES ---';
+                        ls -al;
+                        echo '--- GIT PULL ---';
+                        git pull;
+                        echo '--- DOCKER OPERATIONS ---';
+                        docker-compose down;
+                        docker ps;
+                        docker build -t tesseract-app -f Dockerfile .;
+                        docker-compose up;
+                        docker system prune --all --force;
+                        echo '--- LIST OF DOCKER CONTAINERS AFTER STARTING DOCKER CONTAINERS ---';
+                        docker ps;
