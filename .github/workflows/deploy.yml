@@ -27,7 +27,6 @@ jobs:
                       docker-compose down;
                       docker ps;
                       docker build -t tesseract-app -f Dockerfile .;
-                      docker-compose up;
-                      docker system prune --all --force;
+                      docker-compose up -d;
                       echo '--- LIST OF DOCKER CONTAINERS AFTER STARTING DOCKER CONTAINERS ---';
                       docker ps;
