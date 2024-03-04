@@ -1,10 +1,11 @@
 version: "3.9"
 services:
-  postgres:
-    image: postgres:14.7
-    environment:
-      POSTGRES_DB: "tesseract"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    ports:
-      - "5431:5432"
+    postgres:
+        image: postgres:14.7
+        container_name: 'tesseract-postgres-container'
+        environment:
+            POSTGRES_DB: "tesseract"
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "postgres"
+        ports:
+            - "5431:5432"
