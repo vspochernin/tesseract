@@ -11,7 +11,7 @@ jobs:
             POSTGRES_DB: "tesseract"
             POSTGRES_USER: "postgres"
             POSTGRES_PASSWORD: "postgres"
-            SPRING_DATASOURCE_URL: "jdbc:localhost://postgres:5432/tesseract"
+            SPRING_DATASOURCE_URL: "jdbc:postgresql://localhost:5431/tesseractt"
             SPRING_DATASOURCE_USERNAME: "postgres"
             SPRING_DATASOURCE_PASSWORD: "postgres"
         runs-on: ubuntu-latest
