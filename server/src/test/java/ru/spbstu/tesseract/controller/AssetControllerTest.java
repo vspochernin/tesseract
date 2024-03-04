@@ -43,6 +43,7 @@ public class AssetControllerTest {
     void setup() {
         Flyway flyway = Flyway.configure()
                 .dataSource(postgres.getJdbcUrl(), postgres.getUsername(), postgres.getPassword())
+                .locations("classpath:integration/migration")
                 .cleanDisabled(false)
                 .load();
 
