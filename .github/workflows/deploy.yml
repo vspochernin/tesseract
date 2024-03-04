@@ -2,31 +2,29 @@ name: Deploy
 on:
     push:
         branches: [ "master" ]
-    pull_request:
-        branches: [ "master" ]
 
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: Build and deploy
-              uses: D3rHase/ssh-command-action@v0.2.2
-              with:
-                  host: ${{secrets.REMOTE_HOST}}
-                  user: ${{secrets.REMOTE_USER}}
-                  port: ${{secrets.REMOTE_PORT}}
-                  private_key: ${{secrets.SSH_PRIVATE_KEY}}
-                  command: |
-                      echo '--- START WORK ON REMOTE SERVER ---';
-                      cd ${{ secrets.REMOTE_TARGET }};
-                      echo '--- LIST OF FILES ---';
-                      ls -la;
-                      echo '--- GIT PULL ---';
-                      git pull;
-                      echo '--- DOCKER OPERATIONS ---';
-                      docker-compose down;
-                      docker ps;
-                      docker build -t tesseract-app -f Dockerfile .;
-                      docker-compose up -d;
-                      echo '--- LIST OF DOCKER CONTAINERS AFTER STARTING DOCKER CONTAINERS ---';
-                      docker ps;
+            -   name: Build and deploy
+                uses: D3rHase/ssh-command-action@v0.2.2
+                with:
+                    host: ${{secrets.REMOTE_HOST}}
+                    user: ${{secrets.REMOTE_USER}}
+                    port: ${{secrets.REMOTE_PORT}}
+                    private_key: ${{secrets.SSH_PRIVATE_KEY}}
+                    command: |
+                        echo '--- START WORK ON REMOTE SERVER ---';
+                        cd ${{ secrets.REMOTE_TARGET }};
+                        echo '--- LIST OF FILES ---';
+                        ls -la;
+                        echo '--- GIT PULL ---';
+                        git pull;
+                        echo '--- DOCKER OPERATIONS ---';
+                        docker-compose down;
+                        docker ps;
+                        docker build -t tesseract-app -f Dockerfile .;
+                        docker-compose up -d;
+                        echo '--- LIST OF DOCKER CONTAINERS AFTER STARTING DOCKER CONTAINERS ---';
+                        docker ps;
