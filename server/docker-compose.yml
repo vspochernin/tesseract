@@ -1,0 +1,21 @@
+services:
+    app:
+        image: 'tesseract-app'
+        container_name: 'tesseract-app-container'
+        ports:
+            - 8080:8080
+        depends_on:
+            - postgres
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/tesseract
+            - SPRING_DATASOURCE_USERNAME=postgres
+            - SPRING_DATASOURCE_PASSWORD=postgres
+    postgres:
+        image: postgres:14.7
+        container_name: 'tesseract-postgres-container'
+        environment:
+            POSTGRES_DB: "tesseract"
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "postgres"
+        ports:
+            - "5431:5432"

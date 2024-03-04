@@ -22,7 +22,7 @@ jobs:
                 uses: actions/setup-java@v4
                 with:
                     distribution: 'temurin'
-                    java-version: '18'
+                    java-version: '17'
 
             -   name: Setup Gradle
                 uses: gradle/actions/setup-gradle@v3
@@ -56,7 +56,7 @@ jobs:
             -   name: Prepare migration files
                 run: |
                     rm -rf server/src/main/resources/db/migration/*
-                    cp -r server/src/test/resources/db/migration/* server/src/main/resources/db/migration/
+                    cp -r server/src/test/resources/integration/migration/* server/src/main/resources/db/migration/
 
             -   name: Run postgres
                 uses: isbang/compose-action@v1.5.1
