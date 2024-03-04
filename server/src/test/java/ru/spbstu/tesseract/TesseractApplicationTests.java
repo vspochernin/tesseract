@@ -13,7 +13,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 class TesseractApplicationTests {
 
     @Container
-    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14.7") //qwe
+    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14.7")
             .withDatabaseName("tesseract")
             .withUsername("postgres")
             .withPassword("postgres");
