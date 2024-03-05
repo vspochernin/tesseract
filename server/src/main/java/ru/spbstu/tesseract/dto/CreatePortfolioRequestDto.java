@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateDiversificationRequestDto {
+public class CreatePortfolioRequestDto {
 
     @NotNull
     private Long amount;

@@ -407,29 +407,29 @@ INSERT INTO users_assets(user_id, asset_id)
 VALUES (2, 2);
 
 -- Диверсификация: комбинированная.
-INSERT INTO diversifications(user_id, create_datetime, risk_type_id, amount)
+INSERT INTO portfolios(user_id, create_datetime, risk_type_id, amount)
 VALUES (1, '2023-12-27 00:00:00+03', 3, 5000000);
 
 -- Диверсификация: низкорискованная.
-INSERT INTO diversifications(user_id, create_datetime, risk_type_id, amount)
+INSERT INTO portfolios(user_id, create_datetime, risk_type_id, amount)
 VALUES (2, '2023-12-28 00:00:00+03', 2, 15000000);
 
 -- Первая: три актива 1, десять активов 3, один актив 4.
-INSERT INTO diversifications_assets(diversification_id, asset_id, count)
+INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (1, 1, 3);
 
-INSERT INTO diversifications_assets(diversification_id, asset_id, count)
+INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (1, 3, 10);
 
-INSERT INTO diversifications_assets(diversification_id, asset_id, count)
+INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (1, 4, 1);
 
 -- Вторая: один актив 7, два актива 1, три актива 4.
-INSERT INTO diversifications_assets(diversification_id, asset_id, count)
+INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (2, 7, 1);
 
-INSERT INTO diversifications_assets(diversification_id, asset_id, count)
+INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (2, 1, 2);
 
-INSERT INTO diversifications_assets(diversification_id, asset_id, count)
+INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (2, 4, 3);

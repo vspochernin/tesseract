@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.ui
+package ru.tesseract.portfolios.ui
 
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -9,17 +9,17 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
 import ru.tesseract.api.onSuccess
-import ru.tesseract.diversifications.api.DiversificationsApi
-import ru.tesseract.diversifications.domain.RiskLevel
+import ru.tesseract.portfolios.api.PortfoliosApi
+import ru.tesseract.portfolios.domain.RiskLevel
 import ru.tesseract.ui.Validation
 
 @Factory
-class NewDiversificationViewModel(
-    private val diversificationsApi: DiversificationsApi,
+class NewPortfolioViewModel(
+    private val portfoliosApi: PortfoliosApi,
 ) : ViewModel() {
     var amountField by mutableStateOf("")
     var riskLevel by mutableStateOf(RiskLevel.Combined)
-    private val isAmountValid by derivedStateOf { Validation.isDiversificationAmountValid(amountField) }
+    private val isAmountValid by derivedStateOf { Validation.isPortfolioAmountValid(amountField) }
     var allowError by mutableStateOf(false)
     var isLoading by mutableStateOf(false)
     val showAmountError by derivedStateOf { allowError && !isAmountValid }
@@ -31,7 +31,7 @@ class NewDiversificationViewModel(
         val amount = amountField.toLongOrNull() ?: return@launch
         val riskLevel = riskLevel
         isLoading = true
-        diversificationsApi.create(amount * 100, riskLevel).onSuccess {
+        portfoliosApi.create(amount * 100, riskLevel).onSuccess {
             dismiss()
         }
         isLoading = false

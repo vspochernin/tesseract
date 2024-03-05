@@ -5,12 +5,12 @@ import java.util.NoSuchElementException;
 import lombok.Builder;
 import lombok.Data;
 import ru.spbstu.tesseract.entity.Asset;
-import ru.spbstu.tesseract.entity.Diversification;
-import ru.spbstu.tesseract.entity.DiversificationAsset;
+import ru.spbstu.tesseract.entity.Portfolio;
+import ru.spbstu.tesseract.entity.PortfolioAsset;
 
 @Data
 @Builder
-public class AssetDiversificationDto {
+public class AssetPortfolioDto {
 
     private int assetId;
     private String assetTitle;
@@ -21,20 +21,20 @@ public class AssetDiversificationDto {
     private long priceSumDiff;
     private long currentPrice;
 
-    public static AssetDiversificationDto fromDiversificationAsset(DiversificationAsset diversificationAsset) {
-        Diversification diversification = diversificationAsset.getDiversification();
-        Asset asset = diversificationAsset.getAsset();
+    public static AssetPortfolioDto fromPortfolioAsset(PortfolioAsset portfolioAsset) {
+        Portfolio portfolio = portfolioAsset.getPortfolio();
+        Asset asset = portfolioAsset.getAsset();
 
-        long oldAssetPrice = asset.getOldPrice(diversification.getCreateDatetime())
+        long oldAssetPrice = asset.getOldPrice(portfolio.getCreateDatetime())
                 .orElseThrow(() -> new NoSuchElementException("Can't find price"));
         long currentAssetPrice = asset.getCurrentAssetPrice();
 
-        long assetCount = diversificationAsset.getCount();
+        long assetCount = portfolioAsset.getCount();
 
         long currentPriceSum = currentAssetPrice * assetCount;
         long oldPriceSum = oldAssetPrice * assetCount;
 
-        return AssetDiversificationDto.builder()
+        return AssetPortfolioDto.builder()
 
                 .assetId(asset.getId())
                 .assetTitle(asset.getTitle())

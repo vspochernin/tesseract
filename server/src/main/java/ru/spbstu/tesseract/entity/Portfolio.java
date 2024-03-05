@@ -29,12 +29,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "diversifications")
-public class Diversification {
+@Table(name = "portfolios")
+public class Portfolio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "diversifications_id_seq")
+    @SequenceGenerator(name = "portfolios_id_seq")
     private int id;
 
     @ManyToOne
@@ -49,32 +49,32 @@ public class Diversification {
 
     private long amount;
 
-    @OneToMany(mappedBy = "diversification", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
-    private Set<DiversificationAsset> diversificationAssetSet;
+    private Set<PortfolioAsset> portfolioAssetSet;
 
-    public Diversification(
+    public Portfolio(
             User user,
             ZonedDateTime createDatetime,
             RiskType riskType,
             long amount,
-            List<DiversificationAsset> diversificationsAssets)
+            List<PortfolioAsset> portfoliosAssets)
     {
         this.user = user;
         this.createDatetime = createDatetime;
         this.riskType = riskType;
         this.amount = amount;
-        for (DiversificationAsset diversificationAsset : diversificationsAssets) {
-            diversificationAsset.setDiversification(this);
+        for (PortfolioAsset portfolioAsset : portfoliosAssets) {
+            portfolioAsset.setPortfolio(this);
         }
-        this.diversificationAssetSet = new HashSet<>(diversificationsAssets);
+        this.portfolioAssetSet = new HashSet<>(portfoliosAssets);
     }
 
     public long getCurrentAmount() {
-        return diversificationAssetSet.stream()
-                .map(diversificationAsset -> {
-                    long count = diversificationAsset.getCount();
-                    long currentAssetPrice = diversificationAsset.getAsset().getCurrentAssetPrice();
+        return portfolioAssetSet.stream()
+                .map(portfolioAsset -> {
+                    long count = portfolioAsset.getCount();
+                    long currentAssetPrice = portfolioAsset.getAsset().getCurrentAssetPrice();
 
                     return currentAssetPrice * count;
                 })

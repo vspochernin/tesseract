@@ -4,29 +4,29 @@ import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
-import ru.spbstu.tesseract.entity.Diversification;
+import ru.spbstu.tesseract.entity.Portfolio;
 
 @Data
 @Builder
-public class DiversificationLongDto {
+public class PortfolioLongDto {
 
     private String createDateTime;
     private long currentAmount;
     private int riskTypeId;
-    private List<AssetDiversificationDto> assetList;
+    private List<AssetPortfolioDto> assetList;
     private long amountDiff;
 
-    public static DiversificationLongDto fromDiversification(Diversification diversification) {
-        List<AssetDiversificationDto> assets = diversification.getDiversificationAssetSet().stream()
-                .map(AssetDiversificationDto::fromDiversificationAsset)
+    public static PortfolioLongDto fromPortfolio(Portfolio portfolio) {
+        List<AssetPortfolioDto> assets = portfolio.getPortfolioAssetSet().stream()
+                .map(AssetPortfolioDto::fromPortfolioAsset)
                 .toList();
 
-        return DiversificationLongDto.builder()
-                .createDateTime(diversification.getCreateDatetime().toString())
-                .currentAmount(diversification.getCurrentAmount())
-                .riskTypeId(diversification.getRiskType().ordinal())
+        return PortfolioLongDto.builder()
+                .createDateTime(portfolio.getCreateDatetime().toString())
+                .currentAmount(portfolio.getCurrentAmount())
+                .riskTypeId(portfolio.getRiskType().ordinal())
                 .assetList(assets)
-                .amountDiff(diversification.getCurrentAmount() - diversification.getAmount())
+                .amountDiff(portfolio.getCurrentAmount() - portfolio.getAmount())
                 .build();
     }
 }

@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.ui
+package ru.tesseract.portfolios.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,12 +34,12 @@ import kotlinx.datetime.toJavaInstant
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ru.tesseract.R
-import ru.tesseract.assets.ui.DiversificationAssetSummary
+import ru.tesseract.assets.ui.PortfolioAssetSummary
 import ru.tesseract.assets.ui.formatPrice
 import ru.tesseract.destinations.AssetScreenDestination
-import ru.tesseract.diversifications.domain.DiversificationAsset
-import ru.tesseract.diversifications.domain.RiskLevel
-import ru.tesseract.diversifications.domain.riskLevel
+import ru.tesseract.portfolios.domain.PortfolioAsset
+import ru.tesseract.portfolios.domain.RiskLevel
+import ru.tesseract.portfolios.domain.riskLevel
 import ru.tesseract.ui.DefaultDateTimeFormatter
 import ru.tesseract.ui.asAnnotatedPriceDiff
 
@@ -47,17 +47,17 @@ import ru.tesseract.ui.asAnnotatedPriceDiff
 @RootNavGraph
 @Destination
 @Composable
-fun DiversificationScreen(
-    diversificationId: Int,
+fun PortfolioScreen(
+    portfolioId: Int,
     navigator: DestinationsNavigator,
-    viewModel: DiversificationViewModel = koinViewModel { parametersOf(diversificationId) },
+    viewModel: PortfolioViewModel = koinViewModel { parametersOf(portfolioId) },
 ) {
-    val diversification = viewModel.diversification()
+    val portfolio = viewModel.portfolio()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.diversification_screen_title)) },
+                title = { Text(text = stringResource(id = R.string.portfolio_screen_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
@@ -67,7 +67,7 @@ fun DiversificationScreen(
             )
         },
     ) { padding ->
-        if (diversification != null) {
+        if (portfolio != null) {
             Column(
                 modifier =
                 Modifier
@@ -76,16 +76,16 @@ fun DiversificationScreen(
                     .padding(padding)
                     .padding(vertical = 16.dp),
             ) {
-                Date(diversification.at)
+                Date(portfolio.at)
                 HorizontalDivider(modifier = Modifier.padding(16.dp))
-                RiskLevel(diversification.riskLevel)
+                RiskLevel(portfolio.riskLevel)
                 HorizontalDivider(modifier = Modifier.padding(16.dp))
-                DiversificationAmount(
-                    formatPrice(diversification.currentAmount),
-                    diversification.amountDiff,
+                PortfolioAmount(
+                    formatPrice(portfolio.currentAmount),
+                    portfolio.amountDiff,
                 )
                 HorizontalDivider(modifier = Modifier.padding(16.dp))
-                DiversificationAssets(diversification.assets, navigator)
+                PortfolioAssets(portfolio.assets, navigator)
             }
         } else {
             Box(
@@ -104,7 +104,7 @@ fun DiversificationScreen(
 private fun Date(date: Instant) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
-            text = stringResource(id = R.string.diversification_date),
+            text = stringResource(id = R.string.portfolio_date),
             style = MaterialTheme.typography.labelLarge,
         )
         Text(
@@ -115,29 +115,29 @@ private fun Date(date: Instant) {
 }
 
 @Composable
-private fun DiversificationAssets(
-    assets: List<DiversificationAsset>,
+private fun PortfolioAssets(
+    assets: List<PortfolioAsset>,
     navigator: DestinationsNavigator,
 ) {
     Text(
-        text = stringResource(id = R.string.diversification_assets),
+        text = stringResource(id = R.string.portfolio_assets),
         style = MaterialTheme.typography.labelLarge,
         modifier = Modifier.padding(horizontal = 16.dp),
     )
     assets.forEach { asset ->
-        DiversificationAssetSummary(
+        PortfolioAssetSummary(
             asset = asset,
             onClick = { navigator.navigate(AssetScreenDestination(asset.id)) },
-            modifier = Modifier.fillMaxWidth().testTag("DiversificationScreen.Asset"),
+            modifier = Modifier.fillMaxWidth().testTag("PortfolioScreen.Asset"),
         )
     }
 }
 
 @Composable
-private fun DiversificationAmount(value: String, diff: Long) {
+private fun PortfolioAmount(value: String, diff: Long) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
-            text = stringResource(id = R.string.diversification_sum),
+            text = stringResource(id = R.string.portfolio_sum),
             style = MaterialTheme.typography.labelLarge,
         )
         Text(text = value, style = MaterialTheme.typography.displayMedium)

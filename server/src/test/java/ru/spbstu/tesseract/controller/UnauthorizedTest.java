@@ -58,10 +58,10 @@ public class UnauthorizedTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "/api/v1/assets",
-            "/api/v1/diversifications",
+            "/api/v1/portfolios",
             "/api/v1/favourites",
             "/api/v1/assets/",
-            "/api/v1/diversifications/"})
+            "/api/v1/portfolios/"})
     @DisplayName("Некорректные параметры аутентификации GET запроса")
     public void givenBadCredentials_whenHandleGetRequest_thenReturnsExpectedError(String path) throws Exception {
         mockMvc.perform(get(path)
@@ -72,7 +72,7 @@ public class UnauthorizedTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "/api/v1/favourites/",
-            "/api/v1/diversifications"})
+            "/api/v1/portfolios"})
     @DisplayName("Некорректные параметры аутентификации POST запроса")
     public void givenBadCredentials_whenHandlePostRequest_thenReturnsExpectedError(String path) throws Exception {
         mockMvc.perform(post(path)

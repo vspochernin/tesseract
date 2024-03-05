@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.ui
+package ru.tesseract.portfolios.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -29,28 +29,28 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
 import ru.tesseract.R
-import ru.tesseract.destinations.DiversificationScreenDestination
-import ru.tesseract.destinations.NewDiversificationScreenDestination
+import ru.tesseract.destinations.PortfolioScreenDestination
+import ru.tesseract.destinations.NewPortfolioScreenDestination
 import ru.tesseract.ui.loadingStates
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
 @Destination
 @Composable
-fun DiversificationsScreen(
+fun PortfoliosScreen(
     navigator: DestinationsNavigator,
-    viewModel: DiversificationsViewModel = koinViewModel(),
+    viewModel: PortfoliosViewModel = koinViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.navigation_diversifications)) },
+                title = { Text(text = stringResource(id = R.string.navigation_portfolios)) },
                 scrollBehavior = scrollBehavior,
             )
         },
     ) { padding ->
-        val diversifications = viewModel.diversifications.collectAsLazyPagingItems()
+        val portfolios = viewModel.portfolios.collectAsLazyPagingItems()
         LazyColumn(
             contentPadding = padding,
             modifier = Modifier
@@ -60,32 +60,32 @@ fun DiversificationsScreen(
             item {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     TextButton(
-                        onClick = { navigator.navigate(NewDiversificationScreenDestination) },
+                        onClick = { navigator.navigate(NewPortfolioScreenDestination) },
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp)
-                            .testTag("DiversificationsScreen.CreateButton"),
+                            .testTag("PortfoliosScreen.CreateButton"),
                     ) {
                         Icon(Icons.Default.Add, contentDescription = null)
                         Spacer(modifier = Modifier.size(8.dp))
-                        Text(text = stringResource(id = R.string.diversifications_screen_create))
+                        Text(text = stringResource(id = R.string.portfolios_screen_create))
                     }
                 }
             }
-            items(diversifications.itemCount, key = { it }) { i ->
-                val diversification = diversifications[i]
-                if (diversification != null) {
-                    DiversificationSummary(
-                        diversification = diversification,
+            items(portfolios.itemCount, key = { it }) { i ->
+                val portfolio = portfolios[i]
+                if (portfolio != null) {
+                    PortfolioSummary(
+                        portfolio = portfolio,
                         onClick = {
-                            val destination = DiversificationScreenDestination(diversification.id)
+                            val destination = PortfolioScreenDestination(portfolio.id)
                             navigator.navigate(destination)
                         },
-                        modifier = Modifier.fillMaxWidth().testTag("DiversificationsScreen.Diversification"),
+                        modifier = Modifier.fillMaxWidth().testTag("PortfoliosScreen.Portfolio"),
                     )
                 }
             }
-            loadingStates(diversifications)
+            loadingStates(portfolios)
         }
     }
 }

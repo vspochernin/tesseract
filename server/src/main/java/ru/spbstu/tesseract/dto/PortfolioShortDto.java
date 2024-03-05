@@ -2,25 +2,25 @@ package ru.spbstu.tesseract.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import ru.spbstu.tesseract.entity.Diversification;
+import ru.spbstu.tesseract.entity.Portfolio;
 
 @Data
 @Builder
-public class DiversificationShortDto {
+public class PortfolioShortDto {
 
-    private int diversificationId;
+    private int portfolioId;
     private String createDatetime;
     private int riskTypeId;
     private long currentAmount;
     private long amountDiff;
 
-    public static DiversificationShortDto fromDiversification(Diversification diversification) {
-        return DiversificationShortDto.builder()
-                .diversificationId(diversification.getId())
-                .createDatetime(diversification.getCreateDatetime().toString())
-                .riskTypeId(diversification.getRiskType().ordinal())
-                .currentAmount(diversification.getCurrentAmount())
-                .amountDiff(diversification.getCurrentAmount() - diversification.getAmount())
+    public static PortfolioShortDto fromPortfolio(Portfolio portfolio) {
+        return PortfolioShortDto.builder()
+                .portfolioId(portfolio.getId())
+                .createDatetime(portfolio.getCreateDatetime().toString())
+                .riskTypeId(portfolio.getRiskType().ordinal())
+                .currentAmount(portfolio.getCurrentAmount())
+                .amountDiff(portfolio.getCurrentAmount() - portfolio.getAmount())
                 .build();
     }
 }

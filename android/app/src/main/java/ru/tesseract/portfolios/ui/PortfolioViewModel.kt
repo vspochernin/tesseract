@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.ui
+package ru.tesseract.portfolios.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -8,23 +8,23 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import org.koin.core.annotation.Factory
 import ru.tesseract.api.onSuccess
-import ru.tesseract.diversifications.api.DiversificationsApi
-import ru.tesseract.diversifications.domain.DiversificationWithAssets
+import ru.tesseract.portfolios.api.PortfoliosApi
+import ru.tesseract.portfolios.domain.PortfolioWithAssets
 
 @Factory
-class DiversificationViewModel(
+class PortfolioViewModel(
     private val id: Int,
-    private val diversificationsApi: DiversificationsApi,
+    private val portfoliosApi: PortfoliosApi,
 ) : ViewModel() {
-    private var diversification by mutableStateOf<DiversificationWithAssets?>(null)
+    private var portfolio by mutableStateOf<PortfolioWithAssets?>(null)
 
     @Composable
-    fun diversification(): DiversificationWithAssets? {
+    fun portfolio(): PortfolioWithAssets? {
         LaunchedEffect(Unit) {
-            diversificationsApi.get(id).onSuccess {
-                diversification = it
+            portfoliosApi.get(id).onSuccess {
+                portfolio = it
             }
         }
-        return diversification
+        return portfolio
     }
 }

@@ -19,18 +19,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "diversifications_assets")
-public class DiversificationAsset {
+@Table(name = "portfolios_assets")
+public class PortfolioAsset {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "diversifications_assets_id_seq")
+    @SequenceGenerator(name = "portfolios_assets_id_seq")
     private int id;
 
     @ManyToOne()
-    @JoinColumn(name = "diversification_id")
+    @JoinColumn(name = "portfolio_id")
     @JsonIgnore
-    private Diversification diversification;
+    private Portfolio portfolio;
 
     @ManyToOne()
     @JoinColumn(name = "asset_id")
@@ -38,7 +38,7 @@ public class DiversificationAsset {
 
     private long count;
 
-    public DiversificationAsset(Asset asset, long count) {
+    public PortfolioAsset(Asset asset, long count) {
         this.asset = asset;
         this.count = count;
     }

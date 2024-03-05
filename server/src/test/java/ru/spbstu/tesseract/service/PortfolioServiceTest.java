@@ -15,10 +15,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ru.spbstu.tesseract.dto.CreateDiversificationRequestDto;
+import ru.spbstu.tesseract.dto.CreatePortfolioRequestDto;
 import ru.spbstu.tesseract.entity.Asset;
 import ru.spbstu.tesseract.entity.Company;
-import ru.spbstu.tesseract.entity.Diversification;
+import ru.spbstu.tesseract.entity.Portfolio;
 import ru.spbstu.tesseract.entity.Operator;
 import ru.spbstu.tesseract.entity.Price;
 import ru.spbstu.tesseract.entity.RiskType;
@@ -26,7 +26,7 @@ import ru.spbstu.tesseract.entity.User;
 import ru.spbstu.tesseract.exception.TesseractErrorType;
 import ru.spbstu.tesseract.exception.TesseractException;
 import ru.spbstu.tesseract.repository.AssetRepository;
-import ru.spbstu.tesseract.repository.DiversificationRepository;
+import ru.spbstu.tesseract.repository.PortfolioRepository;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.any;
@@ -36,16 +36,16 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-class DiversificationServiceTest {
+class PortfolioServiceTest {
 
     @Mock
-    private DiversificationRepository diversificationRepository;
+    private PortfolioRepository portfolioRepository;
 
     @Mock
     private AssetRepository assetRepository;
 
     @InjectMocks
-    private DiversificationService diversificationService;
+    private PortfolioService portfolioService;
 
     @BeforeEach
     void setUp() {
@@ -57,57 +57,57 @@ class DiversificationServiceTest {
     }
 
     @Test
-    void givenTooLittleAmount_whenCreateDiversification_thenTooLittleAmountThrown() {
-        CreateDiversificationRequestDto request = reqeustWithAmount(99L);
+    void givenTooLittleAmount_whenCreatePortfolio_thenTooLittleAmountThrown() {
+        CreatePortfolioRequestDto request = reqeustWithAmount(99L);
         List<Asset> assets = getAssetsWithMinPrice100();
         when(assetRepository.findAll()).thenReturn(assets);
 
-        assertThatThrownBy(() -> diversificationService.createDiversification(request))
+        assertThatThrownBy(() -> portfolioService.createPortfolio(request))
                 .isInstanceOf(TesseractException.class)
                 .extracting("errorType")
                 .isEqualTo(TesseractErrorType.TOO_LITTLE_AMOUNT);
     }
 
     @Test
-    void givenMinPossibleAmount_whenCreateDiversification_thenDiversificationIsCreated() {
-        CreateDiversificationRequestDto request = reqeustWithAmount(100L);
+    void givenMinPossibleAmount_whenCreatePortfolio_thenPortfolioIsCreated() {
+        CreatePortfolioRequestDto request = reqeustWithAmount(100L);
         List<Asset> assets = getAssetsWithMinPrice100();
         when(assetRepository.findAll()).thenReturn(assets);
 
-        diversificationService.createDiversification(request);
+        portfolioService.createPortfolio(request);
 
-        verify(diversificationRepository).save(any(Diversification.class));
+        verify(portfolioRepository).save(any(Portfolio.class));
     }
 
     @Test
-    void givenCorrectAmount_whenCreateDiversification_thenDiversificationIsCreated() {
-        CreateDiversificationRequestDto request = reqeustWithAmount(500_000L);
+    void givenCorrectAmount_whenCreatePortfolio_thenPortfolioIsCreated() {
+        CreatePortfolioRequestDto request = reqeustWithAmount(500_000L);
         List<Asset> assets = getAssetsWithMinPrice100();
         when(assetRepository.findAll()).thenReturn(assets);
 
-        diversificationService.createDiversification(request);
+        portfolioService.createPortfolio(request);
 
-        verify(diversificationRepository).save(any(Diversification.class));
+        verify(portfolioRepository).save(any(Portfolio.class));
     }
 
     @Test
-    void givenMaxPossibleAmount_whenCreateDiversification_thenDiversificationIsCreated() {
-        CreateDiversificationRequestDto request = reqeustWithAmount(1_000_000_000L);
+    void givenMaxPossibleAmount_whenCreatePortfolio_thenPortfolioIsCreated() {
+        CreatePortfolioRequestDto request = reqeustWithAmount(1_000_000_000L);
         List<Asset> assets = getAssetsWithMinPrice100();
         when(assetRepository.findAll()).thenReturn(assets);
 
-        diversificationService.createDiversification(request);
+        portfolioService.createPortfolio(request);
 
-        verify(diversificationRepository).save(any(Diversification.class));
+        verify(portfolioRepository).save(any(Portfolio.class));
     }
 
     @Test
-    void givenTooBigAmount_whenCreateDiversification_thenTooBigAmountThrown() {
-        CreateDiversificationRequestDto request = reqeustWithAmount(1_000_000_001L);
+    void givenTooBigAmount_whenCreatePortfolio_thenTooBigAmountThrown() {
+        CreatePortfolioRequestDto request = reqeustWithAmount(1_000_000_001L);
         List<Asset> assets = getAssetsWithMinPrice100();
         when(assetRepository.findAll()).thenReturn(assets);
 
-        assertThatThrownBy(() -> diversificationService.createDiversification(request))
+        assertThatThrownBy(() -> portfolioService.createPortfolio(request))
                 .isInstanceOf(TesseractException.class)
                 .extracting("errorType")
                 .isEqualTo(TesseractErrorType.TOO_BIG_AMOUNT);
@@ -172,8 +172,8 @@ class DiversificationServiceTest {
         return List.of(asset1, asset2);
     }
 
-    private static CreateDiversificationRequestDto reqeustWithAmount(long amount) {
-        CreateDiversificationRequestDto request = new CreateDiversificationRequestDto();
+    private static CreatePortfolioRequestDto reqeustWithAmount(long amount) {
+        CreatePortfolioRequestDto request = new CreatePortfolioRequestDto();
         request.setAmount(amount);
         request.setRiskTypeId(RiskType.COMBINED.ordinal());
         return request;

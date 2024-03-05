@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import ru.tesseract.diversifications.domain.RiskLevel
+import ru.tesseract.portfolios.domain.RiskLevel
 
 @Serializable(with = DetailedAssetInfoSerializer::class)
 data class DetailedAssetInfo(

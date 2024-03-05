@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.ui
+package ru.tesseract.portfolios.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -40,22 +40,22 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
 import ru.tesseract.R
-import ru.tesseract.diversifications.domain.RiskLevel
+import ru.tesseract.portfolios.domain.RiskLevel
 import ru.tesseract.ui.Validation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RootNavGraph
 @Destination
 @Composable
-fun NewDiversificationScreen(
+fun NewPortfolioScreen(
     navigator: DestinationsNavigator,
-    viewModel: NewDiversificationViewModel = koinViewModel(),
+    viewModel: NewPortfolioViewModel = koinViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.new_diversification_screen_title)) },
+                title = { Text(text = stringResource(id = R.string.new_portfolio_screen_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
@@ -82,12 +82,12 @@ fun NewDiversificationScreen(
                 singleLine = true,
                 isError = viewModel.showAmountError,
                 suffix = { Text(text = "₽") },
-                label = { Text(text = stringResource(id = R.string.diversification_sum)) },
-                modifier = Modifier.fillMaxWidth().testTag("NewDiversificationScreen.AmountField"),
+                label = { Text(text = stringResource(id = R.string.portfolio_sum)) },
+                modifier = Modifier.fillMaxWidth().testTag("NewPortfolioScreen.AmountField"),
             )
             AnimatedVisibility(visible = viewModel.showAmountError) {
                 Text(
-                    text = stringResource(id = R.string.validation_invalid_amount, Validation.MaxDiversificationAmountRubles),
+                    text = stringResource(id = R.string.validation_invalid_amount, Validation.MaxPortfolioAmountRubles),
                     color = MaterialTheme.colorScheme.error,
                 )
             }
@@ -127,7 +127,7 @@ fun NewDiversificationScreen(
                 modifier = Modifier.align(Alignment.End)
                     .let {
                         if (viewModel.isButtonEnabled) {
-                            it.testTag("NewDiversificationScreen.CreateButton")
+                            it.testTag("NewPortfolioScreen.CreateButton")
                         } else {
                             it
                         }
@@ -140,7 +140,7 @@ fun NewDiversificationScreen(
                         color = MaterialTheme.colorScheme.onBackground,
                     )
                 } else {
-                    Text(stringResource(id = R.string.new_diversification_screen_create))
+                    Text(stringResource(id = R.string.new_portfolio_screen_create))
                 }
             }
         }

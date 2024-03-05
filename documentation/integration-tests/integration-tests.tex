@@ -289,16 +289,16 @@
     \item \texttt{givenIncorrectNewPassword\_whenChangePassword\_thenReturnsExpectedError} - изменение пароля, когда пароль некорректный.
 \end{enumerate}
 
-\subsubsection{DiversificationControllerTest.java}
+\subsubsection{PortfolioControllerTest.java}
 
 Данный класс тестирует контроллер диверсификаций.
 
 \begin{enumerate}
-    \item \texttt{givenCorrectRequest\_whenGetDiversifications\_thenReturnsDiversificationsWithExpectedIds} - получить первые 10 своих диверсификаций.
-    \item \texttt{givenDiversificationId2\_whenGetDiversification\_thenReturnsExpectedDiversification} - получить свою существующую диверсификацию.
-    \item \texttt{givenNonExistentOrNonYourDiversification\_whenGetDiversification\_thenReturnsExpectedError} - получить не свою или несуществующую диверсификацию.
-    \item \texttt{givenValidCreateDiversificationRequest\_whenCreateDiversification\_thenSuccess} - создание диверсификации с корректными данными.
-    \item \texttt{givenInvalidCreateDiversificationRequest\_whenCreateDiversification\_thenReturnsExpectedError} - создание диверсификации с некорректными данными.
+    \item \texttt{givenCorrectRequest\_whenGetPortfolios\_thenReturnsPortfoliosWithExpectedIds} - получить первые 10 своих диверсификаций.
+    \item \texttt{givenPortfolioId2\_whenGetPortfolio\_thenReturnsExpectedPortfolio} - получить свою существующую диверсификацию.
+    \item \texttt{givenNonExistentOrNonYourPortfolio\_whenGetPortfolio\_thenReturnsExpectedError} - получить не свою или несуществующую диверсификацию.
+    \item \texttt{givenValidCreatePortfolioRequest\_whenCreatePortfolio\_thenSuccess} - создание диверсификации с корректными данными.
+    \item \texttt{givenInvalidCreatePortfolioRequest\_whenCreatePortfolio\_thenReturnsExpectedError} - создание диверсификации с некорректными данными.
 \end{enumerate}
 
 \subsubsection{FavouritesControllerTest.java}

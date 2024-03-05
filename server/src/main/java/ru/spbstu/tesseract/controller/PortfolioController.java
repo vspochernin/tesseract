@@ -13,45 +13,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.spbstu.tesseract.dto.CreateDiversificationRequestDto;
-import ru.spbstu.tesseract.dto.DiversificationLongDto;
-import ru.spbstu.tesseract.dto.DiversificationShortDto;
-import ru.spbstu.tesseract.service.DiversificationService;
+import ru.spbstu.tesseract.dto.CreatePortfolioRequestDto;
+import ru.spbstu.tesseract.dto.PortfolioLongDto;
+import ru.spbstu.tesseract.dto.PortfolioShortDto;
+import ru.spbstu.tesseract.service.PortfolioService;
 
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-public class DiversificationController {
+public class PortfolioController {
 
-    private final DiversificationService diversificationService;
+    private final PortfolioService portfolioService;
 
-    @GetMapping("/diversifications")
-    public ResponseEntity<List<DiversificationShortDto>> diversifications(
+    @GetMapping("/portfolios")
+    public ResponseEntity<List<PortfolioShortDto>> portfolios(
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize)
     {
-        List<DiversificationShortDto> diversifications =
-                diversificationService.getDiversifications(pageNumber, pageSize);
+        List<PortfolioShortDto> portfolios =
+                portfolioService.getPortfolios(pageNumber, pageSize);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(diversifications);
+                .body(portfolios);
     }
 
-    @GetMapping("/diversifications/{id}")
-    public ResponseEntity<DiversificationLongDto> diversification(@PathVariable String id) {
-        int diversificationId = Integer.parseInt(id);
+    @GetMapping("/portfolios/{id}")
+    public ResponseEntity<PortfolioLongDto> portfolio(@PathVariable String id) {
+        int portfolioId = Integer.parseInt(id);
 
-        DiversificationLongDto diversificationLongDto = diversificationService.getDiversification(diversificationId);
+        PortfolioLongDto portfolioLongDto = portfolioService.getPortfolio(portfolioId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(diversificationLongDto);
+                .body(portfolioLongDto);
     }
 
-    @PostMapping("/diversifications")
-    public ResponseEntity createDiversification(@Valid @RequestBody CreateDiversificationRequestDto request) {
-        diversificationService.createDiversification(request);
+    @PostMapping("/portfolios")
+    public ResponseEntity createPortfolio(@Valid @RequestBody CreatePortfolioRequestDto request) {
+        portfolioService.createPortfolio(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

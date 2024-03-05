@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Testcontainers
-public class DiversificationControllerTest {
+public class PortfolioControllerTest {
 
     @Container
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14.7")
@@ -69,23 +69,23 @@ public class DiversificationControllerTest {
 
     @Test
     @DisplayName("Получить первые 10 своих диверсификаций")
-    public void givenCorrectRequest_whenGetDiversifications_thenReturnsDiversificationsWithExpectedIds() throws
+    public void givenCorrectRequest_whenGetPortfolios_thenReturnsPortfoliosWithExpectedIds() throws
             Exception
     {
 
-        mockMvc.perform(get("/api/v1/diversifications")
+        mockMvc.perform(get("/api/v1/portfolios")
                         .param("pageNumber", "0")
                         .param("pageSize", "10")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("length()").value(1))
-                .andExpect(jsonPath("$[0].diversificationId").value(2));
+                .andExpect(jsonPath("$[0].portfolioId").value(2));
     }
 
     @Test
     @DisplayName("Получить свою существующую диверсификацию c id = 2")
-    public void givenDiversificationId2_whenGetDiversification_thenReturnsExpectedDiversification() throws Exception {
-        mockMvc.perform(get("/api/v1/diversifications/2")
+    public void givenPortfolioId2_whenGetPortfolio_thenReturnsExpectedPortfolio() throws Exception {
+        mockMvc.perform(get("/api/v1/portfolios/2")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.createDateTime").value("2023-12-27T21:00Z"))
@@ -100,10 +100,10 @@ public class DiversificationControllerTest {
     @ParameterizedTest
     @ValueSource(ints = {3, 1001})
     @DisplayName("Получить не свою или несуществующую диверсификацию")
-    public void givenNonExistentOrNonYourDiversification_whenGetDiversification_thenReturnsExpectedError(int id) throws
+    public void givenNonExistentOrNonYourPortfolio_whenGetPortfolio_thenReturnsExpectedError(int id) throws
             Exception
     {
-        mockMvc.perform(get("/api/v1/diversifications/" + id)
+        mockMvc.perform(get("/api/v1/portfolios/" + id)
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.id").value(8))
@@ -111,15 +111,15 @@ public class DiversificationControllerTest {
 
     }
 
-    private void checkIfDiversificationWithId3IsNotExists() throws Exception {
-        mockMvc.perform(get("/api/v1/diversifications/3")
+    private void checkIfPortfolioWithId3IsNotExists() throws Exception {
+        mockMvc.perform(get("/api/v1/portfolios/3")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.id").value(8))
                 .andExpect(jsonPath("$.errorType").value("NOT_FOUND"));
     }
 
-    private static Stream<Arguments> validCreateDiversificationRequestArgumentsProvider() {
+    private static Stream<Arguments> validCreatePortfolioRequestArgumentsProvider() {
         return Stream.of(
                 Arguments.of(170_00L, 3),
                 Arguments.of(5_000_000_00L, 3),
@@ -131,9 +131,9 @@ public class DiversificationControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("validCreateDiversificationRequestArgumentsProvider")
+    @MethodSource("validCreatePortfolioRequestArgumentsProvider")
     @DisplayName("Создание диверсификации с корректными данными")
-    public void givenValidCreateDiversificationRequest_whenCreateDiversification_thenSuccess(
+    public void givenValidCreatePortfolioRequest_whenCreatePortfolio_thenSuccess(
             Long amount,
             Integer riskTypeId) throws Exception
     {
@@ -141,22 +141,22 @@ public class DiversificationControllerTest {
         request.put("amount", amount);
         request.put("riskTypeId", riskTypeId);
 
-        checkIfDiversificationWithId3IsNotExists();
+        checkIfPortfolioWithId3IsNotExists();
 
-        mockMvc.perform(post("/api/v1/diversifications")
+        mockMvc.perform(post("/api/v1/portfolios")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(get("/api/v1/diversifications/3")
+        mockMvc.perform(get("/api/v1/portfolios/3")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.currentAmount").value(lessThanOrEqualTo(amount.intValue())))
                 .andExpect(jsonPath("$.riskTypeId").value(riskTypeId));
     }
 
-    private static Stream<Arguments> invalidCreateDiversificationRequestArgumentsProvider() {
+    private static Stream<Arguments> invalidCreatePortfolioRequestArgumentsProvider() {
         return Stream.of(
                 Arguments.of(169_99L, 3),
                 Arguments.of(10_000_000_01L, 3),
@@ -166,9 +166,9 @@ public class DiversificationControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("invalidCreateDiversificationRequestArgumentsProvider")
+    @MethodSource("invalidCreatePortfolioRequestArgumentsProvider")
     @DisplayName("Создание диверсификации с некорректными данными")
-    public void givenInvalidCreateDiversificationRequest_whenCreateDiversification_thenReturnsExpectedError(
+    public void givenInvalidCreatePortfolioRequest_whenCreatePortfolio_thenReturnsExpectedError(
             Long amount,
             Integer riskTypeId) throws Exception
     {
@@ -176,14 +176,14 @@ public class DiversificationControllerTest {
         request.put("amount", amount);
         request.put("riskTypeId", riskTypeId);
 
-        checkIfDiversificationWithId3IsNotExists();
+        checkIfPortfolioWithId3IsNotExists();
 
-        mockMvc.perform(post("/api/v1/diversifications")
+        mockMvc.perform(post("/api/v1/portfolios")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
 
-        checkIfDiversificationWithId3IsNotExists();
+        checkIfPortfolioWithId3IsNotExists();
     }
 }

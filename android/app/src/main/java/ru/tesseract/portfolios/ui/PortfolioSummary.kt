@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.ui
+package ru.tesseract.portfolios.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,14 +16,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.toJavaInstant
 import ru.tesseract.assets.ui.formatPrice
-import ru.tesseract.diversifications.domain.Diversification
-import ru.tesseract.diversifications.domain.riskLevel
+import ru.tesseract.portfolios.domain.Portfolio
+import ru.tesseract.portfolios.domain.riskLevel
 import ru.tesseract.ui.DefaultDateTimeFormatter
 import ru.tesseract.ui.asAnnotatedPriceDiff
 
 @Composable
-fun DiversificationSummary(
-    diversification: Diversification,
+fun PortfolioSummary(
+    portfolio: Portfolio,
     onClick: () -> Unit,
     modifier: Modifier,
 ) {
@@ -35,24 +35,24 @@ fun DiversificationSummary(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    DefaultDateTimeFormatter.format(diversification.at.toJavaInstant()),
+                    DefaultDateTimeFormatter.format(portfolio.at.toJavaInstant()),
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    stringResource(id = diversification.riskLevel.explicitResId),
+                    stringResource(id = portfolio.riskLevel.explicitResId),
                     style = MaterialTheme.typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
             Column(horizontalAlignment = Alignment.End) {
                 Text(
-                    formatPrice(diversification.currentAmount),
+                    formatPrice(portfolio.currentAmount),
                     style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
-                    diversification.amountDiff.asAnnotatedPriceDiff(),
+                    portfolio.amountDiff.asAnnotatedPriceDiff(),
                     style = MaterialTheme.typography.titleMedium,
                 )
             }

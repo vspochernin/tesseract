@@ -35,7 +35,7 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ru.tesseract.R
 import ru.tesseract.assets.domain.DetailedAssetInfo
-import ru.tesseract.diversifications.ui.RiskLevel
+import ru.tesseract.portfolios.ui.RiskLevel
 import ru.tesseract.ui.FavoriteIcon
 
 @OptIn(ExperimentalMaterial3Api::class)

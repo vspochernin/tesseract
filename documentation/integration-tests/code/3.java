@@ -1,4 +1,4 @@
-private static Stream<Arguments> validCreateDiversificationRequestArgumentsProvider() {
+private static Stream<Arguments> validCreatePortfolioRequestArgumentsProvider() {
     return Stream.of(
             Arguments.of(170_00L, 3),
             Arguments.of(5_000_000_00L, 3),
@@ -10,9 +10,9 @@ private static Stream<Arguments> validCreateDiversificationRequestArgumentsProvi
 }
 
 @ParameterizedTest
-@MethodSource("validCreateDiversificationRequestArgumentsProvider")
+@MethodSource("validCreatePortfolioRequestArgumentsProvider")
 @DisplayName("Создание диверсификации с корректными данными")
-public void givenValidCreateDiversificationRequest_whenCreateDiversification_thenSuccess(
+public void givenValidCreatePortfolioRequest_whenCreatePortfolio_thenSuccess(
         Long amount,
         Integer riskTypeId) throws Exception
 {
@@ -20,22 +20,22 @@ public void givenValidCreateDiversificationRequest_whenCreateDiversification_the
     request.put("amount", amount);
     request.put("riskTypeId", riskTypeId);
 
-    checkIfDiversificationWithId3IsNotExists();
+    checkIfPortfolioWithId3IsNotExists();
 
-    mockMvc.perform(post("/api/v1/diversifications")
+    mockMvc.perform(post("/api/v1/portfolios")
                     .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isCreated());
 
-    mockMvc.perform(get("/api/v1/diversifications/3")
+    mockMvc.perform(get("/api/v1/portfolios/3")
                     .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.currentAmount").value(lessThanOrEqualTo(amount.intValue())))
             .andExpect(jsonPath("$.riskTypeId").value(riskTypeId));
 }
 
-private static Stream<Arguments> invalidCreateDiversificationRequestArgumentsProvider() {
+private static Stream<Arguments> invalidCreatePortfolioRequestArgumentsProvider() {
     return Stream.of(
             Arguments.of(169_99L, 3),
             Arguments.of(10_000_000_01L, 3),
@@ -45,9 +45,9 @@ private static Stream<Arguments> invalidCreateDiversificationRequestArgumentsPro
 }
 
 @ParameterizedTest
-@MethodSource("invalidCreateDiversificationRequestArgumentsProvider")
+@MethodSource("invalidCreatePortfolioRequestArgumentsProvider")
 @DisplayName("Создание диверсификации с некорректными данными")
-public void givenInvalidCreateDiversificationRequest_whenCreateDiversification_thenReturnsExpectedError(
+public void givenInvalidCreatePortfolioRequest_whenCreatePortfolio_thenReturnsExpectedError(
         Long amount,
         Integer riskTypeId) throws Exception
 {
@@ -55,13 +55,13 @@ public void givenInvalidCreateDiversificationRequest_whenCreateDiversification_t
     request.put("amount", amount);
     request.put("riskTypeId", riskTypeId);
 
-    checkIfDiversificationWithId3IsNotExists();
+    checkIfPortfolioWithId3IsNotExists();
 
-    mockMvc.perform(post("/api/v1/diversifications")
+    mockMvc.perform(post("/api/v1/portfolios")
                     .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isBadRequest());
 
-    checkIfDiversificationWithId3IsNotExists();
+    checkIfPortfolioWithId3IsNotExists();
 }

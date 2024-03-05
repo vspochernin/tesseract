@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.domain
+package ru.tesseract.portfolios.domain
 
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
@@ -6,16 +6,16 @@ import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class DiversificationTest {
+class PortfolioTest {
     @Test
-    fun `DiversificationWithAssets should serialize correctly`() {
-        val expected = DiversificationWithAssets(
+    fun `PortfolioWithAssets should serialize correctly`() {
+        val expected = PortfolioWithAssets(
             at = Clock.System.now(),
             currentAmount = 12300,
             amountDiff = 100,
             riskLevelOrdinal = 0,
             assets = listOf(
-                DiversificationAsset(
+                PortfolioAsset(
                     id = 1,
                     title = "title",
                     companyTitle = "company title",
@@ -28,7 +28,7 @@ class DiversificationTest {
             )
         )
         val serialized = Json.encodeToString(expected)
-        val deserialized = Json.decodeFromString<DiversificationWithAssets>(serialized)
+        val deserialized = Json.decodeFromString<PortfolioWithAssets>(serialized)
         assertEquals(expected.at, deserialized.at)
         assertEquals(expected.currentAmount, deserialized.currentAmount)
         assertEquals(expected.amountDiff, deserialized.amountDiff)
@@ -44,15 +44,15 @@ class DiversificationTest {
     }
 
     @Test
-    fun `Diversification should serialize correctly`() {
-        val sampleDiversification = Diversification(
+    fun `Portfolio should serialize correctly`() {
+        val samplePortfolio = Portfolio(
             id = 1,
             at = Clock.System.now(),
             riskLevelOrdinal = 0,
             currentAmount = 12300,
             amountDiff = 100,
         )
-        val serialized = Json.encodeToString(sampleDiversification)
-        assertEquals(sampleDiversification, Json.decodeFromString<Diversification>(serialized))
+        val serialized = Json.encodeToString(samplePortfolio)
+        assertEquals(samplePortfolio, Json.decodeFromString<Portfolio>(serialized))
     }
 }

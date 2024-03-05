@@ -15,51 +15,51 @@ import org.apache.commons.math3.distribution.BetaDistribution;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-import ru.spbstu.tesseract.dto.CreateDiversificationRequestDto;
-import ru.spbstu.tesseract.dto.DiversificationLongDto;
-import ru.spbstu.tesseract.dto.DiversificationShortDto;
+import ru.spbstu.tesseract.dto.CreatePortfolioRequestDto;
+import ru.spbstu.tesseract.dto.PortfolioLongDto;
+import ru.spbstu.tesseract.dto.PortfolioShortDto;
 import ru.spbstu.tesseract.entity.Asset;
-import ru.spbstu.tesseract.entity.Diversification;
-import ru.spbstu.tesseract.entity.DiversificationAsset;
+import ru.spbstu.tesseract.entity.Portfolio;
+import ru.spbstu.tesseract.entity.PortfolioAsset;
 import ru.spbstu.tesseract.entity.RiskType;
 import ru.spbstu.tesseract.entity.User;
 import ru.spbstu.tesseract.exception.TesseractErrorType;
 import ru.spbstu.tesseract.exception.TesseractException;
 import ru.spbstu.tesseract.repository.AssetRepository;
-import ru.spbstu.tesseract.repository.DiversificationRepository;
+import ru.spbstu.tesseract.repository.PortfolioRepository;
 
 @Service
 @RequiredArgsConstructor
-public class DiversificationService {
+public class PortfolioService {
 
     private static final double ALPHA_MIN = 2;
     private static final double ALPHA_MAX = 10;
     private static final double BETA = 2;
 
-    private final DiversificationRepository diversificationRepository;
+    private final PortfolioRepository portfolioRepository;
     private final AssetRepository assetRepository;
 
-    public List<DiversificationShortDto> getDiversifications(int pageNumber, int pageSize) {
+    public List<PortfolioShortDto> getPortfolios(int pageNumber, int pageSize) {
         User currentUser = User.getCurrentUser();
-        Slice<Diversification> diversifications =
-                diversificationRepository.findAllByUser(currentUser, PageRequest.of(pageNumber, pageSize));
+        Slice<Portfolio> portfolios =
+                portfolioRepository.findAllByUser(currentUser, PageRequest.of(pageNumber, pageSize));
 
-        return diversifications.getContent().stream()
-                .map(DiversificationShortDto::fromDiversification)
+        return portfolios.getContent().stream()
+                .map(PortfolioShortDto::fromPortfolio)
                 .toList();
     }
 
-    public DiversificationLongDto getDiversification(int diversificationId) {
+    public PortfolioLongDto getPortfolio(int portfolioId) {
         User currentUser = User.getCurrentUser();
-        Optional<Diversification> diversificationO =
-                diversificationRepository.findByIdAndUser(diversificationId, currentUser);
+        Optional<Portfolio> portfolioO =
+                portfolioRepository.findByIdAndUser(portfolioId, currentUser);
 
-        return diversificationO
-                .map(DiversificationLongDto::fromDiversification)
+        return portfolioO
+                .map(PortfolioLongDto::fromPortfolio)
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public void createDiversification(CreateDiversificationRequestDto request) {
+    public void createPortfolio(CreatePortfolioRequestDto request) {
         long amount = request.getAmount();
         if (amount > 1_000_000_000L) {
             throw new TesseractException(TesseractErrorType.TOO_BIG_AMOUNT);
@@ -91,7 +91,7 @@ public class DiversificationService {
         Asset theMostProfitableAsset = assets.get(0);
         double maxProfit = theMostProfitableAsset.getAssetScore() * theMostProfitableAsset.getInterest();
 
-        Map<Asset, Long> assetsInDiversifications = new HashMap<>();
+        Map<Asset, Long> assetsInPortfolios = new HashMap<>();
         long currentSumPrice = 0;
 
         while (currentSumPrice < amount && !assets.isEmpty()) {
@@ -109,8 +109,8 @@ public class DiversificationService {
                     long quantityToAdd = calculateQuantityToAdd(alpha, maxPossibleQuantity);
 
                     // Добавляем актив и его количество в результат.
-                    assetsInDiversifications.putIfAbsent(asset, 0L);
-                    assetsInDiversifications.put(asset, assetsInDiversifications.get(asset) + quantityToAdd);
+                    assetsInPortfolios.putIfAbsent(asset, 0L);
+                    assetsInPortfolios.put(asset, assetsInPortfolios.get(asset) + quantityToAdd);
                     currentSumPrice += assetPrice * quantityToAdd;
 
                     if (currentSumPrice >= amount) break;
@@ -121,25 +121,25 @@ public class DiversificationService {
         }
 
         // Преобразование в список для сохранения.
-        List<DiversificationAsset> diversificationAssetsList = assetsInDiversifications.entrySet().stream()
-                .map(entry -> new DiversificationAsset(entry.getKey(), entry.getValue()))
+        List<PortfolioAsset> portfolioAssetsList = assetsInPortfolios.entrySet().stream()
+                .map(entry -> new PortfolioAsset(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
 
-        long realAmount = diversificationAssetsList.stream()
-                .mapToLong(diversificationAsset -> diversificationAsset.getCount() *
-                        diversificationAsset.getAsset().getCurrentAssetPrice())
+        long realAmount = portfolioAssetsList.stream()
+                .mapToLong(portfolioAsset -> portfolioAsset.getCount() *
+                        portfolioAsset.getAsset().getCurrentAssetPrice())
                 .sum();
 
         User currentUser = User.getCurrentUser();
-        Diversification createdDiversification = new Diversification(
+        Portfolio createdPortfolio = new Portfolio(
                 currentUser,
                 ZonedDateTime.now(),
                 riskType,
                 realAmount,
-                diversificationAssetsList
+                portfolioAssetsList
         );
 
-        diversificationRepository.save(createdDiversification);
+        portfolioRepository.save(createdPortfolio);
     }
 
     private long calculateQuantityToAdd(double alpha, long maxPossibleQuantity) {

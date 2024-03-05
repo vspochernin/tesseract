@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications
+package ru.tesseract.portfolios
 
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.ComposeTestRule
@@ -9,46 +9,46 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import ru.tesseract.waitUntilAtLeastOneExistsWithTag
 
-class DiversificationRobot(private val composeTestRule: ComposeTestRule) {
+class PortfolioRobot(private val composeTestRule: ComposeTestRule) {
     fun navigateToTab() = with(composeTestRule) {
-        waitUntilAtLeastOneExistsWithTag("Navigation.Diversifications")
-        onNodeWithTag("Navigation.Diversifications").performClick()
+        waitUntilAtLeastOneExistsWithTag("Navigation.Portfolios")
+        onNodeWithTag("Navigation.Portfolios").performClick()
     }
 
     fun navigateToCreate() = with(composeTestRule) {
-        waitUntilAtLeastOneExistsWithTag("DiversificationsScreen.CreateButton")
-        onNodeWithTag("DiversificationsScreen.CreateButton").performClick()
+        waitUntilAtLeastOneExistsWithTag("PortfoliosScreen.CreateButton")
+        onNodeWithTag("PortfoliosScreen.CreateButton").performClick()
     }
 
     fun inputAmount(text: String) = with(composeTestRule) {
-        waitUntilAtLeastOneExistsWithTag("NewDiversificationScreen.AmountField")
-        onNodeWithTag("NewDiversificationScreen.AmountField").performTextInput(text)
+        waitUntilAtLeastOneExistsWithTag("NewPortfolioScreen.AmountField")
+        onNodeWithTag("NewPortfolioScreen.AmountField").performTextInput(text)
     }
 
     fun create() = with(composeTestRule) {
-        waitUntilAtLeastOneExistsWithTag("NewDiversificationScreen.CreateButton")
-        onNodeWithTag("NewDiversificationScreen.CreateButton").performClick()
+        waitUntilAtLeastOneExistsWithTag("NewPortfolioScreen.CreateButton")
+        onNodeWithTag("NewPortfolioScreen.CreateButton").performClick()
     }
 
     fun waitUntilLoaded() = with(composeTestRule) {
-        waitUntilAtLeastOneExistsWithTag("DiversificationsScreen.Diversification")
+        waitUntilAtLeastOneExistsWithTag("PortfoliosScreen.Portfolio")
     }
 
-    fun assertDiversificationCount(count: Int) = with(composeTestRule) {
+    fun assertPortfolioCount(count: Int) = with(composeTestRule) {
         waitUntilLoaded()
-        onAllNodesWithTag("DiversificationsScreen.Diversification").assertCountEquals(count)
+        onAllNodesWithTag("PortfoliosScreen.Portfolio").assertCountEquals(count)
     }
 
-    fun goToAnyDiversification() = with(composeTestRule) {
+    fun goToAnyPortfolio() = with(composeTestRule) {
         waitUntilLoaded()
-        onAllNodesWithTag("DiversificationsScreen.Diversification").onFirst().performClick()
+        onAllNodesWithTag("PortfoliosScreen.Portfolio").onFirst().performClick()
     }
 
-    fun assertDiversificationAssetsAreShown() = with(composeTestRule) {
-        waitUntilAtLeastOneExistsWithTag("DiversificationScreen.Asset")
+    fun assertPortfolioAssetsAreShown() = with(composeTestRule) {
+        waitUntilAtLeastOneExistsWithTag("PortfolioScreen.Asset")
     }
 
-    fun tryToCreateDiversification(amount: String) {
+    fun tryToCreatePortfolio(amount: String) {
         navigateToTab()
         navigateToCreate()
         inputAmount(amount)

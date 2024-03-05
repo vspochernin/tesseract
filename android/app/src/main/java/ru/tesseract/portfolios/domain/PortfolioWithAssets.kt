@@ -1,11 +1,11 @@
-package ru.tesseract.diversifications.domain
+package ru.tesseract.portfolios.domain
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiversificationWithAssets(
+data class PortfolioWithAssets(
     @SerialName("createDateTime")
     val at: Instant,
     @SerialName("currentAmount")
@@ -15,11 +15,11 @@ data class DiversificationWithAssets(
     @SerialName("riskTypeId")
     val riskLevelOrdinal: Int,
     @SerialName("assetList")
-    val assets: List<DiversificationAsset>,
+    val assets: List<PortfolioAsset>,
 )
 
 @Serializable
-data class DiversificationAsset(
+data class PortfolioAsset(
     @SerialName("assetId")
     val id: Int,
     @SerialName("assetTitle")
@@ -38,4 +38,4 @@ data class DiversificationAsset(
     val isFavorite: Boolean = false,
 )
 
-val DiversificationWithAssets.riskLevel get() = RiskLevel.entries[riskLevelOrdinal]
+val PortfolioWithAssets.riskLevel get() = RiskLevel.entries[riskLevelOrdinal]

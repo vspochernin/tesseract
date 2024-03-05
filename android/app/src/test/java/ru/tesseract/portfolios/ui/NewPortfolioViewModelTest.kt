@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.ui
+package ru.tesseract.portfolios.ui
 
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -10,21 +10,21 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import ru.tesseract.api.ApiResponse
-import ru.tesseract.diversifications.api.DiversificationsApi
-import ru.tesseract.diversifications.domain.RiskLevel
+import ru.tesseract.portfolios.api.PortfoliosApi
+import ru.tesseract.portfolios.domain.RiskLevel
 import ru.tesseract.util.MainDispatcherRule
 
-class NewDiversificationViewModelTest {
+class NewPortfolioViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
     @Test
-    fun `NewDiversificationViewModel should call create diversification`() = runTest {
-        val api = mockk<DiversificationsApi>()
+    fun `NewPortfolioViewModel should call create portfolio`() = runTest {
+        val api = mockk<PortfoliosApi>()
         coEvery { api.create(any(), any()) } returns ApiResponse.Success(Unit)
         val dismiss = mockk<() -> Unit>()
         every { dismiss() } returns Unit
-        val viewModel = NewDiversificationViewModel(api)
+        val viewModel = NewPortfolioViewModel(api)
         viewModel.amountField = "123"
         viewModel.onCreate(dismiss).join()
         coVerify(exactly = 1) { api.create(12300L, RiskLevel.Combined) }
@@ -34,12 +34,12 @@ class NewDiversificationViewModelTest {
     }
 
     @Test
-    fun `NewDiversificationViewModel should not create invalid diversification`() = runTest {
-        val api = mockk<DiversificationsApi>()
+    fun `NewPortfolioViewModel should not create invalid portfolio`() = runTest {
+        val api = mockk<PortfoliosApi>()
         coEvery { api.create(any(), any()) } returns ApiResponse.Success(Unit)
         val dismiss = mockk<() -> Unit>()
         every { dismiss() } returns Unit
-        val viewModel = NewDiversificationViewModel(api)
+        val viewModel = NewPortfolioViewModel(api)
         viewModel.amountField = "abc"
         viewModel.onCreate(dismiss).join()
         coVerify(exactly = 0) { api.create(any(), any()) }

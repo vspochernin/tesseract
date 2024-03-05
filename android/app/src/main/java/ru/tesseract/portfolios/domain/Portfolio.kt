@@ -1,4 +1,4 @@
-package ru.tesseract.diversifications.domain
+package ru.tesseract.portfolios.domain
 
 import androidx.annotation.StringRes
 import kotlinx.datetime.Instant
@@ -17,8 +17,8 @@ enum class RiskLevel(
 }
 
 @Serializable
-data class Diversification(
-    @SerialName("diversificationId")
+data class Portfolio(
+    @SerialName("portfolioId")
     val id: Int,
     @SerialName("createDatetime")
     val at: Instant,
@@ -30,4 +30,4 @@ data class Diversification(
     val amountDiff: Long,
 )
 
-val Diversification.riskLevel get() = RiskLevel.entries[riskLevelOrdinal]
+val Portfolio.riskLevel get() = RiskLevel.entries[riskLevelOrdinal]

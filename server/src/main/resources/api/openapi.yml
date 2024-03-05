@@ -192,10 +192,10 @@ paths:
           description: Некорректное тело запроса
         '401':
           description: Отсутствуют данные аутентификации
-  /diversifications:
+  /portfolios:
     get:
       tags:
-        - diversification
+        - portfolio
       summary: Получить список диверсификаций
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
@@ -207,12 +207,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DiversificationsList'
+                $ref: '#/components/schemas/PortfoliosList'
         '401':
           description: Отсутствуют данные аутентификации
     post:
       tags:
-        - diversification
+        - portfolio
       summary: Создать диверсификацию
       requestBody:
         description: Данные для создании диверсификации
@@ -220,7 +220,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DiversificationCreateInfo'
+              $ref: '#/components/schemas/PortfolioCreateInfo'
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
       responses:
@@ -232,10 +232,10 @@ paths:
           description: Отсутствуют данные аутентификации
         '404':
           description: Отсутствуют активы с выбранным типом рискованности
-  /diversifications/{id}:
+  /portfolios/{id}:
     get:
       tags:
-        - diversification
+        - portfolio
 
       summary: Получить информацию о конкретной диверсификации
       parameters:
@@ -247,7 +247,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SpecifiedDiversification'
+                $ref: '#/components/schemas/SpecifiedPortfolio'
         '400':
           description: Некорректное тело запроса
         '401':
@@ -362,10 +362,10 @@ components:
           type: integer
         favouriteStatus:
           type: boolean
-    Diversification:
+    Portfolio:
       type: object
       properties:
-        diversificationId:
+        portfolioId:
           type: integer
         createDatetime:
           type: string
@@ -375,11 +375,11 @@ components:
         amount:
           type: integer
           description: Сумма диверсификации, в копейках
-    DiversificationsList:
+    PortfoliosList:
       type: array
       items:
-        $ref: '#/components/schemas/Diversification'
-    DiversificationCreateInfo:
+        $ref: '#/components/schemas/Portfolio'
+    PortfolioCreateInfo:
       type: object
       properties:
         amount:
@@ -387,7 +387,7 @@ components:
           description: Сумма создаваемой диверсификации, в копейках
         riskTypeId:
           type: integer
-    DiversificationAsset:
+    PortfolioAsset:
       type: object
       properties:
         assetId:
@@ -403,7 +403,7 @@ components:
           type: integer
         favouriteStatus:
           type: boolean
-    SpecifiedDiversification:
+    SpecifiedPortfolio:
       type: object
       properties:
         createDatetime:
@@ -416,7 +416,7 @@ components:
         assetsList:
           type: array
           items:
-            $ref: "#/components/schemas/DiversificationAsset"
+            $ref: "#/components/schemas/PortfolioAsset"
   responses:
     NotFound:
       description: Сущность не найдена

@@ -6,13 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.spbstu.tesseract.entity.Diversification;
+import ru.spbstu.tesseract.entity.Portfolio;
 import ru.spbstu.tesseract.entity.User;
 
 @Repository
-public interface DiversificationRepository extends JpaRepository<Diversification, Integer> {
+public interface PortfolioRepository extends JpaRepository<Portfolio, Integer> {
 
-    Slice<Diversification> findAllByUser(User user, Pageable page);
+    Slice<Portfolio> findAllByUser(User user, Pageable page);
 
-    Optional<Diversification> findByIdAndUser(int id, User user);
+    Optional<Portfolio> findByIdAndUser(int id, User user);
 }
