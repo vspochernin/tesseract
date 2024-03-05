@@ -2,8 +2,7 @@ name: Deploy
 on:
     push:
         branches: [ "master" ]
-    pull_request:
-        branches: [ "master" ]
+
 
 jobs:
     build-and-deploy:
@@ -22,6 +21,7 @@ jobs:
                         echo '--- LIST OF FILES ---';
                         ls -la;
                         echo '--- GIT PULL ---';
+                        git checkout master
                         git pull;
                         echo '--- DOCKER OPERATIONS ---';
                         docker-compose down;
