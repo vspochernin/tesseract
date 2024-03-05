@@ -196,14 +196,14 @@ paths:
     get:
       tags:
         - portfolio
-      summary: Получить список диверсификаций
+      summary: Получить список портфелей
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
         - $ref: '#/components/parameters/pageNumber'
         - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
-          description: Успешное получение списка диверсификаций
+          description: Успешное получение списка портфелей
           content:
             application/json:
               schema:
@@ -213,9 +213,9 @@ paths:
     post:
       tags:
         - portfolio
-      summary: Создать диверсификацию
+      summary: Создать портфель
       requestBody:
-        description: Данные для создании диверсификации
+        description: Данные для создании портфеля
         required: true
         content:
           application/json:
@@ -225,7 +225,7 @@ paths:
         - $ref: '#/components/parameters/authCredsParam'
       responses:
         '201':
-          description: Успешное создание диверсификации
+          description: Успешное создание портфеля
         '400':
           description: Некорректное тело запроса
         '401':
@@ -237,13 +237,13 @@ paths:
       tags:
         - portfolio
 
-      summary: Получить информацию о конкретной диверсификации
+      summary: Получить информацию о конкретном портфеле
       parameters:
         - $ref: '#/components/parameters/authCredsParam'
         - $ref: '#/components/parameters/idPath'
       responses:
         '200':
-          description: Успешное получение диверсификации
+          description: Успешное получение портфеля
           content:
             application/json:
               schema:
@@ -253,7 +253,7 @@ paths:
         '401':
           description: Отсутствуют данные аутентификации
         '404':
-          description: Отсутствует диверсификация с таким id (либо запрашиваем несвою диверсификацию)
+          description: Отсутствует портфель с таким id (либо запрашиваем не свой портфель)
 components:
   parameters:
     authCredsParam:
@@ -374,7 +374,7 @@ components:
           type: integer
         amount:
           type: integer
-          description: Сумма диверсификации, в копейках
+          description: Стоимость портфеля, в копейках
     PortfoliosList:
       type: array
       items:
@@ -384,7 +384,7 @@ components:
       properties:
         amount:
           type: integer
-          description: Сумма создаваемой диверсификации, в копейках
+          description: Стоимость создаваемого портфеля, в копейках
         riskTypeId:
           type: integer
     PortfolioAsset:
@@ -398,7 +398,7 @@ components:
           type: string
         oldPrice:
           type: integer
-          description: Старая цена актива (то есть цена на момент создания диверсификации), в копейках
+          description: Старая цена актива (то есть цена на момент создания портфеля), в копейках
         count:
           type: integer
         favouriteStatus:

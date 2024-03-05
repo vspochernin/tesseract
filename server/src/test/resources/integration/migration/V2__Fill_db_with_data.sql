@@ -390,7 +390,7 @@ VALUES (20, 5010000, '2023-11-12 00:00:00+03');
 INSERT INTO users(login, email, password)
 VALUES ('vspochernin', 'vspochernin@gmail.com', '$2a$10$SGRw6G/5NR5WBIRJjq2HJuVFQSJsfK.dDjPx2pWYDENOWUOXCDoVy');
 
--- Заполненный пользователь (будет две диверсификации + четыре избранных).
+-- Заполненный пользователь (будет два портфеля + четыре избранных).
 INSERT INTO users(login, email, password)
 VALUES ('vrazukrantov', 'vrazbusiness@mail.ru', '$2a$10$SGRw6G/5NR5WBIRJjq2HJuVFQSJsfK.dDjPx2pWYDENOWUOXCDoVy');
 
@@ -406,15 +406,15 @@ VALUES (2, 8);
 INSERT INTO users_assets(user_id, asset_id)
 VALUES (2, 2);
 
--- Диверсификация: комбинированная.
+-- Портфель: комбинированный.
 INSERT INTO portfolios(user_id, create_datetime, risk_type_id, amount)
 VALUES (1, '2023-12-27 00:00:00+03', 3, 5000000);
 
--- Диверсификация: низкорискованная.
+-- Портфель: низкорискованный.
 INSERT INTO portfolios(user_id, create_datetime, risk_type_id, amount)
 VALUES (2, '2023-12-28 00:00:00+03', 2, 15000000);
 
--- Первая: три актива 1, десять активов 3, один актив 4.
+-- Первый: три актива 1, десять активов 3, один актив 4.
 INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (1, 1, 3);
 
@@ -424,7 +424,7 @@ VALUES (1, 3, 10);
 INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (1, 4, 1);
 
--- Вторая: один актив 7, два актива 1, три актива 4.
+-- Второй: один актив 7, два актива 1, три актива 4.
 INSERT INTO portfolios_assets(portfolio_id, asset_id, count)
 VALUES (2, 7, 1);
 

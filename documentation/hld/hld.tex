@@ -139,9 +139,9 @@
     \item Страница активов (AssetsPage).
     \item Страница конкретного актива (AssetPage).
     \item Страница избранных активов (FavouritesPage).
-    \item Страница диверсификаций (PortfoliosPage).
-    \item Страница создания диверсификации (PortfolioCreatePage).
-    \item Страница конкретной диверсификации (PortfolioPage).
+    \item Страница портфелей (PortfoliosPage).
+    \item Страница создания портфеля (PortfolioCreatePage).
+    \item Страница конкретного портфеля (PortfolioPage).
     \item Страница настроек (SettingsPage).
 \end{enumerate}
 
@@ -443,7 +443,7 @@ API будет поддерживать следующие HTTP коды:
     \end{itemize}
 \end{itemize}
 
-\subsection{Получить список диверсификаций}
+\subsection{Получить список портфелей}
 
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
@@ -451,19 +451,19 @@ API будет поддерживать следующие HTTP коды:
     \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
-        \item Строка запроса: id последней загруженной диверсификации (опционально).
+        \item Строка запроса: id последнего загруженного портфеля (опционально).
     \end{itemize}
     \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON) - список:
         \begin{itemize}
-            \item Timestamp createDatetime; - дата и время создания диверсификации.
-            \item Integer risk; - степень рискованности диверсификации.
-            \item Integer amount; - сумма диверсификации.
+            \item Timestamp createDatetime; - дата и время создания портфеля.
+            \item Integer risk; - степень рискованности портфеля.
+            \item Integer amount; - стоимость портфеля.
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item \texttt{200 OK} - успешное получение списка диверсификаций.
+            \item \texttt{200 OK} - успешное получение списка портфелей.
             \item \texttt{400 Bad Request} - некорректное тело запроса.
             \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
             \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
@@ -471,7 +471,7 @@ API будет поддерживать следующие HTTP коды:
     \end{itemize}
 \end{itemize}
 
-\subsection{Создать диверсификацию}
+\subsection{Создать портфель}
 
 \begin{itemize}
     \item HTTP метод: \texttt{POST}.
@@ -481,15 +481,15 @@ API будет поддерживать следующие HTTP коды:
         \item Заголовок: данные аутентификации.
         \item Тело (JSON):
         \begin{itemize}
-            \item Integer amount; - сумма создаваемой диверсификации.
-            \item Integer risk; - степень рискованности создаваемой диверсификации.
+            \item Integer amount; - стоимость создаваемого портфеля.
+            \item Integer risk; - степень рискованности создаваемого портфеля.
         \end{itemize}
     \end{itemize}
     \item Выходные параметры:
     \begin{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item \texttt{201 Created} - успешное создание диверсификации.
+            \item \texttt{201 Created} - успешное создание портфеля.
             \item \texttt{400 Bad Request} - некорректное тело запроса.
             \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
             \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
@@ -497,7 +497,7 @@ API будет поддерживать следующие HTTP коды:
     \end{itemize}
 \end{itemize}
 
-\subsection{Получить информацию о конкретной диверсификации}
+\subsection{Получить информацию о конкретном портфеле}
 
 \begin{itemize}
     \item HTTP метод: \texttt{GET}.
@@ -505,29 +505,29 @@ API будет поддерживать следующие HTTP коды:
     \item Входные параметры:
     \begin{itemize}
         \item Заголовок: данные аутентификации.
-        \item Путь: id запрашиваемой диверсификации.
+        \item Путь: id запрашиваемого портфеля.
     \end{itemize}
     \item Выходные параметры:
     \begin{itemize}
         \item Тело (JSON):
         \begin{itemize}
-            \item Timestamp createDatetime; - дата и время создания диверсификации.
-            \item Integer risk; - уровень рискованности диверсификации.
-            \item Integer amount - сумма диверсификации.
+            \item Timestamp createDatetime; - дата и время создания портфеля.
+            \item Integer risk; - уровень рискованности портфеля.
+            \item Integer amount - стоимость портфеля.
             \item Список:
             \begin{itemize}
                 \item String assetTitle; - название актива.
                 \item String companyTitle; - название компании.
-                \item Integer priceSum; - \textbf{старая} цена актива (то есть цена на момент создания диверсификации).
+                \item Integer priceSum; - \textbf{старая} цена актива (то есть цена на момент создания портфеля).
                 \item Integer count; количество активов данного вида.
             \end{itemize}
         \end{itemize}
         \item HTTP коды:
         \begin{itemize}
-            \item \texttt{200 OK} - успешное получение диверсификации.
+            \item \texttt{200 OK} - успешное получение портфеля.
             \item \texttt{400 Bad Request} - некорректное тело запроса.
             \item \texttt{401 Unauthorized} - отсутствуют данные аутентификации.
-            \item \texttt{404 Not Found} - отсутствует диверсификация с таким id (либо запрашиваем не свою диверсификацию).
+            \item \texttt{404 Not Found} - отсутствует портфель с таким id (либо запрашиваем не свой портфель).
             \item \texttt{500 Internal Server Error} - непредвиденная ошибка.
         \end{itemize}
     \end{itemize}
@@ -601,19 +601,19 @@ API будет поддерживать следующие HTTP коды:
 \begin{figure}[H]
     \centering
     \includegraphics[width=5cm]{resources/10.png}
-    \caption{Страница диверсификаций (PortfoliosPage)}
+    \caption{Страница портфелей (PortfoliosPage)}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=5cm]{resources/11.png}
-    \caption{Страница создания диверсификации (PortfolioCreatePage)}
+    \caption{Страница создания портфеля (PortfolioCreatePage)}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=5cm]{resources/12.png}
-    \caption{Страница конкретной диверсификации (PortfolioPage)}
+    \caption{Страница конкретного портфеля (PortfolioPage)}
 \end{figure}
 
 \begin{figure}[H]

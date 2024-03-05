@@ -5,7 +5,7 @@
     <string name="info_screen_title">Информация о приложении</string>
     <string name="navigation_assets">Активы</string>
     <string name="navigation_favorites">Избранное</string>
-    <string name="navigation_portfolios">Диверсификации</string>
+    <string name="navigation_portfolios">Портфели</string>
     <string name="navigation_settings">Настройки</string>
     <string name="login_screen_title">Войти в Тессеракт</string>
     <string name="login_username_field">Логин</string>
@@ -18,7 +18,7 @@
     <string name="login_screen_signing_in">Вход…</string>
     <string name="login_screen_or_with_login">или войти с логином</string>
     <string name="login_screen_information">Информация</string>
-    <string name="info_screen_text">Данное приложение является агрегатором цифровых финансовых активов. В нем вы можете отслеживать возможные для покупки активы, добавлять их в избранное, а также создавать диверсификации по вашим критериям.</string>
+    <string name="info_screen_text">Данное приложение является агрегатором цифровых финансовых активов. В нем вы можете отслеживать возможные для покупки активы, добавлять их в избранное, а также создавать портфели по вашим критериям.</string>
     <string name="settings_screen_log_out">Выйти из аккаунта</string>
     <string name="settings_screen_account">Аккаунт</string>
     <string name="settings_screen_theme">Тема</string>
@@ -36,10 +36,10 @@
     <string name="registration_screen_register_button">Зарегистрироваться</string>
     <string name="asset_screen_organization">Компания</string>
     <string name="asset_screen_price">Цена</string>
-    <string name="portfolios_screen_create">Создать диверсификацию</string>
-    <string name="portfolio_screen_title">Диверсификация</string>
+    <string name="portfolios_screen_create">Создать портфель</string>
+    <string name="portfolio_screen_title">Портфель</string>
     <string name="portfolio_date">Дата и время создания</string>
-    <string name="portfolio_sum">Общая сумма</string>
+    <string name="portfolio_sum">Общая стоимость</string>
     <string name="portfolio_assets">Активы</string>
     <string name="risk_tolerance">Уровень рискованности</string>
     <string name="risk_tolerance_high">Высокая</string>
@@ -50,8 +50,8 @@
     <string name="risk_tolerance_medium_risk">Среднерискованная</string>
     <string name="risk_tolerance_low_risk">Низкорискованная</string>
     <string name="risk_tolerance_combined_risk">Комбинированная</string>
-    <string name="new_portfolio_screen_title">Новая диверсификация</string>
-    <string name="new_portfolio_screen_create">Создать диверсификацию</string>
+    <string name="new_portfolio_screen_title">Новый портфель</string>
+    <string name="new_portfolio_screen_create">Создать портфель</string>
     <string name="asset_quantity">%s × %d шт.</string>
     <string name="error_unexpected_error">Непредвиденная ошибка</string>
     <string name="error_login_exists">Такой логин уже используется</string>
@@ -68,10 +68,10 @@
     <string name="settings_screen_password_changed">Пароль успешно изменён</string>
     <string name="error_not_found">Ресурс не найден</string>
     <string name="error_password_does_not_match">Неправильный пароль</string>
-    <string name="error_too_big_amount">Сумма слишком большая</string>
-    <string name="validation_invalid_amount">Сумма должна быть целым числом не более %d</string>
+    <string name="error_too_big_amount">Стоимость слишком большая</string>
+    <string name="validation_invalid_amount">Стоимость должна быть целым числом не более %d</string>
     <string name="error_no_assets_with_such_risk">На данный момент отсутствуют активы с выбранным типом рискованности</string>
-    <string name="error_too_little_amount">Запрашиваемая сумма диверсификации меньше минимальной стоимости актива выбранной рискованности</string>
+    <string name="error_too_little_amount">Запрашиваемая стоимость портфеля меньше минимальной стоимости актива выбранной рискованности</string>
     <string name="asset_screen_operator">Оператор ЦФА</string>
     <string name="login_screen_change_base_url_button">Изменить API URL</string>
     <string name="login_screen_base_url">API URL</string>

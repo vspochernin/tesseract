@@ -68,7 +68,7 @@ public class PortfolioControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("Получить первые 10 своих диверсификаций")
+    @DisplayName("Получить первые 10 своих портфелей")
     public void givenCorrectRequest_whenGetPortfolios_thenReturnsPortfoliosWithExpectedIds() throws
             Exception
     {
@@ -83,7 +83,7 @@ public class PortfolioControllerTest {
     }
 
     @Test
-    @DisplayName("Получить свою существующую диверсификацию c id = 2")
+    @DisplayName("Получить свой существующий портфель c id = 2")
     public void givenPortfolioId2_whenGetPortfolio_thenReturnsExpectedPortfolio() throws Exception {
         mockMvc.perform(get("/api/v1/portfolios/2")
                         .header("Authorization", Secrets.VRAZUKRANTOV_BEREAR_TOKEN))
@@ -99,7 +99,7 @@ public class PortfolioControllerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {3, 1001})
-    @DisplayName("Получить не свою или несуществующую диверсификацию")
+    @DisplayName("Получить не свой или несуществующий")
     public void givenNonExistentOrNonYourPortfolio_whenGetPortfolio_thenReturnsExpectedError(int id) throws
             Exception
     {
@@ -132,7 +132,7 @@ public class PortfolioControllerTest {
 
     @ParameterizedTest
     @MethodSource("validCreatePortfolioRequestArgumentsProvider")
-    @DisplayName("Создание диверсификации с корректными данными")
+    @DisplayName("Создание портфеля с корректными данными")
     public void givenValidCreatePortfolioRequest_whenCreatePortfolio_thenSuccess(
             Long amount,
             Integer riskTypeId) throws Exception
@@ -167,7 +167,7 @@ public class PortfolioControllerTest {
 
     @ParameterizedTest
     @MethodSource("invalidCreatePortfolioRequestArgumentsProvider")
-    @DisplayName("Создание диверсификации с некорректными данными")
+    @DisplayName("Создание портфеля с некорректными данными")
     public void givenInvalidCreatePortfolioRequest_whenCreatePortfolio_thenReturnsExpectedError(
             Long amount,
             Integer riskTypeId) throws Exception

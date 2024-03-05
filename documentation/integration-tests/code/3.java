@@ -11,7 +11,7 @@ private static Stream<Arguments> validCreatePortfolioRequestArgumentsProvider() 
 
 @ParameterizedTest
 @MethodSource("validCreatePortfolioRequestArgumentsProvider")
-@DisplayName("Создание диверсификации с корректными данными")
+@DisplayName("Создание портфеля с корректными данными")
 public void givenValidCreatePortfolioRequest_whenCreatePortfolio_thenSuccess(
         Long amount,
         Integer riskTypeId) throws Exception
@@ -46,7 +46,7 @@ private static Stream<Arguments> invalidCreatePortfolioRequestArgumentsProvider(
 
 @ParameterizedTest
 @MethodSource("invalidCreatePortfolioRequestArgumentsProvider")
-@DisplayName("Создание диверсификации с некорректными данными")
+@DisplayName("Создание портфеля с некорректными данными")
 public void givenInvalidCreatePortfolioRequest_whenCreatePortfolio_thenReturnsExpectedError(
         Long amount,
         Integer riskTypeId) throws Exception
