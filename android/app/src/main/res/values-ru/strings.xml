@@ -46,10 +46,10 @@
     <string name="risk_tolerance_medium">Средняя</string>
     <string name="risk_tolerance_low">Низкая</string>
     <string name="risk_tolerance_combined">Комбинированная</string>
-    <string name="risk_tolerance_high_risk">Высокорискованная</string>
-    <string name="risk_tolerance_medium_risk">Среднерискованная</string>
-    <string name="risk_tolerance_low_risk">Низкорискованная</string>
-    <string name="risk_tolerance_combined_risk">Комбинированная</string>
+    <string name="risk_tolerance_high_risk">Высокорискованный</string>
+    <string name="risk_tolerance_medium_risk">Среднерискованный</string>
+    <string name="risk_tolerance_low_risk">Низкорискованный</string>
+    <string name="risk_tolerance_combined_risk">Комбинированный</string>
     <string name="new_portfolio_screen_title">Новый портфель</string>
     <string name="new_portfolio_screen_create">Создать портфель</string>
     <string name="asset_quantity">%s × %d шт.</string>
