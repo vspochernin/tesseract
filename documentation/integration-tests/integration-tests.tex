@@ -212,7 +212,7 @@
     \inputminted[frame=single]{java}{./code/3.java}
     \large
 
-    Для создания диверсификаций у нас работает следующая логика: сумма диверсификации не должна быть меньше, чем стоимость самого дешевого актива и не должна быть больше, чем определенная граница (10 миллионов рублей). Уровень рискованности, в свою очередь, может принимать значения 0, 1, 2 или 3.
+    Для создания портфелей у нас работает следующая логика: стоимость портфеля не должна быть меньше, чем стоимость самого дешевого актива и не должна быть больше, чем определенная граница (10 миллионов рублей). Уровень рискованности, в свою очередь, может принимать значения 0, 1, 2 или 3.
 
     Таким образом, мы проверяем правильность работы алгоритма на границах диапазонов.
 
@@ -289,16 +289,16 @@
     \item \texttt{givenIncorrectNewPassword\_whenChangePassword\_thenReturnsExpectedError} - изменение пароля, когда пароль некорректный.
 \end{enumerate}
 
-\subsubsection{DiversificationControllerTest.java}
+\subsubsection{PortfolioControllerTest.java}
 
-Данный класс тестирует контроллер диверсификаций.
+Данный класс тестирует контроллер портфелей.
 
 \begin{enumerate}
-    \item \texttt{givenCorrectRequest\_whenGetDiversifications\_thenReturnsDiversificationsWithExpectedIds} - получить первые 10 своих диверсификаций.
-    \item \texttt{givenDiversificationId2\_whenGetDiversification\_thenReturnsExpectedDiversification} - получить свою существующую диверсификацию.
-    \item \texttt{givenNonExistentOrNonYourDiversification\_whenGetDiversification\_thenReturnsExpectedError} - получить не свою или несуществующую диверсификацию.
-    \item \texttt{givenValidCreateDiversificationRequest\_whenCreateDiversification\_thenSuccess} - создание диверсификации с корректными данными.
-    \item \texttt{givenInvalidCreateDiversificationRequest\_whenCreateDiversification\_thenReturnsExpectedError} - создание диверсификации с некорректными данными.
+    \item \texttt{givenCorrectRequest\_whenGetPortfolios\_thenReturnsPortfoliosWithExpectedIds} - получить первые 10 своих портфелей.
+    \item \texttt{givenPortfolioId2\_whenGetPortfolio\_thenReturnsExpectedPortfolio} - получить свой существующий портфель.
+    \item \texttt{givenNonExistentOrNonYourPortfolio\_whenGetPortfolio\_thenReturnsExpectedError} - получить не свой или несуществующий портфель.
+    \item \texttt{givenValidCreatePortfolioRequest\_whenCreatePortfolio\_thenSuccess} - создание портфеля с корректными данными.
+    \item \texttt{givenInvalidCreatePortfolioRequest\_whenCreatePortfolio\_thenReturnsExpectedError} - создание портфеля с некорректными данными.
 \end{enumerate}
 
 \subsubsection{FavouritesControllerTest.java}

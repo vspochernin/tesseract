@@ -20,6 +20,7 @@ jobs:
                         echo '--- LIST OF FILES ---';
                         ls -la;
                         echo '--- GIT PULL ---';
+                        git checkout master
                         git pull;
                         echo '--- DOCKER OPERATIONS ---';
                         docker-compose down;

@@ -1,0 +1,71 @@
+# Получить первые 10 своих портфелей.
+GET http://localhost:8080/api/v1/portfolios?pageNumber=0&pageSize=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
+
+###
+
+# Получить свой существующий портфель с id = 2.
+GET http://localhost:8080/api/v1/portfolios/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
+
+###
+
+# Получить не свой существующий портфель.
+GET http://localhost:8080/api/v1/portfolios/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
+
+###
+
+# Получить несуществующий портфель.
+GET http://localhost:8080/api/v1/portfolios/1001
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
+
+###
+
+# Создать портфель - корректные данные.
+POST http://localhost:8080/api/v1/portfolios
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
+Content-Type: application/json
+
+{
+    "amount": 500000000,
+    "riskTypeId": 3
+}
+
+###
+
+# Создать портфель - слишком большая стоимость.
+POST http://localhost:8080/api/v1/portfolios
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
+Content-Type: application/json
+
+{
+    "amount": 1100000000,
+    "riskTypeId": 3
+}
+
+###
+
+# Создать портфель - слишком малая стоимость.
+POST http://localhost:8080/api/v1/portfolios
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
+Content-Type: application/json
+
+{
+    "amount": 1,
+    "riskTypeId": 3
+}
+
+###
+
+# Создать портфель - некорректный уровень рискованности.
+POST http://localhost:8080/api/v1/portfolios
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2cmF6dWtyYW50b3YiLCJpYXQiOjE3MDk0NzU4NTcsImV4cCI6MjAxOTY1MTg1N30.NnZ1kUSrXQTfmYICrsEwBVTHQxLy0Y-X9bW0rptZXWI
+Content-Type: application/json
+
+{
+    "amount": 50000000,
+    "riskTypeId": 4
+}
+
+###

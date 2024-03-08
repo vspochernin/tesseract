@@ -4,7 +4,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import ru.tesseract.diversifications.domain.RiskLevel
+import ru.tesseract.portfolios.domain.RiskLevel
 
 class DetailedAssetInfoSerializerTest {
     private val json = Json {

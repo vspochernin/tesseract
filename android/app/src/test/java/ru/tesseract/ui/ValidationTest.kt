@@ -73,38 +73,38 @@ class ValidationTest {
     }
 
     @Test
-    fun `isDiversificationAmountValid should return true for max sum - 1`() {
-        assertTrue(Validation.isDiversificationAmountValid("9999999"))
+    fun `isPortfolioAmountValid should return true for max sum - 1`() {
+        assertTrue(Validation.isPortfolioAmountValid("9999999"))
     }
 
     @Test
-    fun `isDiversificationAmountValid should return true for max sum`() {
-        assertTrue(Validation.isDiversificationAmountValid("10000000"))
+    fun `isPortfolioAmountValid should return true for max sum`() {
+        assertTrue(Validation.isPortfolioAmountValid("10000000"))
     }
 
     @Test
-    fun `isDiversificationAmountValid should return false for sum bigger than max`() {
-        assertFalse(Validation.isDiversificationAmountValid("10000001"))
+    fun `isPortfolioAmountValid should return false for sum bigger than max`() {
+        assertFalse(Validation.isPortfolioAmountValid("10000001"))
     }
 
     @Test
-    fun `isDiversificationAmountValid should return false for sum less than min`() {
-        assertFalse(Validation.isDiversificationAmountValid("0"))
+    fun `isPortfolioAmountValid should return false for sum less than min`() {
+        assertFalse(Validation.isPortfolioAmountValid("0"))
     }
 
     @Test
-    fun `isDiversificationAmountValid should return true for min sum`() {
-        assertTrue(Validation.isDiversificationAmountValid("1"))
+    fun `isPortfolioAmountValid should return true for min sum`() {
+        assertTrue(Validation.isPortfolioAmountValid("1"))
     }
 
     @Test
-    fun `isDiversificationAmountValid should return true for min sum + 1`() {
-        assertTrue(Validation.isDiversificationAmountValid("2"))
+    fun `isPortfolioAmountValid should return true for min sum + 1`() {
+        assertTrue(Validation.isPortfolioAmountValid("2"))
     }
 
     @Test
-    fun `isDiversificationAmountValid should return false for not number`() {
-        assertFalse(Validation.isDiversificationAmountValid("123a"))
+    fun `isPortfolioAmountValid should return false for not number`() {
+        assertFalse(Validation.isPortfolioAmountValid("123a"))
     }
 
     @Test

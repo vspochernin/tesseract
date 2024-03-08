@@ -45,7 +45,7 @@ Table risks {
   description varchar
 }
 
-Table diversifications {
+Table portfolios {
   id SERIAL4 [primary key]
   user_id integer
   create_datetime timestampz
@@ -54,8 +54,8 @@ Table diversifications {
 
 }
 
-Table diversifications_assets {
-  diversification_id integer
+Table portfolios_assets {
+  portfolio_id integer
   asset_id integer
   count integer
 }
@@ -68,10 +68,10 @@ Ref: "assets"."id" < "users_assets"."asset_id"
 
 Ref: "companies"."id" < "assets"."company_id"
 
-Ref: "risks"."id" < "diversifications"."risk_id"
+Ref: "risks"."id" < "portfolios"."risk_id"
 
-Ref: "diversifications"."id" < "diversifications_assets"."diversification_id"
+Ref: "portfolios"."id" < "portfolios_assets"."portfolio_id"
 
-Ref: "assets"."id" < "diversifications_assets"."asset_id"
+Ref: "assets"."id" < "portfolios_assets"."asset_id"
 
-Ref: "users"."id" < "diversifications"."user_id"
+Ref: "users"."id" < "portfolios"."user_id"

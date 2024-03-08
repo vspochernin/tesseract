@@ -66,7 +66,7 @@ public class BadRequestTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "/api/v1/assets",
-            "/api/v1/diversifications",
+            "/api/v1/portfolios",
             "/api/v1/favourites"})
     @DisplayName("Некорректные query параметры GET запроса")
     public void givenInvalidQueryParams_whenHandleGetRequest_thenReturnsExpectedError(String path) throws Exception {
@@ -82,7 +82,7 @@ public class BadRequestTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "/api/v1/assets/",
-            "/api/v1/diversifications/"})
+            "/api/v1/portfolios/"})
     @DisplayName("Некорректные параметры пути GET запроса")
     public void givenIncorrectPathParams_whenHandleGetRequest_thenReturnsExpectedError(String path) throws Exception {
         mockMvc.perform(get(path + "123qwe123")
@@ -123,7 +123,7 @@ public class BadRequestTest {
             "/api/v1/register",
             "/api/v1/login/tesseract",
             "/api/v1/login/google",
-            "/api/v1/diversifications"})
+            "/api/v1/portfolios"})
     @DisplayName("Некорректные параметры тела POST запроса")
     public void givenIncorrectBodyParams_whenHandlePostRequest_thenReturnsExpectedError(String path) throws Exception {
         HashMap<String, String> request = new HashMap<>();

@@ -21,13 +21,13 @@ import org.koin.compose.getKoin
 import org.koin.core.parameter.parametersOf
 import ru.tesseract.R
 import ru.tesseract.assets.domain.GeneralAssetInfo
-import ru.tesseract.diversifications.domain.DiversificationAsset
+import ru.tesseract.portfolios.domain.PortfolioAsset
 import ru.tesseract.ui.FavoriteIcon
 import ru.tesseract.ui.asAnnotatedPriceDiff
 
 @Composable
-fun DiversificationAssetSummary(
-    asset: DiversificationAsset,
+fun PortfolioAssetSummary(
+    asset: PortfolioAsset,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

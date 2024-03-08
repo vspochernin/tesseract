@@ -19,9 +19,7 @@ fun startLoggedOut() = runTest {
 }
 
 fun startLoggedIn() = runTest {
-    if (loginState.token.value == null) {
-        loginState.setToken(getToken(), LoginMethod.Tesseract)
-    }
+    loginState.setToken(getToken(), LoginMethod.Tesseract)
     launchActivity<MainActivity>()
 }
 

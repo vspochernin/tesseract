@@ -36,7 +36,7 @@ import ru.tesseract.NavGraphs
 import ru.tesseract.R
 import ru.tesseract.destinations.AssetsScreenDestination
 import ru.tesseract.destinations.DirectionDestination
-import ru.tesseract.destinations.DiversificationsScreenDestination
+import ru.tesseract.destinations.PortfoliosScreenDestination
 import ru.tesseract.destinations.FavoritesScreenDestination
 import ru.tesseract.destinations.SettingsScreenDestination
 
@@ -52,10 +52,10 @@ enum class MainNavigationBarItem(
         R.string.navigation_assets,
     ),
     Favorites(FavoritesScreenDestination, Icons.Default.Favorite, R.string.navigation_favorites),
-    Diversifications(
-        DiversificationsScreenDestination,
+    Portfolios(
+        PortfoliosScreenDestination,
         Icons.Default.PieChart,
-        R.string.navigation_diversifications,
+        R.string.navigation_portfolios,
     ),
     Settings(SettingsScreenDestination, Icons.Default.Settings, R.string.navigation_settings),
 }

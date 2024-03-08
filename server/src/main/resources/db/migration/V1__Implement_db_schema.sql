@@ -55,7 +55,7 @@ CREATE TABLE users_assets
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL
 );
 
-CREATE TABLE diversifications
+CREATE TABLE portfolios
 (
     id              SERIAL PRIMARY KEY,
     user_id         INTEGER                  NOT NULL,
@@ -65,12 +65,12 @@ CREATE TABLE diversifications
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL
 );
 
-CREATE TABLE diversifications_assets
+CREATE TABLE portfolios_assets
 (
     id                 SERIAL PRIMARY KEY,
-    diversification_id INTEGER NOT NULL,
+    portfolio_id INTEGER NOT NULL,
     asset_id           INTEGER NOT NULL,
     count              BIGINT  NOT NULL,
-    FOREIGN KEY (diversification_id) REFERENCES diversifications (id) ON DELETE SET NULL,
+    FOREIGN KEY (portfolio_id) REFERENCES portfolios (id) ON DELETE SET NULL,
     FOREIGN KEY (asset_id) REFERENCES assets (id) ON DELETE SET NULL
 );
