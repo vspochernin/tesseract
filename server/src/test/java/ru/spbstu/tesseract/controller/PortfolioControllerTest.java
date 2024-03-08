@@ -99,7 +99,7 @@ public class PortfolioControllerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {3, 1001})
-    @DisplayName("Получить не свой или несуществующий")
+    @DisplayName("Получить не свой или несуществующий портфель")
     public void givenNonExistentOrNonYourPortfolio_whenGetPortfolio_thenReturnsExpectedError(int id) throws
             Exception
     {

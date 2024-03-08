@@ -1,424 +1,424 @@
 openapi: "3.0.0"
 info:
-  version: 1.0.0
-  title: Tesseract
-  description: An API for tesseract
-  termsOfService: https://swagger.io/terms/
-  contact:
-    name: Swagger API Team
-    email: apiteam@swagger.io
-    url: https://swagger.io
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0.html
+    version: 1.0.0
+    title: Tesseract
+    description: An API for tesseract
+    termsOfService: https://swagger.io/terms/
+    contact:
+        name: Swagger API Team
+        email: apiteam@swagger.io
+        url: https://swagger.io
+    license:
+        name: Apache 2.0
+        url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: http://localhost:8080/api/v1
+    -   url: http://localhost:8080/api/v1
 paths:
-  /login/tesseract:
-    post:
-      summary: Аутентификация через логин и пароль
-      tags:
-        - login
-      requestBody:
-        description: Данные для авторизации через логин и пароль
-        required: true
-        content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/AuthCredentials'
-      responses:
-        '200':
-          description: Успешная авторизация
-          content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/SuccsessAuthToken'
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Несуществующая комбинация логин/пароль
-  /login/google:
-    post:
-      tags:
-        - login
-      summary: Аутентификация через Google OAuth
-      requestBody:
-        description: Данные для авторизации через Google Auth
-        required: true
-        content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/AuthGoogleCredentials'
-      responses:
-        '200':
-          description: Успешная авторизация
-          content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/SuccsessAuthToken'
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Некорректный Google токен
-  /register:
-    post:
-      tags:
-        - register
-      summary: Регистрация пользователя
-      requestBody:
-        description: Данные для регистрации
-        required: true
-        content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/RegisterCredentials'
-      responses:
-        '201':
-          description: Успешная регистрация
-        '400':
-          description: Некорректное тело запроса
-  /password:
-    put:
-      summary: Изменить пароль
-      tags:
-        - password
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-      requestBody:
-        description: Данные для смены пароля
-        required: true
-        content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/PasswordChangeCredentials'
-      responses:
-        '200':
-          description: Успешное изменение пароля
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Отсутствуют данные аутентификации
-  /assets:
-    post:
-      tags:
-        - asset
-      summary: Получить список всех активов
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/pageNumber'
-        - $ref: '#/components/parameters/pageSize'
-      responses:
-        '200':
-          description: Успешное получение списка активов
-          content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/AssetList'
-        '401':
-          description: Отсутствуют данные аутентификации
-  /favourites/{id}:
-    post:
-      tags:
-        - favourites
-      summary: Добавить актив в избранное
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '200':
-          description: Актив уже присутствует в избранном
-        '201':
-          description: Актив был добавлен в избранное
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Отсутствуют данные аутентификации
-        '404':
-          description: Указан несуществующий id актива
-    delete:
-      tags:
-        - favourites
-      summary: Удалить актив из избранного
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '200':
-          description: Успешное удаление актива из избранного (либо отсутствие соответствующего id актива)
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Отсутствуют данные аутентификации
-        '404':
-          description: Указан несуществующий id актива
-  /assets/{id}:
-    get:
-      tags:
-        - asset
-      summary: Получить информацию о конкретном активе
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '200':
-          description: Успешное получение информации об активе
-          content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/SpecifiedAsset'
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Отсутствуют данные аутентификации
-        '404':
-          description: Отсутствие запрашиваемого id актива
-  /favourites:
-    get:
-      tags:
-        - favourites
-      summary: Получить список избранных активов
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/pageNumber'
-        - $ref: '#/components/parameters/pageSize'
-      responses:
-        '200':
-          description: Успешное получение списка активов
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AssetList'
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Отсутствуют данные аутентификации
-  /portfolios:
-    get:
-      tags:
-        - portfolio
-      summary: Получить список портфелей
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/pageNumber'
-        - $ref: '#/components/parameters/pageSize'
-      responses:
-        '200':
-          description: Успешное получение списка портфелей
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PortfoliosList'
-        '401':
-          description: Отсутствуют данные аутентификации
-    post:
-      tags:
-        - portfolio
-      summary: Создать портфель
-      requestBody:
-        description: Данные для создании портфеля
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PortfolioCreateInfo'
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-      responses:
-        '201':
-          description: Успешное создание портфеля
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Отсутствуют данные аутентификации
-        '404':
-          description: Отсутствуют активы с выбранным типом рискованности
-  /portfolios/{id}:
-    get:
-      tags:
-        - portfolio
+    /login/tesseract:
+        post:
+            summary: Аутентификация через логин и пароль
+            tags:
+                - login
+            requestBody:
+                description: Данные для авторизации через логин и пароль
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AuthCredentials'
+            responses:
+                '200':
+                    description: Успешная авторизация
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccsessAuthToken'
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Несуществующая комбинация логин/пароль
+    /login/google:
+        post:
+            tags:
+                - login
+            summary: Аутентификация через Google OAuth
+            requestBody:
+                description: Данные для авторизации через Google Auth
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AuthGoogleCredentials'
+            responses:
+                '200':
+                    description: Успешная авторизация
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccsessAuthToken'
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Некорректный Google токен
+    /register:
+        post:
+            tags:
+                - register
+            summary: Регистрация пользователя
+            requestBody:
+                description: Данные для регистрации
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RegisterCredentials'
+            responses:
+                '201':
+                    description: Успешная регистрация
+                '400':
+                    description: Некорректное тело запроса
+    /password:
+        put:
+            summary: Изменить пароль
+            tags:
+                - password
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+            requestBody:
+                description: Данные для смены пароля
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PasswordChangeCredentials'
+            responses:
+                '200':
+                    description: Успешное изменение пароля
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Отсутствуют данные аутентификации
+    /assets:
+        post:
+            tags:
+                - asset
+            summary: Получить список всех активов
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+                -   $ref: '#/components/parameters/pageNumber'
+                -   $ref: '#/components/parameters/pageSize'
+            responses:
+                '200':
+                    description: Успешное получение списка активов
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AssetList'
+                '401':
+                    description: Отсутствуют данные аутентификации
+    /favourites/{id}:
+        post:
+            tags:
+                - favourites
+            summary: Добавить актив в избранное
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+                -   $ref: '#/components/parameters/idPath'
+            responses:
+                '200':
+                    description: Актив уже присутствует в избранном
+                '201':
+                    description: Актив был добавлен в избранное
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Отсутствуют данные аутентификации
+                '404':
+                    description: Указан несуществующий id актива
+        delete:
+            tags:
+                - favourites
+            summary: Удалить актив из избранного
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+                -   $ref: '#/components/parameters/idPath'
+            responses:
+                '200':
+                    description: Успешное удаление актива из избранного (либо отсутствие соответствующего id актива)
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Отсутствуют данные аутентификации
+                '404':
+                    description: Указан несуществующий id актива
+    /assets/{id}:
+        get:
+            tags:
+                - asset
+            summary: Получить информацию о конкретном активе
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+                -   $ref: '#/components/parameters/idPath'
+            responses:
+                '200':
+                    description: Успешное получение информации об активе
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SpecifiedAsset'
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Отсутствуют данные аутентификации
+                '404':
+                    description: Отсутствие запрашиваемого id актива
+    /favourites:
+        get:
+            tags:
+                - favourites
+            summary: Получить список избранных активов
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+                -   $ref: '#/components/parameters/pageNumber'
+                -   $ref: '#/components/parameters/pageSize'
+            responses:
+                '200':
+                    description: Успешное получение списка активов
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AssetList'
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Отсутствуют данные аутентификации
+    /portfolios:
+        get:
+            tags:
+                - portfolio
+            summary: Получить список портфелей
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+                -   $ref: '#/components/parameters/pageNumber'
+                -   $ref: '#/components/parameters/pageSize'
+            responses:
+                '200':
+                    description: Успешное получение списка портфелей
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PortfoliosList'
+                '401':
+                    description: Отсутствуют данные аутентификации
+        post:
+            tags:
+                - portfolio
+            summary: Создать портфель
+            requestBody:
+                description: Данные для создании портфеля
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PortfolioCreateInfo'
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+            responses:
+                '201':
+                    description: Успешное создание портфеля
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Отсутствуют данные аутентификации
+                '404':
+                    description: Отсутствуют активы с выбранным типом рискованности
+    /portfolios/{id}:
+        get:
+            tags:
+                - portfolio
 
-      summary: Получить информацию о конкретном портфеле
-      parameters:
-        - $ref: '#/components/parameters/authCredsParam'
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '200':
-          description: Успешное получение портфеля
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SpecifiedPortfolio'
-        '400':
-          description: Некорректное тело запроса
-        '401':
-          description: Отсутствуют данные аутентификации
-        '404':
-          description: Отсутствует портфель с таким id (либо запрашиваем не свой портфель)
+            summary: Получить информацию о конкретном портфеле
+            parameters:
+                -   $ref: '#/components/parameters/authCredsParam'
+                -   $ref: '#/components/parameters/idPath'
+            responses:
+                '200':
+                    description: Успешное получение портфеля
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SpecifiedPortfolio'
+                '400':
+                    description: Некорректное тело запроса
+                '401':
+                    description: Отсутствуют данные аутентификации
+                '404':
+                    description: Отсутствует портфель с таким id (либо запрашиваем не свой портфель)
 components:
-  parameters:
-    authCredsParam:
-      name: authCreds
-      in: header
-      description: Данные аутентификации
-      required: true
-      schema:
-        type: string
-    idPath:
-      name: id
-      in: path
-      description: Уникальный номер сущности
-      required: true
-      schema:
-        type: integer
-    pageNumber:
-      name: pageNumber
-      in: query
-      description: Номер страницы пагинации (начинается с 0)
-      required: false
-      schema:
-        type: integer
-    pageSize:
-      name: pageSize
-      in: query
-      description: Размер одной страницы
-      required: false
-      schema:
-        type: integer
-  schemas:
-    AuthCredentials:
-      type: object
-      properties:
-        login:
-          type: string
-        password:
-          type: string
-    SuccsessAuthToken:
-      type: object
-      properties:
-        token:
-          type: string
-    AuthGoogleCredentials:
-      type: object
-      properties:
-        googleToken:
-          type: string
-    RegisterCredentials:
-      type: object
-      properties:
-        login:
-          type: string
-        password:
-          type: string
-        email:
-          type: string
-    PasswordChangeCredentials:
-      type: object
-      properties:
-        oldPassword:
-          type: string
-        newPassword:
-          type: string
-    Asset:
-      type: object
-      properties:
-        assetId:
-          type: integer
-        assetTitle:
-          type: string
-        companyTitle:
-          type: string
-        assetPrice:
-          type: integer
-          description: Стоимость актива, в копейках
-        assetPriceDiff:
-          type: integer
-          description: Изменение стоимости актива за последний месяц, в копейках
-        favouriteStatus:
-          type: boolean
-    AssetList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Asset'
-    SpecifiedAsset:
-      type: object
-      properties:
-        assetId:
-          type: integer
-        assetTitle:
-          type: string
-        assetDescription:
-          type: string
-        assetPrice:
-          type: integer
-          description: Стоимость актива, в копейках
-        assetPriceDiff:
-          type: integer
-          description: Изменение стоимости актива за последний месяц, в копейках
-        companyTitle:
-          type: string
-        companyDescription:
-          type: string
-        riskTypeId:
-          type: integer
-        favouriteStatus:
-          type: boolean
-    Portfolio:
-      type: object
-      properties:
-        portfolioId:
-          type: integer
-        createDatetime:
-          type: string
-          description: Формат времени ISO 8601
-        riskTypeId:
-          type: integer
-        amount:
-          type: integer
-          description: Стоимость портфеля, в копейках
-    PortfoliosList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Portfolio'
-    PortfolioCreateInfo:
-      type: object
-      properties:
-        amount:
-          type: integer
-          description: Стоимость создаваемого портфеля, в копейках
-        riskTypeId:
-          type: integer
-    PortfolioAsset:
-      type: object
-      properties:
-        assetId:
-          type: integer
-        assetTitle:
-          type: string
-        companyTitle:
-          type: string
-        oldPrice:
-          type: integer
-          description: Старая цена актива (то есть цена на момент создания портфеля), в копейках
-        count:
-          type: integer
-        favouriteStatus:
-          type: boolean
-    SpecifiedPortfolio:
-      type: object
-      properties:
-        createDatetime:
-          type: string
-          description: Формат времени ISO 8601
-        amount:
-          type: integer
-        riskTypeId:
-          type: integer
-        assetsList:
-          type: array
-          items:
-            $ref: "#/components/schemas/PortfolioAsset"
-  responses:
-    NotFound:
-      description: Сущность не найдена
-    GeneralError:
-      description: Непредвиденная ошибка
+    parameters:
+        authCredsParam:
+            name: authCreds
+            in: header
+            description: Данные аутентификации
+            required: true
+            schema:
+                type: string
+        idPath:
+            name: id
+            in: path
+            description: Уникальный номер сущности
+            required: true
+            schema:
+                type: integer
+        pageNumber:
+            name: pageNumber
+            in: query
+            description: Номер страницы пагинации (начинается с 0)
+            required: false
+            schema:
+                type: integer
+        pageSize:
+            name: pageSize
+            in: query
+            description: Размер одной страницы
+            required: false
+            schema:
+                type: integer
+    schemas:
+        AuthCredentials:
+            type: object
+            properties:
+                login:
+                    type: string
+                password:
+                    type: string
+        SuccsessAuthToken:
+            type: object
+            properties:
+                token:
+                    type: string
+        AuthGoogleCredentials:
+            type: object
+            properties:
+                googleToken:
+                    type: string
+        RegisterCredentials:
+            type: object
+            properties:
+                login:
+                    type: string
+                password:
+                    type: string
+                email:
+                    type: string
+        PasswordChangeCredentials:
+            type: object
+            properties:
+                oldPassword:
+                    type: string
+                newPassword:
+                    type: string
+        Asset:
+            type: object
+            properties:
+                assetId:
+                    type: integer
+                assetTitle:
+                    type: string
+                companyTitle:
+                    type: string
+                assetPrice:
+                    type: integer
+                    description: Стоимость актива, в копейках
+                assetPriceDiff:
+                    type: integer
+                    description: Изменение стоимости актива за последний месяц, в копейках
+                favouriteStatus:
+                    type: boolean
+        AssetList:
+            type: array
+            items:
+                $ref: '#/components/schemas/Asset'
+        SpecifiedAsset:
+            type: object
+            properties:
+                assetId:
+                    type: integer
+                assetTitle:
+                    type: string
+                assetDescription:
+                    type: string
+                assetPrice:
+                    type: integer
+                    description: Стоимость актива, в копейках
+                assetPriceDiff:
+                    type: integer
+                    description: Изменение стоимости актива за последний месяц, в копейках
+                companyTitle:
+                    type: string
+                companyDescription:
+                    type: string
+                riskTypeId:
+                    type: integer
+                favouriteStatus:
+                    type: boolean
+        Portfolio:
+            type: object
+            properties:
+                portfolioId:
+                    type: integer
+                createDatetime:
+                    type: string
+                    description: Формат времени ISO 8601
+                riskTypeId:
+                    type: integer
+                amount:
+                    type: integer
+                    description: Стоимость портфеля, в копейках
+        PortfoliosList:
+            type: array
+            items:
+                $ref: '#/components/schemas/Portfolio'
+        PortfolioCreateInfo:
+            type: object
+            properties:
+                amount:
+                    type: integer
+                    description: Стоимость создаваемого портфеля, в копейках
+                riskTypeId:
+                    type: integer
+        PortfolioAsset:
+            type: object
+            properties:
+                assetId:
+                    type: integer
+                assetTitle:
+                    type: string
+                companyTitle:
+                    type: string
+                oldPrice:
+                    type: integer
+                    description: Старая цена актива (то есть цена на момент создания портфеля), в копейках
+                count:
+                    type: integer
+                favouriteStatus:
+                    type: boolean
+        SpecifiedPortfolio:
+            type: object
+            properties:
+                createDatetime:
+                    type: string
+                    description: Формат времени ISO 8601
+                amount:
+                    type: integer
+                riskTypeId:
+                    type: integer
+                assetsList:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/PortfolioAsset"
+    responses:
+        NotFound:
+            description: Сущность не найдена
+        GeneralError:
+            description: Непредвиденная ошибка
