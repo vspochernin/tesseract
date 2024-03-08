@@ -406,11 +406,9 @@ VALUES (2, 8);
 INSERT INTO users_assets(user_id, asset_id)
 VALUES (2, 2);
 
--- Портфель: комбинированный.
 INSERT INTO portfolios(user_id, create_datetime, risk_type_id, amount)
 VALUES (1, '2023-12-27 00:00:00+03', 3, 5000000);
 
--- Портфель: низкорискованный.
 INSERT INTO portfolios(user_id, create_datetime, risk_type_id, amount)
 VALUES (2, '2023-12-28 00:00:00+03', 2, 15000000);
 
