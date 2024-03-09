@@ -2,6 +2,8 @@ name: Deploy
 on:
     push:
         branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
 
 jobs:
     build-and-deploy:
@@ -15,17 +17,9 @@ jobs:
                     port: ${{secrets.REMOTE_PORT}}
                     private_key: ${{secrets.SSH_PRIVATE_KEY}}
                     command: |
-                        echo '--- START WORK ON REMOTE SERVER ---';
                         cd ${{ secrets.REMOTE_TARGET }};
-                        echo '--- LIST OF FILES ---';
                         ls -la;
-                        echo '--- GIT PULL ---';
-                        git checkout master
                         git pull;
-                        echo '--- DOCKER OPERATIONS ---';
-                        docker-compose down;
                         docker ps;
-                        docker build -t tesseract-app -f Dockerfile .;
-                        docker-compose up -d;
-                        echo '--- LIST OF DOCKER CONTAINERS AFTER STARTING DOCKER CONTAINERS ---';
+                        docker-compose up -d --no-deps --build backend
                         docker ps;

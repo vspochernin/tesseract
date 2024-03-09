@@ -1,6 +1,8 @@
 services:
-    app:
+    backend:
         image: 'tesseract-app'
+        build:
+            context: server
         container_name: 'tesseract-app-container'
         ports:
             - 8080:8080
@@ -18,4 +20,4 @@ services:
             POSTGRES_USER: "postgres"
             POSTGRES_PASSWORD: "postgres"
         ports:
-            - "5431:5432"
+            - "5432:5432"
