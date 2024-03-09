@@ -28,9 +28,19 @@ class AssetShortDtoTest {
                                 .setDatetime(ZonedDateTime.now())
                                 .build(),
                         Price.builder()
-                                .id(1)
+                                .id(2)
                                 .price(50)
                                 .setDatetime(ZonedDateTime.now().minusDays(1))
+                                .build(),
+                        Price.builder()
+                                .id(3)
+                                .price(200)
+                                .setDatetime(ZonedDateTime.now().minusDays(2))
+                                .build(),
+                        Price.builder()
+                                .id(4)
+                                .price(300)
+                                .setDatetime(ZonedDateTime.now().minusDays(3))
                                 .build()))
                 .build();
         Asset mockedAsset = Mockito.spy(asset);
