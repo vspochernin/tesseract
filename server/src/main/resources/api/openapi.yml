@@ -2,15 +2,7 @@ openapi: "3.0.0"
 info:
     version: 1.0.0
     title: Tesseract
-    description: An API for tesseract
-    termsOfService: https://swagger.io/terms/
-    contact:
-        name: Swagger API Team
-        email: apiteam@swagger.io
-        url: https://swagger.io
-    license:
-        name: Apache 2.0
-        url: https://www.apache.org/licenses/LICENSE-2.0.html
+    description: Описание API
 servers:
     -   url: http://localhost:8080/api/v1
 paths:
@@ -20,7 +12,7 @@ paths:
             tags:
                 - login
             requestBody:
-                description: Данные для авторизации через логин и пароль
+                description: Данные для аутентификации через логин и пароль
                 required: true
                 content:
                     application/json:
@@ -28,11 +20,11 @@ paths:
                             $ref: '#/components/schemas/AuthCredentials'
             responses:
                 '200':
-                    description: Успешная авторизация
+                    description: Успешная аутентификация
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/SuccsessAuthToken'
+                                $ref: '#/components/schemas/SuccessAuthToken'
                 '400':
                     description: Некорректное тело запроса
                 '401':
@@ -43,7 +35,7 @@ paths:
                 - login
             summary: Аутентификация через Google OAuth
             requestBody:
-                description: Данные для авторизации через Google Auth
+                description: Данные для аутентификации через Google OAuth
                 required: true
                 content:
                     application/json:
@@ -51,11 +43,11 @@ paths:
                             $ref: '#/components/schemas/AuthGoogleCredentials'
             responses:
                 '200':
-                    description: Успешная авторизация
+                    description: Успешная аутентификация
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/SuccsessAuthToken'
+                                $ref: '#/components/schemas/SuccessAuthToken'
                 '400':
                     description: Некорректное тело запроса
                 '401':
@@ -75,6 +67,10 @@ paths:
             responses:
                 '201':
                     description: Успешная регистрация
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessAuthToken'
                 '400':
                     description: Некорректное тело запроса
     /password:
@@ -144,7 +140,7 @@ paths:
                 -   $ref: '#/components/parameters/idPath'
             responses:
                 '200':
-                    description: Успешное удаление актива из избранного (либо отсутствие соответствующего id актива)
+                    description: Успешное удаление актива из избранного (либо отсутствие актива в избранных)
                 '400':
                     description: Некорректное тело запроса
                 '401':
@@ -171,7 +167,7 @@ paths:
                 '401':
                     description: Отсутствуют данные аутентификации
                 '404':
-                    description: Отсутствие запрашиваемого id актива
+                    description: Указан несуществующий id актива
     /favourites:
         get:
             tags:
@@ -259,7 +255,7 @@ components:
         authCredsParam:
             name: authCreds
             in: header
-            description: Данные аутентификации
+            description: JWT токен аутентификации
             required: true
             schema:
                 type: string
@@ -280,7 +276,7 @@ components:
         pageSize:
             name: pageSize
             in: query
-            description: Размер одной страницы
+            description: Размер одной страницы пагинации
             required: false
             schema:
                 type: integer
@@ -292,7 +288,7 @@ components:
                     type: string
                 password:
                     type: string
-        SuccsessAuthToken:
+        SuccessAuthToken:
             type: object
             properties:
                 token:
@@ -300,7 +296,7 @@ components:
         AuthGoogleCredentials:
             type: object
             properties:
-                googleToken:
+                token:
                     type: string
         RegisterCredentials:
             type: object
@@ -328,11 +324,11 @@ components:
                 companyTitle:
                     type: string
                 assetPrice:
-                    type: integer
+                    type: long
                     description: Стоимость актива, в копейках
                 assetPriceDiff:
-                    type: integer
-                    description: Изменение стоимости актива за последний месяц, в копейках
+                    type: long
+                    description: Изменение стоимости актива за последний день, в копейках
                 favouriteStatus:
                     type: boolean
         AssetList:
@@ -349,11 +345,11 @@ components:
                 assetDescription:
                     type: string
                 assetPrice:
-                    type: integer
+                    type: long
                     description: Стоимость актива, в копейках
                 assetPriceDiff:
-                    type: integer
-                    description: Изменение стоимости актива за последний месяц, в копейках
+                    type: long
+                    description: Изменение стоимости актива за последний день, в копейках
                 companyTitle:
                     type: string
                 companyDescription:
@@ -362,6 +358,8 @@ components:
                     type: integer
                 favouriteStatus:
                     type: boolean
+                operatorTitle:
+                    type: string
         Portfolio:
             type: object
             properties:
@@ -372,9 +370,12 @@ components:
                     description: Формат времени ISO 8601
                 riskTypeId:
                     type: integer
-                amount:
-                    type: integer
-                    description: Стоимость портфеля, в копейках
+                currentAmount:
+                    type: long
+                    description: Текущая стоимость портфеля, в копейках
+                amountDiff:
+                    type: long
+                    description: Изменение стоимости портфеля с момента создания, в копейках
         PortfoliosList:
             type: array
             items:
@@ -383,7 +384,7 @@ components:
             type: object
             properties:
                 amount:
-                    type: integer
+                    type: long
                     description: Стоимость создаваемого портфеля, в копейках
                 riskTypeId:
                     type: integer
@@ -396,27 +397,37 @@ components:
                     type: string
                 companyTitle:
                     type: string
-                oldPrice:
-                    type: integer
-                    description: Старая цена актива (то есть цена на момент создания портфеля), в копейках
+                currentPriceSum:
+                    type: long
+                    description: Текущая стоимость всех активов данного вида, в копейках
                 count:
                     type: integer
                 favouriteStatus:
                     type: boolean
+                priceSumDiff:
+                    type: long
+                    description: Изменение стоимости всех активов данного вида с момента создания портфеля, в копейках
+                currentPrice:
+                    type: long
+                    description: Текущая стоимость одного актива данного вида, в копейках
         SpecifiedPortfolio:
             type: object
             properties:
                 createDatetime:
                     type: string
                     description: Формат времени ISO 8601
-                amount:
-                    type: integer
+                currentAmount:
+                    type: long
+                    description: Текущая стоимость портфеля, в копейках
                 riskTypeId:
                     type: integer
                 assetsList:
                     type: array
                     items:
                         $ref: "#/components/schemas/PortfolioAsset"
+                amountDiff:
+                    type: long
+                    description: Изменение стоимости портфеля с момента создания, в копейках
     responses:
         NotFound:
             description: Сущность не найдена

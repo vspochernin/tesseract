@@ -33,6 +33,18 @@ class PortfolioShortDtoTest {
                                                         .setDatetime(ZonedDateTime.of(
                                                                 LocalDateTime.of(2023, 10, 10, 10, 10),
                                                                 ZoneId.of("Europe/Moscow")))
+                                                        .build(),
+                                                Price.builder()
+                                                        .price(1000)
+                                                        .setDatetime(ZonedDateTime.of(
+                                                                LocalDateTime.of(2022, 10, 10, 10, 10),
+                                                                ZoneId.of("Europe/Moscow")))
+                                                        .build(),
+                                                Price.builder()
+                                                        .price(2000)
+                                                        .setDatetime(ZonedDateTime.of(
+                                                                LocalDateTime.of(2021, 10, 10, 10, 10),
+                                                                ZoneId.of("Europe/Moscow")))
                                                         .build()))
                                 .build(), 2)));
         portfolio.setId(1);

@@ -21,6 +21,14 @@ class AssetTest {
                         Price.builder()
                                 .price(50)
                                 .setDatetime(ZonedDateTime.now().minusDays(1))
+                                .build(),
+                        Price.builder()
+                                .price(200)
+                                .setDatetime(ZonedDateTime.now().minusDays(2))
+                                .build(),
+                        Price.builder()
+                                .price(300)
+                                .setDatetime(ZonedDateTime.now().minusDays(3))
                                 .build()))
                 .build();
 
@@ -40,6 +48,14 @@ class AssetTest {
                         Price.builder()
                                 .price(50)
                                 .setDatetime(ZonedDateTime.now().minusDays(1))
+                                .build(),
+                        Price.builder()
+                                .price(200)
+                                .setDatetime(ZonedDateTime.now().minusDays(2))
+                                .build(),
+                        Price.builder()
+                                .price(300)
+                                .setDatetime(ZonedDateTime.now().minusDays(3))
                                 .build()))
                 .build();
 
@@ -59,6 +75,14 @@ class AssetTest {
                         Price.builder()
                                 .price(50)
                                 .setDatetime(ZonedDateTime.now().minusDays(1))
+                                .build(),
+                        Price.builder()
+                                .price(200)
+                                .setDatetime(ZonedDateTime.now().minusDays(2))
+                                .build(),
+                        Price.builder()
+                                .price(300)
+                                .setDatetime(ZonedDateTime.now().minusDays(3))
                                 .build(),
                         Price.builder()
                                 .price(250)
@@ -95,7 +119,15 @@ class AssetTest {
                                 .setDatetime(ZonedDateTime.now().minusDays(1))
                                 .build(),
                         Price.builder()
+                                .price(200)
+                                .setDatetime(ZonedDateTime.now().minusDays(2))
+                                .build(),
+                        Price.builder()
                                 .price(250)
+                                .setDatetime(ZonedDateTime.now().minusDays(3))
+                                .build(),
+                        Price.builder()
+                                .price(1000)
                                 .setDatetime(ZonedDateTime.now().minusWeeks(1))
                                 .build()))
                 .build();
@@ -119,7 +151,15 @@ class AssetTest {
                                 .setDatetime(ZonedDateTime.now().minusDays(1))
                                 .build(),
                         Price.builder()
+                                .price(200)
+                                .setDatetime(ZonedDateTime.now().minusDays(2))
+                                .build(),
+                        Price.builder()
                                 .price(250)
+                                .setDatetime(ZonedDateTime.now().minusDays(3))
+                                .build(),
+                        Price.builder()
+                                .price(1000)
                                 .setDatetime(ZonedDateTime.now().minusWeeks(1))
                                 .build()))
                 .build();
