@@ -2,6 +2,8 @@ name: Unit and Integration tests
 on:
     push:
         branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
 
 jobs:
     unit-and-integration-test:
