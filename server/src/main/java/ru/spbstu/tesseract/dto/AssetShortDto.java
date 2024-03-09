@@ -19,7 +19,7 @@ public class AssetShortDto {
         return AssetShortDto.builder()
                 .assetId(asset.getId())
                 .assetTitle(asset.getTitle())
-                .companyTitle(asset.getCompany().getTitle())
+                .companyTitle("test tile")
                 .assetPrice(asset.getCurrentAssetPrice())
                 .assetPriceDiff(asset.getAssetDayPriceDiff())
                 .favouriteStatus(asset.isAssetFavourite())
