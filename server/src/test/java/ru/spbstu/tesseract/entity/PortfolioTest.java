@@ -19,6 +19,18 @@ class PortfolioTest {
                                                         Price.builder()
                                                                 .price(100)
                                                                 .setDatetime(ZonedDateTime.now())
+                                                                .build(),
+                                                        Price.builder()
+                                                                .price(50)
+                                                                .setDatetime(ZonedDateTime.now().minusDays(1))
+                                                                .build(),
+                                                        Price.builder()
+                                                                .price(200)
+                                                                .setDatetime(ZonedDateTime.now().minusDays(2))
+                                                                .build(),
+                                                        Price.builder()
+                                                                .price(300)
+                                                                .setDatetime(ZonedDateTime.now().minusDays(3))
                                                                 .build()
                                                 )
                                         )
@@ -39,6 +51,18 @@ class PortfolioTest {
                         Price.builder()
                                 .price(100)
                                 .setDatetime(ZonedDateTime.now())
+                                .build(),
+                        Price.builder()
+                                .price(50)
+                                .setDatetime(ZonedDateTime.now().minusDays(1))
+                                .build(),
+                        Price.builder()
+                                .price(200)
+                                .setDatetime(ZonedDateTime.now().minusDays(2))
+                                .build(),
+                        Price.builder()
+                                .price(300)
+                                .setDatetime(ZonedDateTime.now().minusDays(3))
                                 .build()))
                 .build();
         User user = new User();

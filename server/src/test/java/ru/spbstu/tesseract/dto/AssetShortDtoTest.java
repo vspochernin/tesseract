@@ -23,22 +23,18 @@ class AssetShortDtoTest {
                         .build())
                 .prices(List.of(
                         Price.builder()
-                                .id(1)
                                 .price(100)
                                 .setDatetime(ZonedDateTime.now())
                                 .build(),
                         Price.builder()
-                                .id(2)
                                 .price(50)
                                 .setDatetime(ZonedDateTime.now().minusDays(1))
                                 .build(),
                         Price.builder()
-                                .id(3)
                                 .price(200)
                                 .setDatetime(ZonedDateTime.now().minusDays(2))
                                 .build(),
                         Price.builder()
-                                .id(4)
                                 .price(300)
                                 .setDatetime(ZonedDateTime.now().minusDays(3))
                                 .build()))
