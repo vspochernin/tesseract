@@ -324,10 +324,12 @@ components:
                 companyTitle:
                     type: string
                 assetPrice:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Стоимость актива, в копейках
                 assetPriceDiff:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Изменение стоимости актива за последний день, в копейках
                 favouriteStatus:
                     type: boolean
@@ -345,10 +347,12 @@ components:
                 assetDescription:
                     type: string
                 assetPrice:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Стоимость актива, в копейках
                 assetPriceDiff:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Изменение стоимости актива за последний день, в копейках
                 companyTitle:
                     type: string
@@ -371,10 +375,12 @@ components:
                 riskTypeId:
                     type: integer
                 currentAmount:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Текущая стоимость портфеля, в копейках
                 amountDiff:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Изменение стоимости портфеля с момента создания, в копейках
         PortfoliosList:
             type: array
@@ -384,7 +390,8 @@ components:
             type: object
             properties:
                 amount:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Стоимость создаваемого портфеля, в копейках
                 riskTypeId:
                     type: integer
@@ -398,17 +405,20 @@ components:
                 companyTitle:
                     type: string
                 currentPriceSum:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Текущая стоимость всех активов данного вида, в копейках
                 count:
                     type: integer
                 favouriteStatus:
                     type: boolean
                 priceSumDiff:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Изменение стоимости всех активов данного вида с момента создания портфеля, в копейках
                 currentPrice:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Текущая стоимость одного актива данного вида, в копейках
         SpecifiedPortfolio:
             type: object
@@ -417,7 +427,8 @@ components:
                     type: string
                     description: Формат времени ISO 8601
                 currentAmount:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Текущая стоимость портфеля, в копейках
                 riskTypeId:
                     type: integer
@@ -426,7 +437,8 @@ components:
                     items:
                         $ref: "#/components/schemas/PortfolioAsset"
                 amountDiff:
-                    type: long
+                    type: integer
+                    format: int64
                     description: Изменение стоимости портфеля с момента создания, в копейках
     responses:
         NotFound:
