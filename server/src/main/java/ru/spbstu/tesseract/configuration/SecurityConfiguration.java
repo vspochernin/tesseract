@@ -25,7 +25,11 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authRegistry -> authRegistry
-                        .requestMatchers("/api/v1/login/tesseract", "/api/v1/login/google", "/api/v1/register")
+                        .requestMatchers(
+                                "/api/v1/login/tesseract",
+                                "/api/v1/login/google",
+                                "/api/v1/register",
+                                "/actuator/**")
                         .permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
